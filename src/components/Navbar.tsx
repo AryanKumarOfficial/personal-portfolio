@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
             {/* Blur background overlay */}
             {isMenuOpen && (
                 <div
-                    className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"
+                    className="fixed md:hidden inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"
                     onClick={toggleMenu} // Close menu when the backdrop is clicked
                 ></div>
             )}
