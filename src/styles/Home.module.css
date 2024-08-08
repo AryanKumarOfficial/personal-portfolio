@@ -1,0 +1,88 @@
+.home {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    gap: 4rem;
+    min-height: calc(100vh - 6.5rem);
+    background-color: #121212; /* Dark background for the section */
+}
+
+.home .image {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 42rem;
+    flex: 1 1 42rem;
+    text-align: center;
+}
+
+.home .image img {
+    height: 50rem;
+    width: 50rem;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    border: 5px solid #ba0c0c; /* Adding a border to the image */
+}
+
+.home .content {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 42rem;
+    flex: 1 1 42rem;
+}
+
+.home .content h3 {
+    color: #ffffff; /* White text */
+    font-size: 4rem;
+    padding-bottom: .5rem;
+}
+
+.home .content span {
+    font-size: 3rem;
+    color: #ba0c0c; /* Use the theme color for the span */
+    padding: .5rem 0;
+    display: block;
+}
+
+.home .content p {
+    font-size: 1.5rem;
+    color: #d1d1d1; /* Light grey text */
+    padding: 1rem 0;
+    line-height: 2;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 1rem;
+    border-radius: 5rem;
+    background: #ba0c0c; /* Theme color for the button */
+    padding: .7rem 2rem;
+    font-size: 1.7rem;
+    color: #ffffff; /* White text */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.btn i {
+    height: 4rem;
+    width: 4rem;
+    line-height: 4rem;
+    font-size: 1.7rem;
+    text-align: center;
+    background: #242b2b; /* Dark background for the icon */
+    color: #ffffff; /* White icon */
+    border-radius: 50%;
+    margin-left: 1rem;
+    transition: margin-left 0.2s linear;
+}
+
+.btn:hover {
+    background-color: #ffffff; /* Change background on hover */
+    color: #ba0c0c; /* Change text color on hover */
+}
+
+.btn:hover i {
+    margin-left: 2rem;
+    background: #ba0c0c; /* Change icon background on hover */
+    color: #ffffff; /* Change icon color on hover */
+}

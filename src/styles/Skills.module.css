@@ -1,0 +1,63 @@
+.skills {
+    @apply bg-gray-900;
+    padding: 5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.heading {
+    text-align: center;
+    font-size: 6vw;
+    color: #38b2ac;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+}
+
+.heading span {
+    text-transform: uppercase;
+    color: #fff;
+}
+
+
+.skills .box_container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.skills .box_container .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.7);
+    border-radius: .5rem;
+    background: #213837;
+}
+
+.skills .box_container .box:hover {
+    background: #2f3635;
+}
+
+.skills .box_container .box:hover h3 {
+    color: #0afad8;
+}
+
+.skills .box_container .box img {
+    height: 7rem;
+    margin-bottom: 1rem;
+}
+
+.skills .box_container .box h3 {
+    color: #fff;
+    font-size: 1.7rem;
+    font-weight: normal;
+    text-transform: uppercase;
+}
