@@ -22,7 +22,7 @@ html {
 }
 
 html::-webkit-scrollbar {
-    width: 1rem;
+    width: .25rem;
 }
 
 html::-webkit-scrollbar-track {
@@ -31,6 +31,16 @@ html::-webkit-scrollbar-track {
 
 
 html::-webkit-scrollbar-thumb {
-    background: #00ddff;
+    background: #2dd4bf;
     border-radius: 5rem;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    cursor: grab;
+    background: #2dd4ff;
+}
+
+html::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
+    background: #2dd4ff;
 }
