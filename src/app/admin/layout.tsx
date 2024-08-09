@@ -1,8 +1,11 @@
+import React from "react";
+import Sidebar from "./components/Sidebar";
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({children}) => {
     return (
-        <main>
+        <body>
+        <Sidebar/>
             {children}
-        </main>
+        </body>
     );
 };
 
