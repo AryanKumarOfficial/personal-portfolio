@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from "next/image"
-import TailwindCSSIcon from "@/../public/assets/icons/tailwindcss.svg";
-import NextJSIcon from "@/../public/assets/icons/next.svg"
-import Flask from "@/../public/assets/icons/flask.svg"
-import Django from "@/../public/assets/icons/Django.svg"
-import Express from "@/../public/assets/icons/express.svg"
-import TS from "@/../public/assets/icons/ts.svg"
-import CPlus from "@/../public/assets/icons/C++.svg"
+import TailwindCSSIcon from "../../../../public/assets/icons/tailwindcss.svg";
+import NextJSIcon from "../../../../public/assets/icons/next.svg"
+import Flask from "../../../../public/assets/icons/flask.svg"
+import Django from "../../../../public/assets/icons/Django.svg"
+import Express from "../../../../public/assets/icons/express.svg"
+import TS from "../../../../public/assets/icons/ts.svg"
+import CPlus from "../../../../public/assets/icons/C++.svg"
 
 const Skills: React.FC = () => {
     const skills = [
@@ -33,8 +33,8 @@ const Skills: React.FC = () => {
     return (
         <div className="min-h-screen bg-gray-900 text-white flex items-center">
             <div className="container mx-auto px-4 py-12">
-                <h1 className="text-[6vw] font-normal text-teal-400 mb-10 text-center">
-                    Skills
+                <h1 className="text-[15vw] md:text-[6vw] font-normal text-teal-400 mb-10 text-center uppercase">
+                    <span className={"text-white"}>MY</span> Skills
                 </h1>
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
                     {skills.map((skill, index) => (
