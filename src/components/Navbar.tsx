@@ -11,19 +11,40 @@ const Navbar: React.FC = () => {
 
     const renderLinks = () =>
         [
-            {name: "Home", href: "/"},
-            {name: "About", href: "/about"},
-            {name: "Portfolio", href: "/portfolio"},
-            {name: "Blogs", href: "/blogs"},
-            {name: "Contact", href: "/contact"}
+            {
+                name: "Home",
+                href: "/",
+                icon: "fas fa-home"
+            },
+            {
+                name: "About",
+                href: "/about",
+                icon: "fas fa-user"
+            },
+            {
+                name: "Portfolio",
+                href: "/portfolio",
+                icon: "fas fa-briefcase"
+            },
+            {
+                name: "Blogs",
+                href: "/blogs",
+                icon: "fas fa-blog"
+            },
+            {
+                name: "Contact",
+                href: "/contact",
+                icon: "fas fa-envelope"
+            }
         ].map((link, index) => (
             <Link
                 key={index}
                 href={link.href}
-                onClick={toggleMenu}
-                className="text-gray-300 hover:text-white after:content-[''] after:block after:w-0 after:h-0.5 after:bg-teal-400 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full uppercase"
+                // onClick={toggleMenu}
+                className="text-gray-300 w-1/2 text-left hover:text-teal-400 uppercase flex items-center space-x-2 p-4 transition-colors duration-500"
             >
-                {link.name}
+                <i className={`${link.icon} text-xl`}></i>
+                <span>{link.name}</span>
             </Link>
         ));
 
