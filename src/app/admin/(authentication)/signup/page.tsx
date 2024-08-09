@@ -1,6 +1,8 @@
 "use client"
 import React, {useEffect} from "react";
 import toast from "react-hot-toast";
+import appwriteServices from "@/backend/app/client/config";
+
 
 export default function SignUp() {
     const [showPassword, setShowPassword] = React.useState(false);
@@ -23,27 +25,38 @@ export default function SignUp() {
         // Check if passwords match
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        try {
+            setLoading(true);
+            if (!formData.name || !formData.email || !formData.password || !formData.cPassword) {
+                toast.error("All fields are required");
+                return;
+            }
 
-        if (!formData.name || !formData.email || !formData.password || !formData.cPassword) {
-            toast.error("All fields are required");
-            return;
+            if (formData.password !== formData.cPassword) {
+                toast.error("Passwords do not match");
+                return;
+            }
+            const userData = await appwriteServices.createUserAccount({
+                name: formData.name,
+                email: formData.email,
+                password: formData.password
+            })
+            if (userData) {
+                console.log(userData, "user")
+                toast.success("login success")
+            } else {
+                console.log("error", userData)
+            }
+        } catch (error) {
+            console.log(error, "error creating user")
+        } finally {
+            setLoading(false)
         }
 
-        if (formData.password !== formData.cPassword) {
-            toast.error("Passwords do not match");
-            return;
-        }
-
-        setLoading(true);
 
         // Simulate API call
-        setTimeout(() => {
-            setLoading(false);
-            toast.success("Account created successfully!");
-            console.log(formData);
-        }, 2000);
     }
 
     const togglePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
