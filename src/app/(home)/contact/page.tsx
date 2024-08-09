@@ -32,7 +32,7 @@ const Contact: React.FC = () => {
     ]
 
     return (
-        <main className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center py-16 pt-20">
+        <main className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center py-16 pt-32">
             <h1 className="text-5xl font-normal text-teal-400 mb-12 uppercase">Contact <span
                 className={'text-white uppercase'}> me</span></h1>
 

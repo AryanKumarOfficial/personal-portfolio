@@ -1,7 +1,7 @@
 import React from 'react';
-import HeroSection from "@/app/about/components/HeroSection";
-import Skills from "@/app/about/components/Skills";
-import Education from "@/app/about/components/Education";
+import HeroSection from "@/app/(home)/about/components/HeroSection";
+import Skills from "@/app/(home)/about/components/Skills";
+import Education from "@/app/(home)/about/components/Education";
 
 const About: React.FC = () => {
     return (

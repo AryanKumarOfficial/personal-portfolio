@@ -36,7 +36,7 @@ const blogs = [
 const BlogsPage: React.FC = () => {
     return (
         <section
-            className="min-h-screen bg-gray-900 text-white py-16 sm:py-20 md:py-24 flex flex-col items-center justify-between p-6 sm:p-8 md:p-12 lg:p-16 xl:p-24">
+            className="min-h-screen bg-gray-900 text-white py-20 sm:py-20 md:py-24 xl:py-36 flex flex-col items-center justify-between p-6 sm:p-8 md:p-12 lg:p-16 xl:p-24">
             <div className="container max-w-screen-lg md:max-w-screen-2xl mx-auto">
                 <h1 className="text-4xl sm:text-5xl text-center font-bold text-teal-400 mb-6 sm:mb-8 uppercase">
                     <span className="uppercase text-white">My</span> Blogs

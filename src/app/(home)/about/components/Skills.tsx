@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from "next/image"
-import TailwindCSSIcon from "../../../../public/assets/icons/tailwindcss.svg";
-import NextJSIcon from "../../../../public/assets/icons/next.svg"
-import Flask from "../../../../public/assets/icons/flask.svg"
-import Django from "../../../../public/assets/icons/Django.svg"
-import Express from "../../../../public/assets/icons/express.svg"
-import TS from "../../../../public/assets/icons/ts.svg"
-import CPlus from "../../../../public/assets/icons/C++.svg"
+import TailwindCSSIcon from "../../../../../public/assets/icons/tailwindcss.svg";
+import NextJSIcon from "../../../../../public/assets/icons/next.svg"
+import Flask from "../../../../../public/assets/icons/flask.svg"
+import Django from "../../../../../public/assets/icons/Django.svg"
+import Express from "../../../../../public/assets/icons/express.svg"
+import TS from "../../../../../public/assets/icons/ts.svg"
+import CPlus from "../../../../../public/assets/icons/C++.svg"
 
 const Skills: React.FC = () => {
     const skills = [
