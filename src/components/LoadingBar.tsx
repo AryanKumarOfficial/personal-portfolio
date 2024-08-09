@@ -17,6 +17,10 @@ const SleekLoadingBar: React.FC = () => {
                 color="#64ffda"
                 progress={progress}
                 onLoaderFinished={() => setProgress(0)}
+                shadow={true}
+                transitionTime={500}
+                loaderSpeed={1000}
+                waitingTime={500}
             />
         </div>
     );
