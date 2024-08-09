@@ -37,7 +37,7 @@ const Sidebar: React.FC = () => {
         <>
             <aside
                 ref={sidebarRef}
-                className={`fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-md transform ${
+                className={`fixed inset-y-0 left-0 z-30 w-64 bg-gray-900 text-teal-400 shadow-md shadow-gray-950 transform ${
                     sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                 } transition-transform duration-200 ease-in-out md:translate-x-0`}
             >
@@ -51,23 +51,23 @@ const Sidebar: React.FC = () => {
                     </button>
                     <nav className="mt-10">
                         <ul>
-                            <li className={pathname === "/admin/dashboard" ? "bg-gray-200 rounded" : ""}>
+                            <li className={`my-2 ${pathname === "/admin/dashboard"||pathname==="/admin" ? "bg-gray-700 rounded" : ""}`}>
                                 <Link onClick={handleToggleSidebar} href="/admin/dashboard"
-                                      className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                      className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                                     <i className="mr-2 fas fa-tachometer-alt"/>
                                     Dashboard
                                 </Link>
                             </li>
-                            <li className={pathname === "/admin/posts" ? "bg-gray-200 rounded" : ""}>
-                                <Link onClick={handleToggleSidebar} href="/admin/posts"
-                                      className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                            <li className={pathname === "/admin/posts" ? "bg-gray-700 rounded" : ""}>
+                                <Link onClick={handleToggleSidebar} href="/admin/blogs"
+                                      className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                                     <i className="mr-2 fas fa-newspaper"/>
-                                    Posts
+                                    Blogs
                                 </Link>
                             </li>
-                            <li className={pathname === "/admin/settings" ? "bg-gray-200 rounded" : ""}>
+                            <li className={pathname === "/admin/settings" ? "bg-gray-700 rounded" : ""}>
                                 <Link onClick={handleToggleSidebar} href="/admin/settings"
-                                      className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                      className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                                     <i className="mr-2 fas fa-cog"/>
                                     Settings
                                 </Link>
@@ -78,7 +78,7 @@ const Sidebar: React.FC = () => {
             </aside>
 
             <div className="flex-1 flex flex-col">
-                <header className="flex fixed w-full items-center justify-between p-4 bg-white shadow-md">
+                <header className="flex fixed w-full items-center justify-between p-4 bg-gray-800 text-teal-400 shadow-md shadow-slate-500">
                     <div className="flex items-center">
                         <button className="md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
                             <i className={`fas ${sidebarOpen ? 'fa-times' : 'fa-bars'}`}/>

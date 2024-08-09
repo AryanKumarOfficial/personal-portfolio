@@ -60,7 +60,7 @@ const ProfileDD = () => {
                         }}
                     >
                         <Typography
-                            color="textSecondary"
+                            color="teal"
                             variant="h5"
                             fontWeight="400"
                             sx={{ml: 1}}
@@ -89,6 +89,7 @@ const ProfileDD = () => {
                 sx={{
                     "& .MuiMenu-paper": {
                         width: "385px",
+                        background: "#111827",
                     },
                 }}
             >
@@ -99,18 +100,18 @@ const ProfileDD = () => {
                             aria-label="secondary mailbox folder"
                             onClick={handleClose4}
                         >
-                            <ListItemButton>
+                            <ListItemButton className={"text-teal-400"} color={"primary"}>
                                 <ListItemText primary="Account"/>
                             </ListItemButton>
-                            <ListItemButton href="/">
+                            <ListItemButton className={"text-teal-400"} href="/">
                                 <ListItemText primary="Visit Site"/>
                             </ListItemButton>
                         </List>
                     </Box>
-                    <Divider/>
+                    <Divider color={"teal"}/>
                     <Box p={2}>
                         <Link href="/">
-                            <Button fullWidth variant="contained" color="primary">
+                            <Button fullWidth variant="contained" className={"bg-teal-400 hover:bg-teal-500"}>
                                 Logout
                             </Button>
                         </Link>

@@ -3,6 +3,7 @@ import Link from "next/link";
 
 const NotFound: React.FC = () => {
     return (
+        <body>
         <div className="flex items-center justify-center h-screen bg-gray-800 text-white">
             <div className="text-center">
                 <h1 className="text-6xl font-bold mb-4">404</h1>
@@ -14,6 +15,7 @@ const NotFound: React.FC = () => {
                 </Link>
             </div>
         </div>
+        </body>
     );
 };
 
