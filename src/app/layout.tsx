@@ -2,8 +2,8 @@ import type {Metadata} from "next";
 import {Roboto} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import React from "react";
+import {Toaster} from "react-hot-toast";
 
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const roboto = Roboto({
     display: "swap",
-    weight: [ "400"],
+    weight: ["400"],
     style: "normal",
     subsets: ["latin"],
 });
@@ -31,6 +31,18 @@ export default function RootLayout({
         </head>
         <body className={`${roboto.className}`}>
         <Navbar/>
+        <Toaster
+            position="top-right"
+            reverseOrder={false}
+            toastOptions={{
+                className: "",
+                style: {
+                    background: "#111827",
+                    color: "#2dd4bf",
+                    zIndex: 1,
+                },
+                duration: 5000,
+            }}/>
         {children}
         {/*<Footer/>*/}
         </body>

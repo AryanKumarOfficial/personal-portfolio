@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Newsletter from "@/app/blogs/components/Newsletter";
 
 const ReactFreshersBlog: React.FC = () => {
     return (
