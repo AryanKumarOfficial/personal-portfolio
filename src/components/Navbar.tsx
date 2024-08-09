@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
+import styles from "../styles/Navbar.module.css";
 
 const Navbar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -40,10 +41,9 @@ const Navbar: React.FC = () => {
             <Link
                 key={index}
                 href={link.href}
-                // onClick={toggleMenu}
                 className="text-gray-300 w-1/2 text-left hover:text-teal-400 uppercase flex items-center space-x-2 p-4 transition-colors duration-500"
             >
-                <i className={`${link.icon} text-xl`}></i>
+                <i className={`${link.icon} text-xl block md:!hidden`}></i>
                 <span>{link.name}</span>
             </Link>
         ));
@@ -54,7 +54,8 @@ const Navbar: React.FC = () => {
         >
             <div
                 className="max-w-6xl mx-auto flex flex-row-reverse md:flex-row flex-wrap justify-center md:justify-between items-center">
-                <Link href="/" className="text-white text-xl md:text-3xl font-bold capitalize">
+                <Link href="/"
+                      className={`${styles.waveText} text-white text-xl md:text-3xl font-bold capitalize`}>
                     AryanKumarOfficial
                 </Link>
                 <div className="hidden md:flex space-x-4">
@@ -80,7 +81,7 @@ const Navbar: React.FC = () => {
 
             <aside
                 id="side-menu"
-                className={`fixed top-0 left-0 h-full w-2/3 bg-gray-800 transform ${
+                className={`fixed top-0 left-0 h-full w-1/2 bg-gray-800 transform ${
                     isMenuOpen ? "translate-x-0" : "-translate-x-full"
                 } transition-transform duration-500 ease-in-out z-20 md:hidden`}
                 role="menu"
@@ -88,7 +89,7 @@ const Navbar: React.FC = () => {
                 <button onClick={toggleMenu} className="text-white absolute top-10 transform -translate-y-1/2 right-4">
                     <i className="fas fa-times text-4xl"></i>
                 </button>
-                <div className="flex flex-col justify-center items-center space-y-4 h-full">
+                <div className="flex flex-col justify-center w-1/2 items-center space-y-4 h-full">
                     {renderLinks()}
                 </div>
             </aside>

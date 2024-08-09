@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import React from "react";
 import {Toaster} from "react-hot-toast";
-
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -44,7 +44,7 @@ export default function RootLayout({
                 duration: 5000,
             }}/>
         {children}
-        {/*<Footer/>*/}
+        <Footer/>
         </body>
         </html>
     );
