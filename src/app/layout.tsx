@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import React from "react";
 import {Toaster} from "react-hot-toast";
 import Footer from "@/components/Footer";
+import SleekLoadingBar from "@/components/LoadingBar";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -31,6 +32,7 @@ export default function RootLayout({
         </head>
         <body className={`${roboto.className}`}>
         <Navbar/>
+        <SleekLoadingBar/>
         <Toaster
             position="top-right"
             reverseOrder={false}
