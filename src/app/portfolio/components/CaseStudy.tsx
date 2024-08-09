@@ -3,17 +3,18 @@ import React, {useState} from 'react';
 
 const caseStudies = [
     {
-        title: 'Case Study 1',
-        description: 'Detailed description of case study 1, highlighting key challenges, solutions, and results achieved.',
-        date: 'August 2023',
-        tags: ['Web Development', 'UI/UX Design']
+        title: 'E-Commerce Platform',
+        date: '2021',
+        tags: ['React', 'Node.js', 'Express.js', 'MongoDB'],
+        description: 'Developed an e-commerce platform with user authentication, product management, and order processing features.',
     },
     {
-        title: 'Case Study 2',
-        description: 'Detailed description of case study 2, including project goals, methodology, and impactful outcomes.',
-        date: 'June 2024',
-        tags: ['Mobile App', 'Project Management']
+        title: 'Portfolio Website',
+        date: '2021',
+        tags: ['React', 'TailwindCSS'],
+        description: 'Built a responsive portfolio website to showcase projects and skills using React and TailwindCSS.',
     },
+    // Add more case studies as needed
 ];
 
 const CaseStudies: React.FC = () => {
@@ -34,7 +35,7 @@ const CaseStudies: React.FC = () => {
                             onClick={() => toggleOpen(index)}
                         >
                             <h5 className="text-xl font-semibold text-teal-400 flex items-center">
-                                <span className="material-icons mr-3">folder_open</span>
+                                <i className="fas fa-folder-open mr-3"></i>
                                 {caseStudy.title}
                             </h5>
                             <p className="text-gray-400 text-sm">{caseStudy.date}</p>
