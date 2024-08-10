@@ -12,8 +12,10 @@ import {
     Divider,
 } from "@mui/material";
 import {useRouter} from "next/navigation";
+import useAuth from "@/backend/store/Auth";
 
 const ProfileDD = () => {
+    const {logout} = useAuth();
     useEffect(() => {
     }, []);
     const router = useRouter()
@@ -110,8 +112,9 @@ const ProfileDD = () => {
                     </Box>
                     <Divider color={"teal"}/>
                     <Box p={2}>
-                        <Link href="/">
-                            <Button fullWidth variant="contained" className={"bg-teal-400 hover:bg-teal-500"}>
+                        <Link href="/admin/login">
+                            <Button onClick={logout} fullWidth variant="contained"
+                                    className={"bg-teal-400 hover:bg-teal-500"}>
                                 Logout
                             </Button>
                         </Link>

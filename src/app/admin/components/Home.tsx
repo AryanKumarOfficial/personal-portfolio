@@ -28,7 +28,7 @@ const AdminHome = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {links.map((link, index) => (
 
-                    <Link legacyBehavior={true} href={link.link}>
+                    <Link legacyBehavior={true} key={index} href={link.link}>
                         <a className="flex flex-col items-center p-4 bg-gray-800 rounded-lg shadow-md transition-transform transform hover:scale-105 ">
                             <i className="fas fa-tachometer-alt text-4xl text-blue-500"></i>
                             <h2 className="mt-2 text-xl font-semibold">{link.name}</h2>

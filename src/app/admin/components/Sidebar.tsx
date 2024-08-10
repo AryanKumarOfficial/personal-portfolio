@@ -3,10 +3,13 @@ import React, {useRef, useState, useEffect} from "react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import ProfileDD from "@/app/admin/components/Profile";
+import useAuth from "@/backend/store/Auth";
 
 const Sidebar: React.FC = () => {
+    const {session} = useAuth();
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const sidebarRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,6 +36,14 @@ const Sidebar: React.FC = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (session) {
+            setIsAuthenticated(true);
+        } else {
+            setIsAuthenticated(false);
+        }
+    }, [session]);
+
     return (
         <>
             <aside
@@ -51,7 +62,7 @@ const Sidebar: React.FC = () => {
                     </button>
                     <nav className="mt-10">
                         <ul>
-                            <li className={`my-2 ${pathname === "/admin/dashboard"||pathname==="/admin" ? "bg-gray-700 rounded" : ""}`}>
+                            <li className={`my-2 ${pathname === "/admin/dashboard" || pathname === "/admin" ? "bg-gray-700 rounded" : ""}`}>
                                 <Link onClick={handleToggleSidebar} href="/admin/dashboard"
                                       className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                                     <i className="mr-2 fas fa-tachometer-alt"/>
@@ -78,7 +89,8 @@ const Sidebar: React.FC = () => {
             </aside>
 
             <div className="flex-1 flex flex-col">
-                <header className="flex fixed w-full items-center justify-between p-4 bg-gray-800 text-teal-400 shadow-md shadow-slate-500">
+                <header
+                    className="flex fixed w-full items-center justify-between p-4 bg-gray-800 text-teal-400 shadow-md shadow-slate-500">
                     <div className="flex items-center">
                         <button className="md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
                             <i className={`fas ${sidebarOpen ? 'fa-times' : 'fa-bars'}`}/>
@@ -92,7 +104,7 @@ const Sidebar: React.FC = () => {
                             }`}
                         >
                             {/* Avatar image */}
-                            <div className="">
+                            <div className={isAuthenticated ? 'block' : 'hidden'}>
                                 <ProfileDD/>
                             </div>
                         </div>
