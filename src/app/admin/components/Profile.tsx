@@ -90,6 +90,7 @@ const ProfileDD = () => {
                     "& .MuiMenu-paper": {
                         width: "385px",
                         background: "#111827",
+                        color: "#2dd4bf",
                     },
                 }}
             >
@@ -100,15 +101,15 @@ const ProfileDD = () => {
                             aria-label="secondary mailbox folder"
                             onClick={handleClose4}
                         >
-                            <ListItemButton className={"text-teal-400"} color={"primary"}>
+                            <ListItemButton>
                                 <ListItemText primary="Account"/>
                             </ListItemButton>
-                            <ListItemButton className={"text-teal-400"} href="/">
+                            <ListItemButton href="/">
                                 <ListItemText primary="Visit Site"/>
                             </ListItemButton>
                         </List>
                     </Box>
-                    <Divider color={"teal"}/>
+                    <Divider color={"2dd4bf"}/>
                     <Box p={2}>
                         <Link href="/admin/login">
                             <Button onClick={logout} fullWidth variant="contained"
