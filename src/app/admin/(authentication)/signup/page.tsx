@@ -3,6 +3,7 @@ import React, {useEffect} from "react";
 import toast from "react-hot-toast";
 import useAuth from "@/backend/store/Auth";
 import {useRouter} from "next/navigation";
+import Link from "next/link";
 
 
 export default function SignUp() {
@@ -39,6 +40,9 @@ export default function SignUp() {
 
             if (formData.password !== formData.cPassword) {
                 toast.error("Passwords do not match");
+                return;
+            } else if (formData.password.length < 8) {
+                toast.error("Password must be at least 8 characters long");
                 return;
             }
             const userData = await createAccount(formData.name, formData.email, formData.password);
@@ -84,8 +88,8 @@ export default function SignUp() {
     }, [session]);
 
     return (
-        <section className="flex min-h-screen bg-gray-900 justify-center items-center text-teal-400 pt-28">
-            <form onSubmit={handleSubmit} className="bg-gray-800 w-1/3 rounded-lg shadow-lg px-10 py-6">
+        <section className="flex bg-gray-900 w-1/3 justify-center items-center text-teal-400 pt-28">
+            <form onSubmit={handleSubmit} className="bg-gray-800 w-full rounded-lg shadow-lg px-10 py-6">
                 <h1 className={'uppercase text-3xl font-bold text-center'}>Signup</h1>
 
                 <div className={"flex flex-col justify-center items-start gap-4 my-4"}>
@@ -166,6 +170,15 @@ export default function SignUp() {
                     >
                         {loading ? "Registering..." : "Register"}
                     </button>
+                </div>
+                <div className={"flex flex-row w-full justify-center items-center gap-1 my-4 mt-6"}>
+                    <p className={"text-gray-400"}>
+                        Already have an account?
+                    </p>
+                    <Link href={"/admin/login"}
+                          className={"text-teal-400 font-semibold hover:text-teal-300 transition-colors duration-500"}>
+                        Login
+                    </Link>
                 </div>
             </form>
         </section>

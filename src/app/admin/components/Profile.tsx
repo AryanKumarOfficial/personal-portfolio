@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import {
     Box,
     Menu,
     Typography,
-    Link,
+    Link as MUILink,
     ListItemButton,
     List,
     ListItemText,
@@ -15,37 +15,29 @@ import useAuth from "@/backend/store/Auth";
 
 const ProfileDD = () => {
     const {logout, user} = useAuth();
-    useEffect(() => {
-    }, []);
-    React.useEffect(() => {
-    }, []);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const [anchorEl4, setAnchorEl4] = React.useState(null);
-
-    const handleClick4 = (event: any) => {
-        setAnchorEl4(event.currentTarget);
-        document.body.style.minHeight = "100vh";
+    const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
     };
 
-    const handleClose4 = () => {
-        setAnchorEl4(null);
-        document.body.style.minHeight = "auto";
+    const handleMenuClose = () => {
+        setAnchorEl(null);
     };
-
 
     return (
         <>
             <Button
-                aria-label="menu"
+                aria-label="open profile menu"
                 color="inherit"
                 aria-controls="profile-menu"
                 aria-haspopup="true"
-                onClick={handleClick4}
+                onClick={handleMenuOpen}
             >
                 <Box display="flex" alignItems="center">
                     <Image
-                        src={`https://res.cloudinary.com/buyitnowagain/image/upload/v1718826210/mpm48iuyatqyhef8dadr.png`}
-                        alt={`aryan`}
+                        src="https://res.cloudinary.com/buyitnowagain/image/upload/v1718826210/mpm48iuyatqyhef8dadr.png"
+                        alt="User Avatar"
                         width="30"
                         height="30"
                         className="roundedCircle"
@@ -57,23 +49,13 @@ const ProfileDD = () => {
                                 sm: "flex",
                             },
                             alignItems: "center",
+                            ml: 1,
                         }}
                     >
-                        <Typography
-                            color="teal"
-                            variant="h5"
-                            fontWeight="400"
-                            sx={{ml: 1}}
-                        >
+                        <Typography color="teal" variant="h6">
                             Hi,
                         </Typography>
-                        <Typography
-                            variant="h5"
-                            fontWeight="700"
-                            sx={{
-                                ml: 1,
-                            }}
-                        >
+                        <Typography variant="h6" fontWeight="bold" sx={{ml: 1}}>
                             {user?.name || "Guest"}
                         </Typography>
                         <i className="fas fa-chevron-down ml-1"/>
@@ -82,13 +64,13 @@ const ProfileDD = () => {
             </Button>
             <Menu
                 id="profile-menu"
-                anchorEl={anchorEl4}
+                anchorEl={anchorEl}
                 keepMounted
-                open={Boolean(anchorEl4)}
-                onClose={handleClose4}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
                 sx={{
                     "& .MuiMenu-paper": {
-                        width: "385px",
+                        width: "320px",
                         background: "#111827",
                         color: "#2dd4bf",
                     },
@@ -96,33 +78,36 @@ const ProfileDD = () => {
             >
                 <Box>
                     <Box p={2} pt={0}>
-                        <List
-                            component="nav"
-                            aria-label="secondary mailbox folder"
-                            onClick={handleClose4}
-                        >
+                        <List component="nav" onClick={handleMenuClose}>
                             <ListItemButton>
                                 <ListItemText primary="Account"/>
                             </ListItemButton>
-                            <ListItemButton href="/">
+                            <ListItemButton component={MUILink} href="/" underline="none">
                                 <ListItemText primary="Visit Site"/>
                             </ListItemButton>
                         </List>
                     </Box>
-                    <Divider color={"2dd4bf"}/>
+                    <Divider sx={{borderColor: "#2dd4bf"}}/>
                     <Box p={2}>
-                        <Link href="/admin/login">
-                            <Button onClick={logout} fullWidth variant="contained"
-                                    className={"bg-teal-400 hover:bg-teal-500"}>
-                                Logout
-                            </Button>
-                        </Link>
+                        <Button
+                            onClick={logout}
+                            fullWidth
+                            variant="contained"
+                            className="bg-teal-400 hover:bg-teal-500"
+                            sx={{
+                                backgroundColor: "#2dd4bf",
+                                "&:hover": {
+                                    backgroundColor: "#14b8a6",
+                                },
+                            }}
+                        >
+                            Logout
+                        </Button>
                     </Box>
                 </Box>
             </Menu>
         </>
     );
 };
-
 
 export default ProfileDD;

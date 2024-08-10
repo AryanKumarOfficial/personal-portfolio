@@ -4,6 +4,7 @@ import React, {useEffect} from "react";
 import toast from "react-hot-toast";
 import useAuth from "@/backend/store/Auth";
 import {useRouter} from "next/navigation";
+import Link from "next/link";
 
 
 export default function LoginPage() {
@@ -33,6 +34,7 @@ export default function LoginPage() {
                 toast.error("All fields are required");
                 return;
             }
+
             const userData = await login(formData.email, formData.password);
 
             if (!userData.success) {
@@ -63,8 +65,8 @@ export default function LoginPage() {
     }, [session]);
 
     return (
-        <section className="flex min-h-screen bg-gray-900 justify-center items-center text-teal-400 pt-28">
-            <form onSubmit={handleSubmit} className="bg-gray-800 w-1/3 rounded-lg shadow-lg px-10 py-6">
+        <section className="flex w-1/3 bg-gray-900 justify-center items-center text-teal-400 pt-28">
+            <form onSubmit={handleSubmit} className="bg-gray-800 w-full rounded-lg shadow-lg px-10 py-6">
                 <h1 className={'uppercase text-3xl font-bold text-center'}>Login</h1>
 
                 <div className={"flex flex-col justify-center items-start gap-4 my-4"}>
@@ -99,8 +101,13 @@ export default function LoginPage() {
                                 <i className={"fas fa-eye-slash"}></i>}
                         </button>
                     </div>
+                    <div className={"flex justify-end w-full items-center gap-2"}>
+                        <Link href={"/admin/forgot"}
+                              className={"text-sm text-teal-400 hover:text-teal-300 transition-colors duration-500"}>
+                            Forgot Password?
+                        </Link>
+                    </div>
                 </div>
-
 
                 <div className={"flex flex-col w-full justify-center items-center gap-4 my-4 mt-6"}>
                     <button
@@ -110,6 +117,15 @@ export default function LoginPage() {
                     >
                         {loading ? "Logging In..." : "Login"}
                     </button>
+                </div>
+                <div className={"flex justify-center w-full items-center gap-2"}>
+                    <p className={"text-sm text-gray-400"}>
+                        Don't have an account?
+                    </p>
+                    <Link href={"/admin/signup"}
+                          className={"text-sm text-teal-400 hover:text-teal-300 transition-colors duration-500"}>
+                        Signup
+                    </Link>
                 </div>
             </form>
         </section>

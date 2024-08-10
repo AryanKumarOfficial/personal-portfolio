@@ -4,8 +4,10 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import ProfileDD from "@/app/admin/components/Profile";
 import useAuth from "@/backend/store/Auth";
+import SleekLoadingBar from "@/components/LoadingBar";
+import {Toaster} from "react-hot-toast";
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const {session} = useAuth();
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,11 +24,11 @@ const Sidebar: React.FC = () => {
         setSidebarOpen(!sidebarOpen);
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
-        if (event.key === 'Escape') {
-            setSidebarOpen(false);
-        }
-    };
+    // const handleKeyDown = (event: React.KeyboardEvent) => {
+    //     if (event.key === 'Escape') {
+    //         setSidebarOpen(false);
+    //     }
+    // };
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -62,7 +64,7 @@ const Sidebar: React.FC = () => {
                     </button>
                     <nav className="mt-10">
                         <ul>
-                            <li className={`my-2 ${pathname === "/admin/dashboard" || pathname === "/admin" ? "bg-gray-700 rounded" : ""}`}>
+                            <li className={`my-2 ${pathname === "/admin/dashboard"? "bg-gray-700 rounded" : ""}`}>
                                 <Link onClick={handleToggleSidebar} href="/admin/dashboard"
                                       className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                                     <i className="mr-2 fas fa-tachometer-alt"/>
@@ -110,14 +112,31 @@ const Sidebar: React.FC = () => {
                         </div>
                     )}
                 </header>
-                {/*<main*/}
-                {/*    className="flex-1 p-6 bg-gray-100 overflow-y-auto flex flex-col justify-center items-center min-h-screen h-fit">*/}
-                {/*    {children}*/}
-                {/*</main>*/}
-                {/*<footer className="p-4 bg-white shadow-md text-center">*/}
-                {/*    <p>© {new Date().getFullYear()} Your Company. All rights reserved.</p>*/}
-                {/*</footer>*/}
-                {/*</div>*/}
+                <main
+                    className="flex-1 p-6 bg-gray-900 overflow-y-auto flex flex-col justify-center items-center min-h-screen h-fit">
+                    <SleekLoadingBar/>
+                    <Toaster
+                        position={'top-right'}
+                        reverseOrder={false}
+                        toastOptions={{
+                            className: '',
+                            style: {
+                                background: '#111827',
+                                color: '#2dd4bf',
+                                zIndex: 1,
+                            },
+                            duration: 5000,
+                            success: {
+                                style: {
+                                    background: '#10B981',
+                                    color: '#fff',
+                                },
+                            },
+
+                        }}
+                    />
+                    {children}
+                </main>
             </div>
 
         </>
