@@ -6,7 +6,7 @@ import {useRouter} from "next/navigation";
 
 
 export default function SignUp() {
-    const {createAccount} = useAuth();
+    const {createAccount, session} = useAuth();
     const router = useRouter();
     const [showPassword, setShowPassword] = React.useState(false);
     const [showCPassword, setShowCPassword] = React.useState(false);
@@ -76,6 +76,12 @@ export default function SignUp() {
             setError("");
         }
     }, [formData.password, formData.cPassword]);
+
+    useEffect(() => {
+        if (session) {
+            router.push("/admin");
+        }
+    }, [session]);
 
     return (
         <section className="flex min-h-screen bg-gray-900 justify-center items-center text-teal-400 pt-28">

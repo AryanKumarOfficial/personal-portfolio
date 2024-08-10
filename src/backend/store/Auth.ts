@@ -1,11 +1,11 @@
 import {create} from "zustand";
-import {devtools} from "zustand/middleware";
+import {devtools, createJSONStorage} from "zustand/middleware";
 import {persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AppwriteException, ID, Models} from "appwrite";
 import {account} from "@/backend/app/client/config";
 
-interface UserPreference {
+export interface UserPreference {
     role: string;
 }
 
@@ -115,7 +115,9 @@ const useAuth = create<IAuthStore>()(
                     state?.setHydrated();
                 };
             },
+            storage: createJSONStorage(() => sessionStorage),
         })
-    ));
+    ))
+;
 
 export default useAuth;

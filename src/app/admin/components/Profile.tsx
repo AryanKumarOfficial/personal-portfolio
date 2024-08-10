@@ -11,14 +11,12 @@ import {
     Button,
     Divider,
 } from "@mui/material";
-import {useRouter} from "next/navigation";
 import useAuth from "@/backend/store/Auth";
 
 const ProfileDD = () => {
-    const {logout} = useAuth();
+    const {logout, user} = useAuth();
     useEffect(() => {
     }, []);
-    const router = useRouter()
     React.useEffect(() => {
     }, []);
 
@@ -76,7 +74,7 @@ const ProfileDD = () => {
                                 ml: 1,
                             }}
                         >
-                            {`${'User'}`}
+                            {user?.name || "Guest"}
                         </Typography>
                         <i className="fas fa-chevron-down ml-1"/>
                     </Box>

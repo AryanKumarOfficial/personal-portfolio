@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
+import React, {useEffect} from "react";
 import toast from "react-hot-toast";
 import useAuth from "@/backend/store/Auth";
 import {useRouter} from "next/navigation";
 
 
 export default function LoginPage() {
-    const {login} = useAuth();
+    const {login, session} = useAuth();
     const router = useRouter();
     const [showPassword, setShowPassword] = React.useState(false);
     const [formData, setFormData] = React.useState({
@@ -56,6 +56,11 @@ export default function LoginPage() {
         setShowPassword(!showPassword);
     }
 
+    useEffect(() => {
+        if (session) {
+            router.push("/admin");
+        }
+    }, [session]);
 
     return (
         <section className="flex min-h-screen bg-gray-900 justify-center items-center text-teal-400 pt-28">
@@ -103,7 +108,7 @@ export default function LoginPage() {
                         className={"bg-teal-600 w-full p-4 rounded text-gray-100 uppercase hover:bg-teal-800 transition-colors duration-500"}
                         disabled={loading}
                     >
-                        {loading ? "Registering..." : "Register"}
+                        {loading ? "Logging In..." : "Login"}
                     </button>
                 </div>
             </form>
