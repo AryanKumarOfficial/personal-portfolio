@@ -66,6 +66,12 @@ const useAuth = create<IAuthStore>()(
             },
             async login(email: string, password: string) {
                 try {
+                    // first try to delete existing user session from the server
+                    await account.deleteSessions();
+                } catch (error) {
+                    console.log("Failed to delete existing sessions: ", error)
+                }
+                try {
                     const session = await account.createEmailPasswordSession(email, password);
                     const [user, {jwt}] = await Promise.all([
                         account.get<UserPreference>(),
