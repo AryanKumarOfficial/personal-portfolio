@@ -1,10 +1,12 @@
-import React from "react";
+import React, {Suspense} from "react";
 import EmailVerification from "@/app/admin/components/VerifyEmail";
 
 export default function VerifyPage() {
     return (
         <>
-            <EmailVerification/>
+            <Suspense fallback={<div>Loading...</div>}>
+                <EmailVerification/>
+            </Suspense>
         </>
     )
 }
