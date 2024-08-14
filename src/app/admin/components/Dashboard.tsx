@@ -33,7 +33,7 @@ const AdminDashboard = () => {
     useEffect(() => {
         if (!session) {
             router.push("/admin/login");
-        } else if (session && user && user.labels.includes("admin")) {
+        } else if (session && user && !user.labels.includes("admin")) {
             router.push("/admin/unauthorized");
         }
     }, [session]);

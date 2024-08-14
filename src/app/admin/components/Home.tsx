@@ -32,9 +32,8 @@ const AdminHome = () => {
     useEffect(() => {
         if (!session) {
             router.push("/admin/login");
-        } else if (session && user && user.labels.includes("admin")) {
+        } else if (session && user && !user.labels.includes("admin")) {
             router.push("/admin/unauthorized");
-        } else if (user && !user.emailVerification) {
         }
         console.log(session, "dash session")
     }, [session]);
