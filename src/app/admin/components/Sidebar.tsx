@@ -6,6 +6,7 @@ import ProfileDD from "@/app/admin/components/Profile";
 import useAuth from "@/backend/store/Auth";
 import SleekLoadingBar from "@/components/LoadingBar";
 import {Toaster} from "react-hot-toast";
+import Icon from "@/app/admin/components/Icon";
 
 const Sidebar: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const {session} = useAuth();
@@ -60,28 +61,32 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = ({children}) => {
                         <h1 className="text-2xl font-bold text-center">Admin Panel</h1>
                     </Link>
                     <button className="md:hidden absolute top-[1.95rem] right-4" onClick={handleToggleSidebar}>
-                        <i className={`fas ${sidebarOpen ? 'fa-times' : 'fa-bars'}`}/>
+                        {sidebarOpen ? (
+                            <Icon className={"fas fa-times"}/>
+                        ) : (
+                            <Icon className={"fas fa-bars"}/>
+                        )}
                     </button>
                     <nav className="mt-10">
                         <ul>
-                            <li className={`my-2 ${pathname === "/admin/dashboard"? "bg-gray-700 rounded" : ""}`}>
+                            <li className={`my-2 ${pathname === "/admin/dashboard" ? "bg-gray-700 rounded" : ""}`}>
                                 <Link onClick={handleToggleSidebar} href="/admin/dashboard"
                                       className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                                    <i className="mr-2 fas fa-tachometer-alt"/>
+                                    <Icon className="mr-2 fas fa-tachometer-alt"/>
                                     Dashboard
                                 </Link>
                             </li>
                             <li className={pathname === "/admin/posts" ? "bg-gray-700 rounded" : ""}>
                                 <Link onClick={handleToggleSidebar} href="/admin/blogs"
                                       className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                                    <i className="mr-2 fas fa-newspaper"/>
+                                    <Icon className="mr-2 fas fa-newspaper"/>
                                     Blogs
                                 </Link>
                             </li>
                             <li className={pathname === "/admin/settings" ? "bg-gray-700 rounded" : ""}>
                                 <Link onClick={handleToggleSidebar} href="/admin/settings"
                                       className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                                    <i className="mr-2 fas fa-cog"/>
+                                    <Icon className="mr-2 fas fa-cog"/>
                                     Settings
                                 </Link>
                             </li>
@@ -95,7 +100,7 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = ({children}) => {
                     className="flex fixed w-full items-center justify-between p-4 bg-gray-800 text-teal-400 shadow-md shadow-slate-500">
                     <div className="flex items-center">
                         <button className="md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
-                            <i className={`fas ${sidebarOpen ? 'fa-times' : 'fa-bars'}`}/>
+                            <Icon className={`fas ${sidebarOpen ? 'fa-times' : 'fa-bars'}`}/>
                         </button>
                         <h1 className="text-xl font-semibold ml-4">Admin Panel</h1>
                     </div>
@@ -146,3 +151,4 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = ({children}) => {
 };
 
 export default Sidebar;
+

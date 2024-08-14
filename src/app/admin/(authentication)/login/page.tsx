@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import useAuth from "@/backend/store/Auth";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
+import Icon from "@/app/admin/components/Icon";
 
 
 export default function LoginPage() {
@@ -40,12 +41,12 @@ export default function LoginPage() {
             if (!userData.success) {
                 toast.error(userData.error!.message);
             } else {
-                toast.success("Account Created Successfully!")
+                toast.success("Logged in successfully!")
                 router.push("/admin");
             }
 
         } catch (error) {
-            console.log(error, "error creating user")
+            console.log(error, "error login user")
         } finally {
             setLoading(false)
         }
@@ -97,8 +98,8 @@ export default function LoginPage() {
                             onChange={handleChange}
                         />
                         <button onClick={togglePassword} className={"absolute right-2"}>
-                            {showPassword ? <i className={"fas fa-eye"}></i> :
-                                <i className={"fas fa-eye-slash"}></i>}
+                            {showPassword ? <Icon className={"fas fa-eye"}/> :
+                                <Icon className={"fas fa-eye-slash"}/>}
                         </button>
                     </div>
                     <div className={"flex justify-end w-full items-center gap-2"}>

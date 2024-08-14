@@ -1,7 +1,12 @@
-import React from "react";
+"use client"
+import React, {useEffect} from "react";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
+import useAuth from "@/backend/store/Auth";
 
 const AdminDashboard = () => {
+    const router = useRouter();
+    const {session, user} = useAuth();
     const stats = [
         {
             title: 'Users',
@@ -24,6 +29,14 @@ const AdminDashboard = () => {
             icon: 'fas fa-cog text-red-500 text-4xl',
         },
     ];
+
+    useEffect(() => {
+        if (!session) {
+            router.push("/admin/login");
+        } else if (session && user && user.labels.includes("admin")) {
+            router.push("/admin/unauthorized");
+        }
+    }, [session]);
 
     return (
         <main className="flex-1 p-6 flex flex-col justify-center items-center">
@@ -66,19 +79,22 @@ const AdminDashboard = () => {
                     <h2 className="text-xl md:text-2xl font-semibold mb-4 text-teal-300">Quick Links</h2>
                     <ul>
                         <li className="mb-4">
-                            <Link href="/admin/posts" className="flex items-center text-teal-400 hover:text-teal-500 transition-colors duration-500">
+                            <Link href="/admin/posts"
+                                  className="flex items-center text-teal-400 hover:text-teal-500 transition-colors duration-500">
                                 <i className="fas fa-pen mr-2"/>
                                 Manage Posts
                             </Link>
                         </li>
                         <li className="mb-4">
-                            <Link href="/admin/settings" className="flex items-center text-teal-400 hover:text-teal-500 transition-colors duration-500">
+                            <Link href="/admin/settings"
+                                  className="flex items-center text-teal-400 hover:text-teal-500 transition-colors duration-500">
                                 <i className="fas fa-cog mr-2"/>
                                 Settings
                             </Link>
                         </li>
                         <li className="mb-4">
-                            <Link href="/admin/profile" className="flex items-center text-teal-400 hover:text-teal-500 transition-colors duration-500">
+                            <Link href="/admin/profile"
+                                  className="flex items-center text-teal-400 hover:text-teal-500 transition-colors duration-500">
                                 <i className="fas fa-user mr-2"/>
                                 Edit Profile
                             </Link>

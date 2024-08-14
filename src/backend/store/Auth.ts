@@ -4,6 +4,7 @@ import {persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import {AppwriteException, ID, Models} from "appwrite";
 import {account} from "@/backend/app/client/config";
+import {users} from "@/backend/app/server/config";
 
 export interface UserPreference {
     role: string;
@@ -37,12 +38,27 @@ interface IAuthStore {
     }>;
 
     logout(): void;
+
+    verifyEmail(
+        userId: string,
+        secret: string
+    ): Promise<{
+        success: boolean,
+        error?: AppwriteException | null
+    }>;
+
+    createEmailVerification(): Promise<{
+        success: boolean,
+        error?: AppwriteException | null
+    }>;
+
+    getUserRole(): Promise<string | null>;
 }
 
 
 const useAuth = create<IAuthStore>()(
     devtools(
-        persist(immer((set) => ({
+        persist(immer((set, get) => ({
             session: null,
             token: null,
             user: null,
@@ -94,7 +110,10 @@ const useAuth = create<IAuthStore>()(
             },
             async createAccount(name: string, email: string, password: string) {
                 try {
-                    await account.create(ID.unique(), email, password, name);
+                    const user = await account.create(ID.unique(), email, password, name);
+                    await users.updateLabels(user.$id, ['subscriber']);
+                    await get().createEmailVerification();
+
                     return {
                         success: true,
                     };
@@ -114,6 +133,46 @@ const useAuth = create<IAuthStore>()(
                     console.log("Logout failed: ", error);
                 }
             },
+            async verifyEmail(userId: string, secret: string) {
+                try {
+                    new URLSearchParams();
+                    console.log(userId, secret, " tokens")
+                    const res = await account.updateVerification(userId, secret);
+                    console.log(res, " res after verification")
+                    return {
+                        success: true
+                    }
+                } catch (error) {
+                    console.log("Error verifying error: ", error);
+                    return {
+                        success: false,
+                        error: error instanceof AppwriteException ? error : null
+                    }
+                }
+            },
+            async createEmailVerification() {
+                try {
+                    await account.createVerification("http://localhost:3000/admin/verify")
+                    return {
+                        success: true
+                    }
+                } catch (error) {
+                    console.log("error sending verification email: ", error)
+                    return {
+                        success: false,
+                        error: error instanceof AppwriteException ? error : null
+                    }
+                }
+            },
+            async getUserRole() {
+                try {
+                    const user = await account.get();
+                    return user.labels[0] || null;
+                } catch (error) {
+                    console.log("Failed to get user role")
+                    return null;
+                }
+            }
         })), {
             name: "auth-storage",
             onRehydrateStorage() {
@@ -121,7 +180,7 @@ const useAuth = create<IAuthStore>()(
                     state?.setHydrated();
                 };
             },
-            storage: createJSONStorage(() => sessionStorage),
+            storage: createJSONStorage(() => localStorage),
         })
     ))
 ;

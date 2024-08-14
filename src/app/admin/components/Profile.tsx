@@ -12,6 +12,7 @@ import {
     Divider,
 } from "@mui/material";
 import useAuth from "@/backend/store/Auth";
+import Icon from "@/app/admin/components/Icon";
 
 const ProfileDD = () => {
     const {logout, user} = useAuth();
@@ -58,7 +59,7 @@ const ProfileDD = () => {
                         <Typography variant="h6" fontWeight="bold" sx={{ml: 1}}>
                             {user?.name || "Guest"}
                         </Typography>
-                        <i className="fas fa-chevron-down ml-1"/>
+                        <Icon className="fas fa-chevron-down ml-1"/>
                     </Box>
                 </Box>
             </Button>

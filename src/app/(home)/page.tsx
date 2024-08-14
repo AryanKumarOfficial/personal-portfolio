@@ -4,7 +4,8 @@ import Link from "next/link";
 export default function Home() {
     return (
         <>
-            <section className="flex flex-col-reverse md:flex-row items-center justify-center min-h-screen py-24 bg-gray-900 px-8 !overflow-x-hidden">
+            <section
+                className="flex flex-col-reverse md:flex-row items-center justify-center min-h-screen py-24 bg-gray-900 px-8 !overflow-x-hidden">
                 <div className="flex-1 text-center md:text-left p-6">
                     <h1 className="text-2xl md:text-5xl font-bold text-white mb-4">
                         <span className="text-teal-400 font-bold text-7xl py-4 block">Hi,</span> I'm Aryan Kumar

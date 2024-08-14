@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import styles from "../styles/Navbar.module.css";
+import Icon from "@/app/admin/components/Icon";
 
 const Navbar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -41,9 +42,10 @@ const Navbar: React.FC = () => {
             <Link
                 key={index}
                 href={link.href}
+                onClick={toggleMenu}
                 className="text-gray-300 w-1/2 text-left hover:text-teal-400 uppercase flex items-center space-x-2 p-4 transition-colors duration-500"
             >
-                <i className={`${link.icon} text-xl block md:!hidden`}></i>
+                <Icon className={`${link.icon} text-xl block md:!hidden`}/>
                 <span>{link.name}</span>
             </Link>
         ));
@@ -55,8 +57,8 @@ const Navbar: React.FC = () => {
             <div
                 className="max-w-6xl mx-auto flex flex-row-reverse md:flex-row flex-wrap justify-center md:justify-between items-center">
                 <Link href="/"
-                      className={`${styles.waveText} text-white text-xl md:text-3xl font-bold capitalize`}>
-                    AryanKumarOfficial
+                      className={`${styles.waveText} text-white text-xl md:text-3xl font-bold uppercase`}>
+                    Aryan&nbsp;Kumar
                 </Link>
                 <div className="hidden md:flex space-x-4">
                     {renderLinks()}
@@ -68,7 +70,7 @@ const Navbar: React.FC = () => {
                 aria-label="Toggle Menu"
                 className="md:hidden text-white absolute top-1/2 transform -translate-y-1/2 left-4"
             >
-                <i className={`fas ${isMenuOpen ? "fa-times" : "fa-bars"} text-4xl`}></i>
+                <Icon className={`fas ${isMenuOpen ? "fa-times" : "fa-bars"} text-4xl`}/>
             </button>
 
             {/* Blur background overlay */}
@@ -87,7 +89,7 @@ const Navbar: React.FC = () => {
                 role="menu"
             >
                 <button onClick={toggleMenu} className="text-white absolute top-10 transform -translate-y-1/2 right-4">
-                    <i className="fas fa-times text-4xl"></i>
+                    <Icon className="fas fa-times text-4xl"/>
                 </button>
                 <div className="flex flex-col justify-center w-1/2 items-center space-y-4 h-full">
                     {renderLinks()}

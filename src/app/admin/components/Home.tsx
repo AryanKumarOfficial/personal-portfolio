@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, {useEffect} from "react";
 import useAuth from "@/backend/store/Auth";
 import {useRouter} from "next/navigation";
+import Icon from "@/app/admin/components/Icon";
 
 const AdminHome = () => {
     const {session, user} = useAuth();
@@ -31,13 +32,15 @@ const AdminHome = () => {
     useEffect(() => {
         if (!session) {
             router.push("/admin/login");
-        } else if (session && user && user.prefs.role !== "admin") {
+        } else if (session && user && user.labels.includes("admin")) {
             router.push("/admin/unauthorized");
+        } else if (user && !user.emailVerification) {
         }
+        console.log(session, "dash session")
     }, [session]);
 
     return (
-        <div className="container mx-auto p-4 flex justify-center items-center flex-col gap-20
+        <div className="container mx-auto p-4 flex justify-center items-center flex-col gap-20F
         ">
             <h1 className="text-3xl font-bold mb-4 ">Admin Dashboard</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -45,13 +48,12 @@ const AdminHome = () => {
 
                     <Link legacyBehavior={true} key={index} href={link.link}>
                         <a className="flex flex-col items-center p-4 bg-gray-800 rounded-lg shadow-md transition-transform transform hover:scale-105 ">
-                            <i className={`${link.icon} text-4xl text-blue-500`}></i>
+                            <Icon className={`${link.icon} text-4xl text-blue-500`}/>
                             <h2 className="mt-2 text-xl font-semibold">{link.name}</h2>
                             <p className="text-teal-500">{link.description}</p>
                         </a>
                     </Link>
                 ))}
-                {/* Add more admin links as needed */}
             </div>
         </div>
     );
