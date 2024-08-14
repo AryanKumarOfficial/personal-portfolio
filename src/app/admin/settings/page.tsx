@@ -1,141 +1,222 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, ChangeEvent, FormEvent} from "react";
 import toast from "react-hot-toast";
-import {
-    FaPlus,
-} from "react-icons/fa";
+import {FaPlus} from "react-icons/fa";
 
-const sections = [
+// Define the types for the sections, form data, about data, and other structures
+interface Section {
+    id: string;
+    label: string;
+}
+
+interface FormData {
+    title: string;
+    bio: string;
+}
+
+interface PersonalData {
+    name: string;
+    age: string;
+    email: string;
+    address: string;
+    freelance: string;
+    title: string;
+    experience: string;
+    language: string;
+}
+
+interface ExperiencesData {
+    year: string;
+    projectsCompleted: string;
+}
+
+interface Skill {
+    name: string;
+    icon: string;
+}
+
+interface Education {
+    degree: string;
+    year: string;
+    institute: string;
+    description: string;
+    highlights: string;
+}
+
+interface AboutData {
+    personal: PersonalData;
+    experiences: ExperiencesData;
+    skills: Skill[];
+    education: Education[];
+}
+
+// Define the sections array with proper typing
+const sections: Section[] = [
     {id: "home", label: "Home"},
     {id: "about", label: "About"},
     {id: "portfolio", label: "Portfolio"},
 ];
 
 const SettingsPage: React.FC = () => {
-    const [activeSection, setActiveSection] = useState(sections[0].id);
-    const [formData, setFormData] = useState({title: "", bio: ""});
-    const [aboutData, setAboutData] = useState({
-        title: "",
-        bio: "",
+    const [activeSection, setActiveSection] = useState<string>(sections[0].id);
+    const [formData, setFormData] = useState<FormData>({title: "", bio: ""});
+    const [aboutData, setAboutData] = useState<AboutData>({
         personal: {
             name: "",
             age: "",
             email: "",
             address: "",
             freelance: "",
+            title: "",
             experience: "",
             language: "",
         },
-        experience: {
+        experiences: {
             year: "",
             projectsCompleted: "",
         },
-        skills: [
-            {name: "", icon: ""}
-        ],
-        education: [
-            {degree: "", year: "", institute: "", description: "", highlights: ""}
-        ],
+        skills: [{name: "", icon: ""}],
+        education: [{degree: "", year: "", institute: "", description: "", highlights: ""}],
     });
 
     useEffect(() => {
-        // Fetch the existing settings when the component loads or when the section changes
-        if (activeSection === "home") {
-            fetch("/api/settings/home")
-                .then((res) => res.json())
-                .then((data) => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`/api/settings/${activeSection}`);
+                const data = await response.json();
+                if (activeSection === "home") {
                     setFormData({title: data.title || "", bio: data.bio || ""});
-                })
-                .catch((error) => console.error("Failed to fetch settings:", error));
-        } else if (activeSection === "about") {
-            fetch("/api/settings/about")
-                .then((res) => res.json())
-                .then((data) => {
+                } else if (activeSection === "about") {
+                    // Ensure we have default values if data is null or undefined
                     setAboutData({
-                        title: data.title || "",
-                        bio: data.bio || "",
-                        personal: data.personal || aboutData.personal,
-                        experience: data.experience || aboutData.experience,
-                        skills: data.skills || aboutData.skills,
-                        education: data.education || aboutData.education,
+                        personal: {
+                            ...aboutData.personal,
+                            ...(data?.personal || {}),
+                        },
+                        experiences: {
+                            ...aboutData.experiences,
+                            ...(data?.experiences || {}),
+                        },
+                        skills: data?.skills || aboutData.skills,
+                        education: data?.education || aboutData.education,
                     });
-                })
-                .catch((error) => console.error("Failed to fetch about settings:", error));
-        }
+                }
+            } catch (error) {
+                console.error(`Failed to fetch ${activeSection} settings:`, error);
+                toast.error(`Failed to fetch ${activeSection} settings.`);
+            }
+        };
+        fetchData();
     }, [activeSection]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target;
+
         if (activeSection === "home") {
-            setFormData({...formData, [name]: value});
+            setFormData((prevData) => ({...prevData, [name]: value}));
         } else if (activeSection === "about") {
-            setAboutData({...aboutData, [name]: value});
+            setAboutData((prevData) => {
+                // Use a deep copy of aboutData to avoid mutating state directly
+                const updatedAboutData = {...prevData};
+
+                if (name in prevData.personal) {
+                    // Update personal section
+                    console.log(name, value, "name, value");
+                    updatedAboutData.personal = {...prevData.personal, [name]: value};
+                } else if (name in prevData.experiences) {
+                    // Update experience section
+                    updatedAboutData.experiences = {...prevData.experiences, [name]: value};
+                }
+                return updatedAboutData;
+            });
         }
     };
 
-    const handleUpdate = () => {
-        const endpoint = activeSection === "home" ? "/api/settings/home" : "/api/settings/about";
-        const dataToUpdate = activeSection === "home" ? formData : aboutData;
 
-        fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(dataToUpdate),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.message) {
-                    toast.success(data.message);
-                } else {
-                    toast.error(data.error || "An error occurred while updating the settings.");
-                }
-            })
-            .catch((error) => {
-                console.error("Failed to update settings:", error);
-                toast.error("An error occurred while updating the settings.");
+    const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(`/api/settings/${activeSection}`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(activeSection === "home" ? formData : aboutData),
             });
+            const result = await response.json();
+            if (result.message) {
+                toast.success(result.message);
+            } else {
+                toast.error(result.error || "Update failed");
+            }
+        } catch (error) {
+            console.error(`Failed to update ${activeSection} settings:`, error);
+            toast.error("An error occurred while updating the settings.");
+        }
     };
 
-    function renderSkills() {
-        return aboutData.skills.map((skill, index) => (
+    const handleListChange = (
+        listKey: keyof AboutData,
+        index: number,
+        event: ChangeEvent<HTMLInputElement>
+    ) => {
+        const {name, value} = event.target;
+        setAboutData((prevData) => {
+            const updatedList = [...(prevData[listKey] as any[])];
+            updatedList[index] = {...updatedList[index], [name]: value};
+            return {...prevData, [listKey]: updatedList};
+        });
+    };
+
+    const handleAddItem = (listKey: "skills" | "education") => {
+        const newItem = listKey === "skills"
+            ? {name: "", icon: ""}
+            : {degree: "", year: "", institute: "", description: "", highlights: ""};
+        setAboutData((prevData) => ({
+            ...prevData,
+            [listKey]: [...prevData[listKey], newItem],
+        }));
+    };
+
+    const renderFormField = (
+        label: string,
+        name: string,
+        value: string,
+        placeholder: string
+    ) => (
+        <div className="mb-4">
+            <label className="block text-gray-300">{label}</label>
+            <input
+                type="text"
+                name={name}
+                value={value}
+                onChange={handleInputChange}
+                className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
+                placeholder={placeholder}
+            />
+        </div>
+    );
+
+    const renderListItems = (
+        items: any[],
+        listKey: keyof AboutData,
+        fields: { name: string; placeholder: string }[]
+    ) =>
+        items.map((item, index) => (
             <div key={index} className="my-4">
-                <label className="block text-gray-300">Skill {index + 1}</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={skill.name}
-                    onChange={(e) => handleSkillChange(index, e)}
-                    className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600 my-4"
-                    placeholder="Skill name"
-                />
-                <input
-                    type="text"
-                    name="icon"
-                    value={skill.icon}
-                    onChange={(e) => handleSkillChange(index, e)}
-                    className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                    placeholder="Skill icon"
-                />
+                {fields.map((field) => (
+                    <input
+                        key={field.name}
+                        type="text"
+                        name={field.name}
+                        value={item[field.name]}
+                        onChange={(e) => handleListChange(listKey, index, e)}
+                        className="w-full bg-gray-700 p-2 mb-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
+                        placeholder={field.placeholder}
+                    />
+                ))}
             </div>
         ));
-    }
 
-    const handleSkillChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedSkills = aboutData.skills.map((skill, i) =>
-            i === index ? {...skill, [event.target.name]: event.target.value} : skill
-        );
-        setAboutData({...aboutData, skills: updatedSkills});
-    };
-
-    const handleAddSkill = () => {
-        setAboutData({
-            ...aboutData,
-            skills: [...aboutData.skills, {name: "", icon: ""}],
-        });
-    }
     return (
         <div className="min-h-screen flex justify-center items-center bg-gray-900 text-white py-36">
             <div className="container mx-auto">
@@ -159,170 +240,80 @@ const SettingsPage: React.FC = () => {
 
                 <div className="mt-8 bg-gray-800 p-6 rounded-lg">
                     {activeSection === "home" && (
-                        <div>
+                        <form onSubmit={handleUpdate}>
                             <h2 className="text-2xl font-semibold mb-4">Home Settings</h2>
-
-                            <div className="mb-4">
-                                <label className="block text-gray-300">Title</label>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    value={formData.title}
-                                    onChange={handleInputChange}
-                                    className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                    placeholder="Home title"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-300">Description</label>
-                                <textarea
-                                    name="bio"
-                                    value={formData.bio}
-                                    onChange={handleInputChange}
-                                    className="w-full bg-gray-700 p-2 rounded-lg resize-none outline-none h-32 focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                    placeholder="Home description"
-                                />
-                            </div>
+                            {renderFormField("Title", "title", formData.title, "Home title")}
+                            {renderFormField("Description", "bio", formData.bio, "Home description")}
                             <button
-                                onClick={handleUpdate}
+                                type="submit"
                                 className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out flex items-center justify-center mt-4 w-full uppercase tracking-wider font-semibold text-sm cursor-pointer"
                             >
                                 Update
                             </button>
-                        </div>
-                    )}
-
-                    {activeSection === "about" && (
-                        <form>
-                            <h2 className="text-2xl font-semibold mb-4">About Settings</h2>
-
-                            <h3 className="text-xl font-semibold mb-2">Personal Information</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="mb-4">
-                                    <label className="block text-gray-300">Name</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={aboutData.personal.name}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                        placeholder="Your name"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-300">Age</label>
-                                    <input
-                                        type="text"
-                                        name="age"
-                                        value={aboutData.personal.age}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                        placeholder="Your age"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-300">Email</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={aboutData.personal.email}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                        placeholder="Your email"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-300">Address</label>
-                                    <input
-                                        type="text"
-                                        name="address"
-                                        value={aboutData.personal.address}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                        placeholder="Your address"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-300">Freelance</label>
-                                    <input
-                                        type="text"
-                                        name="freelance"
-                                        value={aboutData.personal.freelance}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                        placeholder="Freelance status"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-300">Experience</label>
-                                    <input
-                                        type="text"
-                                        name="experience"
-                                        value={aboutData.personal.experience}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                        placeholder="Experience"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-300">Language</label>
-                                    <input
-                                        type="text"
-                                        name="language"
-                                        value={aboutData.personal.language}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                        placeholder="Language"
-                                    />
-                                </div>
-
-                            </div>
-
-                            <h3 className="text-xl font-semibold mb-2">Experience</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="mb-4">
-                                    <label className="block text-gray-300">Year</label>
-                                    <input
-                                        type="text"
-                                        name="year"
-                                        value={aboutData.experience.year}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                        placeholder="Year"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-300">Projects Completed</label>
-                                    <input
-                                        type="text"
-                                        name="projectsCompleted"
-                                        value={aboutData.experience.projectsCompleted}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-gray-700 p-2 rounded-lg outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transition duration-200 ease-in-out scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 scrollbar-thumb-rounded-full scrollbar-track-rounded-full text-teal-400 placeholder:text-teal-600"
-                                        placeholder="Projects completed"
-                                    />
-                                </div>
-                            </div>
-
-                            <h3 className="text-xl font-semibold mb-2">Skills</h3>
-                            <div className="mb-4">
-                                {renderSkills()}
-                                <button
-                                    type="button"
-                                    onClick={handleAddSkill}
-                                    className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out flex items-center justify-center mt-4 w-full uppercase tracking-wider font-semibold text-sm cursor-pointer"
-                                >
-                                    <FaPlus className="mr-2"/> Add New Skill
-                                </button>
-                            </div>
                         </form>
                     )}
 
-                    {activeSection === "portfolio" && (
-                        <div>
-                            <h2 className="text-2xl font-semibold mb-4">Portfolio Settings</h2>
-                            {/* Add form fields for Portfolio settings */}
-                        </div>
+                    {activeSection === "about" && (
+                        <form onSubmit={handleUpdate} className={"max-w-screen-md"}>
+                            <h2 className="text-2xl font-semibold mb-4">About Settings</h2>
+
+                            <h3 className="text-lg font-semibold mb-4">Personal Info</h3>
+                            {renderFormField("Name", "name", aboutData.personal.name, "Name")}
+                            {renderFormField("Age", "age", aboutData.personal.age, "Age")}
+                            {renderFormField("Email", "email", aboutData.personal.email, "Email")}
+                            {renderFormField("Address", "address", aboutData.personal.address, "Address")}
+                            {renderFormField("Freelance", "freelance", aboutData.personal.freelance, "Freelance")}
+                            {renderFormField("Title", "title", aboutData.personal.title, "Title")}
+                            {renderFormField("Experience", "experience", aboutData.personal.experience, "Experience")}
+                            {renderFormField("Language", "language", aboutData.personal.language, "Language")}
+
+                            <h3 className="text-lg font-semibold mb-4">Experience Info</h3>
+                            {renderFormField("Years", "year", aboutData.experiences.year, "Years of Experience")}
+                            {renderFormField(
+                                "Projects Completed",
+                                "projectsCompleted",
+                                aboutData.experiences.projectsCompleted,
+                                "Projects Completed"
+                            )}
+
+                            <h3 className="text-lg font-semibold mb-4">Skills</h3>
+                            {renderListItems(aboutData.skills, "skills", [
+                                {name: "name", placeholder: "Skill name"},
+                                {name: "icon", placeholder: "Skill icon"},
+                            ])}
+
+                            <button
+                                type="button"
+                                className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out flex items-center justify-center mt-4 w-full uppercase tracking-wider font-semibold text-sm cursor-pointer"
+                                onClick={() => handleAddItem("skills")}
+                            >
+                                Add Skill <FaPlus className="ml-2"/>
+                            </button>
+
+                            <h3 className="text-lg font-semibold mt-6 mb-4">Education</h3>
+                            {renderListItems(aboutData.education, "education", [
+                                {name: "degree", placeholder: "Degree"},
+                                {name: "year", placeholder: "Year"},
+                                {name: "institute", placeholder: "Institute"},
+                                {name: "description", placeholder: "Description"},
+                                {name: "highlights", placeholder: "Highlights"},
+                            ])}
+
+                            <button
+                                type="button"
+                                className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out flex items-center justify-center mt-4 w-full uppercase tracking-wider font-semibold text-sm cursor-pointer"
+                                onClick={() => handleAddItem("education")}
+                            >
+                                Add Education <FaPlus className="ml-2"/>
+                            </button>
+
+                            <button
+                                type="submit"
+                                className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out flex items-center justify-center mt-8 w-full uppercase tracking-wider font-semibold text-sm cursor-pointer"
+                            >
+                                Update
+                            </button>
+                        </form>
                     )}
                 </div>
             </div>

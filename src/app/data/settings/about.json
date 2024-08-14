@@ -1,0 +1,31 @@
+{
+  "personal": {
+    "name": "Aryan Kumar",
+    "age": "19",
+    "email": "aryanak9163@gmail.com",
+    "address": "Sitamarhi, Bihar",
+    "freelance": "Available",
+    "title": "Full Stack Developer",
+    "experience": "3",
+    "language": "English"
+  },
+  "experiences": {
+    "year": "4",
+    "projectsCompleted": "50"
+  },
+  "skills": [
+    {
+      "name": "Nextjs",
+      "icon": "nextjs"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Matriculation",
+      "year": "2021",
+      "institute": "DAV",
+      "description": "Maza aaya ",
+      "highlights": "bahut maza aaya"
+    }
+  ]
+}

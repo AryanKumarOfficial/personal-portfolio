@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 
 // Define the path to the settings file
-const settingsFilePath = path.join(process.cwd(), "src", "app", "data", "about.json");
+const settingsFilePath = path.join(process.cwd(), "src", "app", "data", "settings", "about.json");
 
 // Handle GET request to fetch data
 export async function GET() {
