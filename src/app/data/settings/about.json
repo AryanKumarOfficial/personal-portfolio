@@ -5,27 +5,104 @@
     "email": "aryanak9163@gmail.com",
     "address": "Sitamarhi, Bihar",
     "freelance": "Available",
-    "title": "Full Stack Developer",
     "experience": "3",
-    "language": "English"
+    "language": "English",
+    "title": "Full Stack Developer"
   },
   "experiences": {
-    "year": "4",
+    "year": "3",
     "projectsCompleted": "50"
   },
   "skills": [
     {
-      "name": "Nextjs",
-      "icon": "nextjs"
+      "name": "HTML",
+      "icon": "devicon-html5-plain colored"
+    },
+    {
+      "name": "CSS",
+      "icon": "devicon-css3-plain colored"
+    },
+    {
+      "name": "JavaScript",
+      "icon": "devicon-javascript-plain colored"
+    },
+    {
+      "name": "bootstrap",
+      "icon": "devicon-bootstrap-plain colored"
+    },
+    {
+      "name": "React.js",
+      "icon": "devicon-react-original colored"
+    },
+    {
+      "name": "tailwindcss",
+      "icon": "devicon-tailwindcss-original colored"
+    },
+    {
+      "name": "Node.js",
+      "icon": "fab fa-node colored"
+    },
+    {
+      "name": "express.js",
+      "icon": "devicon-express-original "
+    },
+    {
+      "name": "MongoDB",
+      "icon": "devicon-mongodb-plain colored"
+    },
+    {
+      "name": "next.js",
+      "icon": "devicon-nextjs-plain colored"
+    },
+    {
+      "name": "typescript",
+      "icon": "devicon-typescript-plain colored"
+    },
+    {
+      "name": "Python",
+      "icon": "devicon-python-plain colored"
+    },
+    {
+      "name": "Django",
+      "icon": "devicon-django-plain "
+    },
+    {
+      "name": "Flask",
+      "icon": "devicon-flask-original "
+    },
+    {
+      "name": "java",
+      "icon": "fa-brands fa-java fa-3x"
+    },
+    {
+      "name": "C++",
+      "icon": "devicon-cplusplus-plain colored"
+    },
+    {
+      "name": "SQL",
+      "icon": "devicon-azuresqldatabase-plain colored"
+    },
+    {
+      "name": "Git",
+      "icon": "devicon-git-plain colored"
     }
   ],
   "education": [
     {
       "degree": "Matriculation",
-      "year": "2021",
-      "institute": "DAV",
-      "description": "Maza aaya ",
-      "highlights": "bahut maza aaya"
+      "year": "2016 - 2021",
+      "institute": "Nikhil Shyama DAV Public School",
+      "description": "Completed matriculation with a strong focus on science and mathematics, excelling in subjects like Physics, Chemistry, and Advanced Mathematics. Actively participated in science fairs and mathematics competitions, achieving several accolades.",
+      "highlights": "In addition to academic achievements, engaged in various extracurricular activities such as the debate club and robotics team, which nurtured leadership and teamwork skills.",
+      "icon": "fas fa-certificate"
+    },
+    {
+      "degree": "Diploma in Computer Science and Engineering",
+      "year": "2021 - 2024",
+      "institute": "New Government Polytechnic",
+      "description": "Specialized in core computer science subjects including Algorithms, Data Structures, Web Development, and Database Management. Gained hands-on experience through various projects and internships.",
+      "highlights": "Successfully completed a final year project on developing a full-stack web application, which was well-received by the faculty. Participated in hackathons and coding competitions, securing top positions. Volunteered as a tutor for junior students, helping them with programming basics.",
+      "icon": "fas fa-graduation-cap"
     }
   ]
 }

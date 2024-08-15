@@ -1,6 +1,22 @@
 import React from 'react';
 
-const HeroSection: React.FC = () => {
+interface PersonalInfo {
+    name: string;
+    age: string;
+    email: string;
+    address: string;
+    freelance: string;
+    title: string;
+    experience: string;
+    language: string;
+}
+
+interface Experience {
+    year: string;
+    projectsCompleted: string;
+}
+
+const HeroSection = ({personalInfo, experience}: { personalInfo: PersonalInfo, experience: Experience }) => {
     return (
         <>
             <section
@@ -16,28 +32,31 @@ const HeroSection: React.FC = () => {
 
                         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
                             <div className="flex-1 bg-gray-700 p-4 rounded-lg">
-                                <h3 className="text-white"><span className="text-teal-500">Name: </span>Aryan Kumar</h3>
                                 <h3 className="text-white"><span
-                                    className="text-teal-500">Age: </span>{(new Date().getFullYear()) - 2005}</h3>
+                                    className="text-teal-500">Name: </span>{personalInfo?.name}</h3>
+                                <h3 className="text-white"><span
+                                    className="text-teal-500">Age: </span>{personalInfo?.age}</h3>
                                 <h3 className="text-white"><span className="text-teal-500">Email: </span><span
-                                    className="!text-white lowercase">aryan.official.cse@mail.com</span></h3>
-                                <h3 className="text-white"><span className="text-teal-500">Address: </span>Sitamarhi,
-                                    Bihar</h3>
+                                    className="!text-white lowercase">{personalInfo?.email}</span></h3>
+                                <h3 className="text-white"><span
+                                    className="text-teal-500">Address: </span>{personalInfo?.address}</h3>
                             </div>
 
                             <div className="flex-1 bg-gray-700 p-4 rounded-lg">
-                                <h3 className="text-white"><span className="text-teal-500">Freelance: </span>Available
-                                </h3>
-                                <h3 className="text-white"><span className="text-teal-500">Skill: </span>Full Stack
-                                    Developer</h3>
                                 <h3 className="text-white"><span
-                                    className="text-teal-500">Experience: </span>{(new Date().getFullYear()) - 2021} years
+                                    className="text-teal-500">Freelance: </span>{personalInfo?.freelance}
                                 </h3>
-                                <h3 className="text-white"><span className="text-teal-500">Language: </span>English</h3>
+                                <h3 className="text-white"><span
+                                    className="text-teal-500">Skill: </span>{personalInfo?.title}</h3>
+                                <h3 className="text-white"><span
+                                    className="text-teal-500">Experience: </span>{personalInfo?.experience} years
+                                </h3>
+                                <h3 className="text-white"><span
+                                    className="text-teal-500">Language: </span>{personalInfo?.language}</h3>
                             </div>
                         </div>
 
-                        <a href="resume-aryan.pdf"
+                        <a href="/assets/resume.pdf"
                            className="inline-block mt-4 px-6 py-3 bg-teal-500 text-white rounded hover:bg-teal-600 transition-colors duration-300"
                            download>
                             Download CV <i className="fas fa-download"></i>
@@ -46,12 +65,12 @@ const HeroSection: React.FC = () => {
 
                     <div className="flex flex-col sm:flex-row lg:flex-col flex-1 gap-4 justify-center">
                         <div className="flex-1 bg-gray-700 p-6 rounded-lg text-center shadow-lg">
-                            <h3 className="text-2xl sm:text-3xl text-teal-500">{(new Date().getFullYear()) - 2021}+</h3>
+                            <h3 className="text-2xl sm:text-3xl text-teal-500">{experience.year}+</h3>
                             <p className="text-gray-400">Years of Experience</p>
                         </div>
 
                         <div className="flex-1 bg-gray-700 p-6 rounded-lg text-center shadow-lg pt-4">
-                            <h3 className="text-2xl sm:text-3xl text-teal-500">150+</h3>
+                            <h3 className="text-2xl sm:text-3xl text-teal-500">{experience.projectsCompleted}+</h3>
                             <p className="text-gray-400">Projects Completed</p>
                         </div>
                     </div>

@@ -9,11 +9,8 @@ console.log(settingsFilePath, "settingsFilePath");
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const {name, age, email, address, freelance, experience, language} = body.personal;
-        const {year, projectsCompleted} = body.experience;
-        const skills = body.skills;
-        const education = body.education;
-        if (!name || !age || !email || !address || !freelance || !experience || !language || !year || !projectsCompleted || !skills || !education) {
+        const {title, bio} = body.personal;
+        if (!title || !bio) {
             return NextResponse.json({error: "Missing required fields"}, {status: 400});
         }
 
@@ -25,9 +22,8 @@ export async function POST(request: Request) {
 
         // Save data to a JSON file (or replace this with database logic)
         const settingsData = {
-            personal: {name, age, email, address, freelance, experience, language},
-            skills,
-            education
+            title,
+            bio,
         };
 
         fs.writeFileSync(settingsFilePath, JSON.stringify(settingsData, null, 2));

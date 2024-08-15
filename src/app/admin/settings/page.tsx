@@ -42,6 +42,7 @@ interface Education {
     institute: string;
     description: string;
     highlights: string;
+    icon: string;
 }
 
 interface AboutData {
@@ -77,7 +78,16 @@ const SettingsPage: React.FC = () => {
             projectsCompleted: "",
         },
         skills: [{name: "", icon: ""}],
-        education: [{degree: "", year: "", institute: "", description: "", highlights: ""}],
+        education: [
+            {
+                degree: "",
+                year: "",
+                institute: "",
+                description: "",
+                highlights: "",
+                icon: "",
+            },
+        ],
     });
 
     useEffect(() => {
@@ -88,19 +98,20 @@ const SettingsPage: React.FC = () => {
                 if (activeSection === "home") {
                     setFormData({title: data.title || "", bio: data.bio || ""});
                 } else if (activeSection === "about") {
-                    // Ensure we have default values if data is null or undefined
-                    setAboutData({
+                    console.log(data.experiences, 'data');
+                    setAboutData((prevData) => ({
+                        ...prevData,
                         personal: {
-                            ...aboutData.personal,
-                            ...(data?.personal || {}),
+                            ...prevData.personal,
+                            ...data?.personal,
                         },
                         experiences: {
-                            ...aboutData.experiences,
-                            ...(data?.experiences || {}),
+                            ...prevData.experiences,
+                            ...data?.experiences,
                         },
-                        skills: data?.skills || aboutData.skills,
-                        education: data?.education || aboutData.education,
-                    });
+                        skills: data?.skills || prevData.skills,
+                        education: data?.education || prevData.education,
+                    }));
                 }
             } catch (error) {
                 console.error(`Failed to fetch ${activeSection} settings:`, error);
@@ -110,33 +121,32 @@ const SettingsPage: React.FC = () => {
         fetchData();
     }, [activeSection]);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (
+        e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
         const {name, value} = e.target;
 
         if (activeSection === "home") {
             setFormData((prevData) => ({...prevData, [name]: value}));
         } else if (activeSection === "about") {
             setAboutData((prevData) => {
-                // Use a deep copy of aboutData to avoid mutating state directly
-                const updatedAboutData = {...prevData};
+                const updatedAboutData = JSON.parse(JSON.stringify(prevData)); // Deep copy
 
                 if (name in prevData.personal) {
-                    // Update personal section
-                    console.log(name, value, "name, value");
-                    updatedAboutData.personal = {...prevData.personal, [name]: value};
+                    updatedAboutData.personal[name] = value;
                 } else if (name in prevData.experiences) {
-                    // Update experience section
-                    updatedAboutData.experiences = {...prevData.experiences, [name]: value};
+                    console.log(aboutData, "setter")
+                    updatedAboutData.experiences[name] = value;
                 }
                 return updatedAboutData;
             });
         }
     };
 
-
     const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
+            console.log(aboutData, 'aboutData');
             const response = await fetch(`/api/settings/${activeSection}`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -168,9 +178,17 @@ const SettingsPage: React.FC = () => {
     };
 
     const handleAddItem = (listKey: "skills" | "education") => {
-        const newItem = listKey === "skills"
-            ? {name: "", icon: ""}
-            : {degree: "", year: "", institute: "", description: "", highlights: ""};
+        const newItem =
+            listKey === "skills"
+                ? {name: "", icon: ""}
+                : {
+                    degree: "",
+                    year: "",
+                    institute: "",
+                    description: "",
+                    highlights: "",
+                    icon: "",
+                };
         setAboutData((prevData) => ({
             ...prevData,
             [listKey]: [...prevData[listKey], newItem],
@@ -243,75 +261,138 @@ const SettingsPage: React.FC = () => {
                         <form onSubmit={handleUpdate}>
                             <h2 className="text-2xl font-semibold mb-4">Home Settings</h2>
                             {renderFormField("Title", "title", formData.title, "Home title")}
-                            {renderFormField("Description", "bio", formData.bio, "Home description")}
+                            {renderFormField(
+                                "Description",
+                                "bio",
+                                formData.bio,
+                                "Home description"
+                            )}
                             <button
                                 type="submit"
-                                className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out flex items-center justify-center mt-4 w-full uppercase tracking-wider font-semibold text-sm cursor-pointer"
+                                className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out"
                             >
-                                Update
+                                Update Home Settings
                             </button>
                         </form>
                     )}
 
                     {activeSection === "about" && (
-                        <form onSubmit={handleUpdate} className={"max-w-screen-md"}>
+                        <form className={"max-w-screen-md"} onSubmit={handleUpdate}>
                             <h2 className="text-2xl font-semibold mb-4">About Settings</h2>
 
-                            <h3 className="text-lg font-semibold mb-4">Personal Info</h3>
-                            {renderFormField("Name", "name", aboutData.personal.name, "Name")}
-                            {renderFormField("Age", "age", aboutData.personal.age, "Age")}
-                            {renderFormField("Email", "email", aboutData.personal.email, "Email")}
-                            {renderFormField("Address", "address", aboutData.personal.address, "Address")}
-                            {renderFormField("Freelance", "freelance", aboutData.personal.freelance, "Freelance")}
-                            {renderFormField("Title", "title", aboutData.personal.title, "Title")}
-                            {renderFormField("Experience", "experience", aboutData.personal.experience, "Experience")}
-                            {renderFormField("Language", "language", aboutData.personal.language, "Language")}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {renderFormField(
+                                    "Name",
+                                    "name",
+                                    aboutData.personal.name,
+                                    "Your name"
+                                )}
+                                {renderFormField("Age", "age", aboutData.personal.age, "Age")}
+                                {renderFormField(
+                                    "Email",
+                                    "email",
+                                    aboutData.personal.email,
+                                    "Email address"
+                                )}
+                                {renderFormField(
+                                    "Address",
+                                    "address",
+                                    aboutData.personal.address,
+                                    "Home address"
+                                )}
+                                {renderFormField(
+                                    "Freelance Status",
+                                    "freelance",
+                                    aboutData.personal.freelance,
+                                    "Freelance status"
+                                )}
+                                {renderFormField(
+                                    "Title",
+                                    "title",
+                                    aboutData.personal.title,
+                                    "Professional title"
+                                )}
+                                {renderFormField(
+                                    "Experience",
+                                    "experience",
+                                    aboutData.personal.experience,
+                                    "Years of experience"
+                                )}
+                                {renderFormField(
+                                    "Language",
+                                    "language",
+                                    aboutData.personal.language,
+                                    "Languages spoken"
+                                )}
+                            </div>
 
-                            <h3 className="text-lg font-semibold mb-4">Experience Info</h3>
-                            {renderFormField("Years", "year", aboutData.experiences.year, "Years of Experience")}
-                            {renderFormField(
-                                "Projects Completed",
-                                "projectsCompleted",
-                                aboutData.experiences.projectsCompleted,
-                                "Projects Completed"
-                            )}
+                            <div className="mt-8">
+                                <h3 className="text-xl font-semibold mb-4">Experiences</h3>
+                                {renderFormField(
+                                    "Year",
+                                    "year",
+                                    aboutData.experiences.year,
+                                    "Year of experience"
+                                )}
+                                {renderFormField(
+                                    "Projects Completed",
+                                    "projectsCompleted",
+                                    aboutData.experiences.projectsCompleted,
+                                    "Number of projects completed"
+                                )}
+                            </div>
 
-                            <h3 className="text-lg font-semibold mb-4">Skills</h3>
-                            {renderListItems(aboutData.skills, "skills", [
-                                {name: "name", placeholder: "Skill name"},
-                                {name: "icon", placeholder: "Skill icon"},
-                            ])}
+                            <div className="mt-8">
+                                <h3 className="text-xl font-semibold mb-4">
+                                    Skills
+                                    <button
+                                        type="button"
+                                        onClick={() => handleAddItem("skills")}
+                                        className="ml-2 bg-teal-500 text-white p-2 rounded-full hover:bg-teal-600 transition duration-300 ease-in-out"
+                                    >
+                                        <FaPlus/>
+                                    </button>
+                                </h3>
+                                {renderListItems(
+                                    aboutData.skills,
+                                    "skills",
+                                    [
+                                        {name: "name", placeholder: "Skill name"},
+                                        {name: "icon", placeholder: "Skill icon"},
+                                    ]
+                                )}
+                            </div>
 
-                            <button
-                                type="button"
-                                className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out flex items-center justify-center mt-4 w-full uppercase tracking-wider font-semibold text-sm cursor-pointer"
-                                onClick={() => handleAddItem("skills")}
-                            >
-                                Add Skill <FaPlus className="ml-2"/>
-                            </button>
-
-                            <h3 className="text-lg font-semibold mt-6 mb-4">Education</h3>
-                            {renderListItems(aboutData.education, "education", [
-                                {name: "degree", placeholder: "Degree"},
-                                {name: "year", placeholder: "Year"},
-                                {name: "institute", placeholder: "Institute"},
-                                {name: "description", placeholder: "Description"},
-                                {name: "highlights", placeholder: "Highlights"},
-                            ])}
-
-                            <button
-                                type="button"
-                                className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out flex items-center justify-center mt-4 w-full uppercase tracking-wider font-semibold text-sm cursor-pointer"
-                                onClick={() => handleAddItem("education")}
-                            >
-                                Add Education <FaPlus className="ml-2"/>
-                            </button>
+                            <div className="mt-8">
+                                <h3 className="text-xl font-semibold mb-4">
+                                    Education
+                                    <button
+                                        type="button"
+                                        onClick={() => handleAddItem("education")}
+                                        className="ml-2 bg-teal-500 text-white p-2 rounded-full hover:bg-teal-600 transition duration-300 ease-in-out"
+                                    >
+                                        <FaPlus/>
+                                    </button>
+                                </h3>
+                                {renderListItems(
+                                    aboutData.education,
+                                    "education",
+                                    [
+                                        {name: "degree", placeholder: "Degree name"},
+                                        {name: "year", placeholder: "Year"},
+                                        {name: "institute", placeholder: "Institute name"},
+                                        {name: "description", placeholder: "Degree description"},
+                                        {name: "highlights", placeholder: "Degree highlights"},
+                                        {name: "icon", placeholder: "Degree icon"},
+                                    ]
+                                )}
+                            </div>
 
                             <button
                                 type="submit"
-                                className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out flex items-center justify-center mt-8 w-full uppercase tracking-wider font-semibold text-sm cursor-pointer"
+                                className="mt-8 bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-300 ease-in-out"
                             >
-                                Update
+                                Update About Settings
                             </button>
                         </form>
                     )}

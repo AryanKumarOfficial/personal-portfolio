@@ -1,6 +1,16 @@
 "use client";
 import React, {useState} from 'react';
 
+
+interface Education {
+    year: string;
+    degree: string;
+    institution: string;
+    description: string;
+    details: string;
+    icon: string;
+}
+
 const educationData = [
     {
         year: '2016 - 2021',

@@ -23,11 +23,23 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-
         // Validate and sanitize input if necessary
+        const {name, age, email, address, freelance, experience, language, title} = body.personal;
+        const {year, projectsCompleted} = body.experiences;
+        const skills = body.skills;
+        const education = body.education;
+        if (!name || !age || !email || !address || !freelance || !experience || !language || !year || !projectsCompleted || !skills || !education || !title) {
+            console.log(body.experiences, 'title');
+            return NextResponse.json({error: "Missing required fields"}, {status: 400});
+        }
 
         // Save data to the JSON file
-        fs.writeFileSync(settingsFilePath, JSON.stringify(body, null, 2));
+        fs.writeFileSync(settingsFilePath, JSON.stringify({
+            personal: {name, age, email, address, freelance, experience, language, title},
+            experiences: {year, projectsCompleted},
+            skills,
+            education,
+        }, null, 2));
 
         return NextResponse.json({message: "Settings updated successfully"});
     } catch (error) {
