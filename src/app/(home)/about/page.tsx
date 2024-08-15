@@ -22,7 +22,7 @@ const About: React.FC = () => {
             projectsCompleted: "",
         },
         skills: [{name: "", icon: ""}],
-        education: [{degree: "", year: "", institute: "", description: "", highlights: ""}],
+        education: [{degree: "", year: "", institute: "", description: "", highlights: "", icon: ""}],
     });
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const About: React.FC = () => {
                 experience={about.experiences}
                 personalInfo={about.personal}/>
             <Skills skills={about.skills}/>
-            <Education/>
+            <Education educationData={about.education}/>
         </Suspense>
     )
 }

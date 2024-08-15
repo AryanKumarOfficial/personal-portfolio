@@ -3,35 +3,15 @@ import React, {useState} from 'react';
 
 
 interface Education {
-    year: string;
     degree: string;
-    institution: string;
+    year: string;
+    institute: string;
     description: string;
-    details: string;
+    highlights: string;
     icon: string;
 }
 
-const educationData = [
-    {
-        year: '2016 - 2021',
-        degree: 'Matriculation',
-        institution: 'Nikhil Shyama DAV Public School',
-        description: 'Completed matriculation with a strong focus on science and mathematics, excelling in subjects like Physics, Chemistry, and Advanced Mathematics. Actively participated in science fairs and mathematics competitions, achieving several accolades.',
-        details: 'In addition to academic achievements, engaged in various extracurricular activities such as the debate club and robotics team, which nurtured leadership and teamwork skills.',
-        icon: 'fas fa-certificate'
-    },
-    {
-        year: '2021 - 2024',
-        degree: 'Diploma in Computer Science and Engineering',
-        institution: 'New Government Polytechnic',
-        description: 'Specialized in core computer science subjects including Algorithms, Data Structures, Web Development, and Database Management. Gained hands-on experience through various projects and internships.',
-        details: 'Successfully completed a final year project on developing a full-stack web application, which was well-received by the faculty. Participated in hackathons and coding competitions, securing top positions. Volunteered as a tutor for junior students, helping them with programming basics.',
-        icon: 'fas fa-graduation-cap'
-    },
-    // Add more education data as needed
-];
-
-const Education: React.FC = () => {
+const Education = ({educationData}: { educationData: Education[] }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     const toggleAccordion = (index: number) => {
@@ -54,7 +34,7 @@ const Education: React.FC = () => {
                                     <i className={`mr-4 text-4xl ${education.icon}`}></i>
                                     <h2 className="text-2xl font-bold text-teal-400">
                                         {education.degree}</h2>
-                                    <h3 className="text-lg font-semibold">{education.institution}</h3>
+                                    <h3 className="text-lg font-semibold">{education.institute}</h3>
                                     <time className="block mt-2 text-sm">{education.year}</time>
                                 </div>
                                 <span className="text-3xl transition-transform transform duration-300">
@@ -67,7 +47,7 @@ const Education: React.FC = () => {
                                 }`}
                             >
                                 <p className="p-2 text-justify md:text-left">{education.description}</p>
-                                <p className="p-2 text-gray-300 text-justify md:text-left">{education.details}</p>
+                                <p className="p-2 text-gray-300 text-justify md:text-left">{education.highlights}</p>
                             </div>
                         </article>
                     ))}
