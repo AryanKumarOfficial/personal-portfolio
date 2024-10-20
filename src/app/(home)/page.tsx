@@ -5,15 +5,31 @@ import {useEffect, useState} from "react";
 
 export default function Home() {
     const [userDetails, setUserDetails] = useState({title: "", bio: ""});
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         fetch("/api/settings/home")
             .then((res) => res.json())
             .then((data) => {
                 setUserDetails(data);
+                setLoading(false);
                 console.log(data);
             })
-            .catch((error) => console.error("Failed to fetch settings:", error));
+            .catch((error) => {
+                console.error("Failed to fetch settings:", error);
+                setLoading(false);
+            });
     }, []);
+
+    if (loading) {
+        // loader component
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"/>
+            </div>
+        );
+    }
+
     return (
         <>
             <section
