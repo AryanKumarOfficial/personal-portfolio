@@ -1,5 +1,9 @@
 "use client";
-import React from "react";
+import React, {useState} from "react";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {formSchema, FormSchema} from "@/backend/schema/message";
+import toast from "react-hot-toast";
 
 const Contact: React.FC = () => {
 
@@ -30,6 +34,52 @@ const Contact: React.FC = () => {
             link: 'https://github.com/aryankumarofficial'
         },
     ]
+    const address = [
+        {
+            name: 'Address',
+            icon: 'fas fa-map-marker-alt',
+            text: '1234 Elm St. New York, NY 10001'
+        },
+        {
+            name: 'Email',
+            icon: 'fas fa-envelope',
+            text: 'aryanak9163@gmail.com'
+        },
+        {
+            name: 'Phone',
+            icon: 'fas fa-phone-alt',
+            text: '+91 82351 72505'
+        }
+    ]
+    const {register, handleSubmit, formState: {errors}, reset} = useForm<FormSchema>({
+        resolver: zodResolver(formSchema)
+    });
+    const [loading, setLoading] = useState(false)
+    const onSubmit = async (data: FormSchema) => {
+        setLoading(true)
+        try {
+
+            const res = await fetch('/contact/api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+
+            if (res.ok) {
+                toast.success('Message sent successfully!');
+            } else {
+                toast.error('An error occurred. Please try again later!');
+            }
+
+            reset();
+        } catch (e: any) {
+            console.log(e?.message)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <main className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center py-16 pt-32">
@@ -42,7 +92,7 @@ const Contact: React.FC = () => {
                 {/* Contact Form */}
                 <div className="md:w-1/2 p-8">
                     <h2 className="text-3xl font-semibold mb-6 text-teal-400">Contact Form</h2>
-                    <form className="space-y-6">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-300">
                                 Name
@@ -52,8 +102,9 @@ const Contact: React.FC = () => {
                                 id="name"
                                 className="mt-1 block w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-teal-500 focus:border-teal-500 transition duration-300 ease-in-out"
                                 placeholder="Your Name"
-                                required
+                                {...register('name')}
                             />
+                            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
                         </div>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-300">
@@ -64,8 +115,9 @@ const Contact: React.FC = () => {
                                 id="email"
                                 className="mt-1 block w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-teal-500 focus:border-teal-500 transition duration-300 ease-in-out"
                                 placeholder="you@example.com"
-                                required
+                                {...register('email')}
                             />
+                            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                         </div>
                         <div>
                             <label htmlFor="message" className="block text-sm font-medium text-gray-300">
@@ -76,14 +128,16 @@ const Contact: React.FC = () => {
                                 className="mt-1 block w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-teal-500 focus:border-teal-500 transition duration-300 ease-in-out"
                                 placeholder="Your message"
                                 rows={5}
-                                required
+                                {...register('message')}
                             ></textarea>
+                            {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-teal-500 text-white font-semibold py-3 rounded-md hover:bg-teal-600 focus:ring-4 focus:ring-teal-300 transition duration-300 ease-in-out"
+                            className="w-full bg-teal-500 text-white font-semibold py-3 rounded-md hover:bg-teal-600 focus:ring-4 focus:ring-teal-300 transition duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed mt-4 disabled:bg-gray-700 disabled:text-gray-300"
+                            disabled={loading}
                         >
-                            Send Message
+                            {loading ? 'Sending...' : 'Send Message'}
                         </button>
                     </form>
                 </div>
@@ -92,28 +146,17 @@ const Contact: React.FC = () => {
                 <section className="md:w-1/2 bg-gray-700 p-8">
                     <h2 className="text-3xl font-semibold mb-6 text-teal-400">Get in Touch</h2>
                     <address className="space-y-4">
-                        <div>
-                            <h3 className="text-lg font-semibold">
-                                <i className={'fas fa-map-marker-alt mr-2 text-teal-400'}></i> Address
-                            </h3>
-                            <p className="text-gray-300">1234 Elm St. New York, NY 10001</p>
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-semibold">
-                                <i className={'fas fa-envelope mr-2 text-teal-400'}></i> Email
-                            </h3>
-                            <p className="text-gray-300">
-                                <a href="mailto:contact@mail.com" className="hover:underline">
-                                    contact@mail.com
-                                </a>
-                            </p>
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-semibold">
-                                <i className={'fas fa-phone-alt mr-2 text-teal-400'}></i> Phone
-                            </h3>
-                            <p className="text-gray-300">+1 (555) 123-4567</p>
-                        </div>
+                        {address.map((info, index) => {
+                            return (
+                                <div key={index}>
+                                    <h3 className="text-lg font-semibold">
+                                        <i className={`${info.icon} mr-2 text-teal-400`}></i> {info.name}
+                                    </h3>
+                                    <p className="text-gray-300">{info.text}</p>
+                                </div>
+                            )
+                        })}
+
                     </address>
 
 
@@ -139,7 +182,8 @@ const Contact: React.FC = () => {
                 </section>
             </section>
         </main>
-    );
+    )
+        ;
 }
 
 export default Contact;

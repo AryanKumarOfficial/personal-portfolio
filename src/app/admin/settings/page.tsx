@@ -409,6 +409,13 @@ const SettingsPage: React.FC = () => {
                             </button>
                         </form>
                     )}
+
+                    {activeSection === "portfolio" && (
+                        <form>
+                            <h2 className="text-2xl font-semibold mb-4">Portfolio Settings</h2>
+                            <p>Portfolio content settings.</p>
+                        </form>
+                    )}
                 </div>
             </div>
         </div>
