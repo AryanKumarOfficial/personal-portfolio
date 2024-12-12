@@ -103,6 +103,14 @@
       "description": "Specialized in core computer science subjects including Algorithms, Data Structures, Web Development, and Database Management. Gained hands-on experience through various projects and internships.",
       "highlights": "Successfully completed a final year project on developing a full-stack web application, which was well-received by the faculty. Participated in hackathons and coding competitions, securing top positions. Volunteered as a tutor for junior students, helping them with programming basics.",
       "icon": "fas fa-graduation-cap"
+    },
+    {
+      "degree": "B. Tech in Computer Science and Engineering",
+      "year": "2024 - 2027",
+      "institute": "Oriental Institute of Science and Technology",
+      "description": "",
+      "highlights": "",
+      "icon": "fas fa-graduation-cap"
     }
   ]
 }

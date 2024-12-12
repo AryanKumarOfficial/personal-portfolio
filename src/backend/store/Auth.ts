@@ -2,30 +2,27 @@ import {create} from "zustand";
 import {devtools, createJSONStorage} from "zustand/middleware";
 import {persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
-import {AppwriteException, ID, Models} from "appwrite";
-import {account} from "@/backend/app/client/config";
-import {users} from "@/backend/app/server/config";
-
-export interface UserPreference {
-    role: string;
-}
+import env from "@/config/config";
+import {generateSecretTokens} from "@/helpers/generators";
 
 interface IAuthStore {
-    session: Models.Session | null;
     token: string | null;
-    user: Models.User<UserPreference> | null;
+    user: {
+        name: string,
+        email: string,
+        isAdmin: boolean,
+        isVerified: boolean,
+    } | null;
     hydrated: boolean | null;
 
     setHydrated(): void;
-
-    verifySession(): Promise<void>;
 
     login(
         email: string,
         password: string
     ): Promise<{
         success: boolean,
-        error?: AppwriteException | null;
+        error?: Error | null;
     }>;
 
     createAccount(
@@ -34,7 +31,7 @@ interface IAuthStore {
         password: string
     ): Promise<{
         success: boolean,
-        error?: AppwriteException | null;
+        error?: Error | null;
     }>;
 
     logout(): void;
@@ -44,12 +41,14 @@ interface IAuthStore {
         secret: string
     ): Promise<{
         success: boolean,
-        error?: AppwriteException | null
+        error?: Error | null
     }>;
 
-    createEmailVerification(): Promise<{
+    createEmailVerification(
+        email: string,
+    ): Promise<{
         success: boolean,
-        error?: AppwriteException | null
+        error?: Error | null
     }>;
 
     getUserRole(): Promise<string | null>;
@@ -59,7 +58,6 @@ interface IAuthStore {
 const useAuth = create<IAuthStore>()(
     devtools(
         persist(immer((set, get) => ({
-            session: null,
             token: null,
             user: null,
             hydrated: null,
@@ -69,105 +67,164 @@ const useAuth = create<IAuthStore>()(
                     hydrated: true
                 });
             },
-            async verifySession() {
+            async createEmailVerification(email: string) {
                 try {
-                    const session = await account.getSession("current");
-                    set({
-                        session: session,
+                    const secret: string = generateSecretTokens();
+                    const response = await fetch(`${env.site.url as string}/admin/sendVerify/api`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({email, secret})
+
                     });
-                } catch (error) {
-                    console.log("Failed to verify session: ", error);
-                    set({session: null});
+
+                    const data = await response.json();
+                    if (!data.success) {
+                        return {
+                            success: false,
+                            error: new Error(data.message)
+                        }
+                    }
+                    return {
+                        success: true,
+                        error: null
+                    }
+                } catch (error: any) {
+                    console.log("error sending verification email: ", error)
+                    return {
+                        success: false,
+                        error: new Error(error.message)
+                    }
                 }
             },
             async login(email: string, password: string) {
                 try {
-                    // first try to delete existing user session from the server
-                    await account.deleteSessions();
-                } catch (error) {
-                    console.log("Failed to delete existing sessions: ", error)
-                }
-                try {
-                    const session = await account.createEmailPasswordSession(email, password);
-                    const [user, {jwt}] = await Promise.all([
-                        account.get<UserPreference>(),
-                        account.createJWT()
-                    ]);
-                    if (!user.prefs?.role) {
-                        await account.updatePrefs<UserPreference>({role: "user"});
+                    const response = await fetch(`${env.site.url as string}/admin/login/api`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({email, password})
+                    });
+
+                    const data = await response.json();
+                    if (!data.success) {
+                        return {
+                            success: false,
+                            error: new Error(data.message)
+                        }
                     }
-                    set({session, user, token: jwt});
+
+                    set({
+                        user: data?.admin,
+                        token: data?.token
+                    });
+
                     return {
                         success: true,
-                    };
-                } catch (error) {
-                    console.log("Failed to login: ", error);
+                        error: null
+                    }
+
+
+                } catch (e) {
+                    console.log("Error logging in: ", e);
                     return {
                         success: false,
-                        error: error instanceof AppwriteException ? error : null,
+                        error: e instanceof Error ? e : null,
                     };
                 }
             },
             async createAccount(name: string, email: string, password: string) {
                 try {
-                    const user = await account.create(ID.unique(), email, password, name);
-                    await users.updateLabels(user.$id, ['subscriber']);
-                    await get().createEmailVerification();
+                    const response = await fetch(`${env.site.url as string}/admin/signup/api`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({name, email, password})
+                    });
 
+                    const data = await response.json();
+                    if (!data.success) {
+                        return {
+                            success: false,
+                            error: new Error(data.message)
+                        }
+                    }
+                    await get().createEmailVerification(email);
                     return {
                         success: true,
+                        error: null
                     };
                 } catch (error) {
                     console.log("Failed to create account: ", error);
                     return {
                         success: false,
-                        error: error instanceof AppwriteException ? error : null,
+                        error: new Error("Internal Server Error")
                     };
                 }
             },
             async logout() {
                 try {
-                    await account.deleteSessions();
-                    set({session: null, user: null, token: null});
+                    set({user: null, token: null});
                 } catch (error) {
                     console.log("Logout failed: ", error);
                 }
             },
-            async verifyEmail(userId: string, secret: string) {
+            async verifyEmail(email: string, secret: string) {
                 try {
-                    new URLSearchParams();
-                    console.log(userId, secret, " tokens")
-                    const res = await account.updateVerification(userId, secret);
-                    console.log(res, " res after verification")
+                    const response = await fetch(`${env.site.url as string}/admin/verify/api`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({email, secret})
+                    });
+
+                    const data = await response.json();
+                    if (!data.success) {
+                        return {
+                            success: false,
+                            error: new Error(data.message)
+                        }
+                    }
+
+                    set({
+                        user: {
+                            name: email,
+                            email: email,
+                            isAdmin: false,
+                            isVerified: true
+                        }
+                    })
+
                     return {
-                        success: true
+                        success: true,
+                        error: null
                     }
                 } catch (error) {
                     console.log("Error verifying error: ", error);
                     return {
                         success: false,
-                        error: error instanceof AppwriteException ? error : null
-                    }
-                }
-            },
-            async createEmailVerification() {
-                try {
-                    await account.createVerification("http://localhost:3000/admin/verify")
-                    return {
-                        success: true
-                    }
-                } catch (error) {
-                    console.log("error sending verification email: ", error)
-                    return {
-                        success: false,
-                        error: error instanceof AppwriteException ? error : null
+                        error: new Error("Failed to verify email"),
                     }
                 }
             },
             async getUserRole() {
                 try {
-                    const user = await account.get();
-                    return user.labels[0] || null;
+                    const res = await fetch(`${env.site.url as string}/admin/api`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({token: get().user?.email})
+                    })
+                    const data = await res.json();
+                    if (!data.success) {
+                        return data?.role || null;
+                    }
+                    return data?.role || null;
                 } catch (error) {
                     console.log("Failed to get user role")
                     return null;
