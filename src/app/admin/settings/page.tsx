@@ -3,6 +3,8 @@
 import React, {useState, useEffect, ChangeEvent, FormEvent} from "react";
 import toast from "react-hot-toast";
 import {FaPlus} from "react-icons/fa";
+import useAuth from "@/backend/store/Auth";
+import {useRouter} from "next/navigation";
 
 // Define the types for the sections, form data, about data, and other structures
 interface Section {
@@ -60,6 +62,7 @@ const sections: Section[] = [
 ];
 
 const SettingsPage: React.FC = () => {
+    const {token, user, role} = useAuth();
     const [activeSection, setActiveSection] = useState<string>(sections[0].id);
     const [formData, setFormData] = useState<FormData>({title: "", bio: ""});
     const [aboutData, setAboutData] = useState<AboutData>({
@@ -89,6 +92,15 @@ const SettingsPage: React.FC = () => {
             },
         ],
     });
+    const router = useRouter();
+    useEffect(() => {
+        if (!token) {
+            router.push("/admin/login");
+        } else if (token && user && !role?.includes("admin")) {
+            router.push("/admin/unauthorized");
+        }
+    }, [token, role, user]);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -176,6 +188,7 @@ const SettingsPage: React.FC = () => {
             return {...prevData, [listKey]: updatedList};
         });
     };
+
 
     const handleAddItem = (listKey: "skills" | "education") => {
         const newItem =

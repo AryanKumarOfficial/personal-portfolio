@@ -6,7 +6,7 @@ import useAuth from "@/backend/store/Auth";
 
 const AdminDashboard = () => {
     const router = useRouter();
-    const {session, user} = useAuth();
+    const {token, user, role} = useAuth();
     const stats = [
         {
             title: 'Users',
@@ -31,12 +31,12 @@ const AdminDashboard = () => {
     ];
 
     useEffect(() => {
-        if (!session) {
+        if (!token) {
             router.push("/admin/login");
-        } else if (session && user && !user.labels.includes("admin")) {
-            router.push("/admin/unauthorized");
+        } else if (token && user && !role?.includes("admin")) {
+            router.push("/unauthorized");
         }
-    }, [session]);
+    }, [token, role, user]);
 
     return (
         <main className="flex-1 p-6 flex flex-col justify-center items-center">

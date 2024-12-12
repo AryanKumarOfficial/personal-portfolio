@@ -6,7 +6,7 @@ import {useRouter} from "next/navigation";
 import Icon from "@/app/admin/components/Icon";
 
 const AdminHome = () => {
-    const {session, user} = useAuth();
+    const {token, user, role} = useAuth();
     const router = useRouter();
     const links = [
         {
@@ -30,13 +30,14 @@ const AdminHome = () => {
     ]
 
     useEffect(() => {
-        if (!session) {
+        if (!token) {
             router.push("/admin/login");
-        } else if (session && user && !user.labels.includes("admin")) {
-            router.push("/admin/unauthorized");
+        } else if (token && user && role !== "admin") {
+            console.log("token", token, "user", user, "role", role);
+            router.push("/unauthorized");
         }
-        console.log(session, "dash session")
-    }, [session]);
+        console.log(token, "dash session")
+    }, [token, role]);
 
     return (
         <div className="container mx-auto p-4 flex justify-center items-center flex-col gap-20F

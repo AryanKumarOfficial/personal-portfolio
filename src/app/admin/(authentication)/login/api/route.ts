@@ -2,9 +2,11 @@ import {NextRequest, NextResponse} from "next/server";
 import Admin from "@/backend/Database/Models/Admin";
 import bcrypt from "bcryptjs";
 import JWT from "jsonwebtoken";
+import {connect} from "@/backend/Database/monggose";
 
 export async function POST(req: NextRequest) {
     try {
+        await connect();
         const {email, password} = await req.json();
         if (!email || !password) {
             return NextResponse.json({
@@ -65,6 +67,7 @@ export async function POST(req: NextRequest) {
 
     } catch
         (e: any) {
+        console.log("Error logging in: ", e);
         return NextResponse.json({
             message: "Internal Server Error!",
             success: false,

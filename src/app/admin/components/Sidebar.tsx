@@ -9,7 +9,7 @@ import {Toaster} from "react-hot-toast";
 import Icon from "@/app/admin/components/Icon";
 
 const Sidebar: React.FC<{ children: React.ReactNode }> = ({children}) => {
-    const {session} = useAuth();
+    const {token} = useAuth();
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,12 +40,12 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = ({children}) => {
     }, []);
 
     useEffect(() => {
-        if (session) {
+        if (token) {
             setIsAuthenticated(true);
         } else {
             setIsAuthenticated(false);
         }
-    }, [session]);
+    }, [token]);
 
     return (
         <>

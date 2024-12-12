@@ -13,6 +13,7 @@ interface IAuthStore {
         isAdmin: boolean,
         isVerified: boolean,
     } | null;
+    role: string | null;
     hydrated: boolean | null;
 
     setHydrated(): void;
@@ -51,7 +52,9 @@ interface IAuthStore {
         error?: Error | null
     }>;
 
-    getUserRole(): Promise<string | null>;
+    getUserRole(
+        email: string
+    ): Promise<string | null>;
 }
 
 
@@ -59,6 +62,7 @@ const useAuth = create<IAuthStore>()(
     devtools(
         persist(immer((set, get) => ({
             token: null,
+            role: null,
             user: null,
             hydrated: null,
 
@@ -120,6 +124,8 @@ const useAuth = create<IAuthStore>()(
                         user: data?.admin,
                         token: data?.token
                     });
+
+                    await get().getUserRole(email);
 
                     return {
                         success: true,
@@ -211,19 +217,21 @@ const useAuth = create<IAuthStore>()(
                     }
                 }
             },
-            async getUserRole() {
+            async getUserRole(email: string) {
                 try {
                     const res = await fetch(`${env.site.url as string}/admin/api`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify({token: get().user?.email})
+                        body: JSON.stringify({email})
                     })
                     const data = await res.json();
                     if (!data.success) {
+                        set({role: "guest"});
                         return data?.role || null;
                     }
+                    set({role: data?.role});
                     return data?.role || null;
                 } catch (error) {
                     console.log("Failed to get user role")
