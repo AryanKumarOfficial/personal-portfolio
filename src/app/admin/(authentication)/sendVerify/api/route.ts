@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
             from: process.env.EMAIL,
             to: email,
             subject: "Verify your email",
-            html: `<a href="http://localhost:3000/admin/verify?secret=${secret}">Click here to verify your email</a>`
+            html: `<a href="http://localhost:3000/admin/verify?email=${email}&secret=${secret}">Click here to verify your email</a>`
         });
         return NextResponse.json({message: "Email sent", success: true}, {status: 200});
     } catch (error: any) {

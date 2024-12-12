@@ -23,53 +23,46 @@ export async function POST(req: NextRequest) {
             }, {status: 404});
         }
 
-        bcrypt.compare(password, String(isAdminExists.password), (err, result) => {
-            if (err) {
-                return NextResponse.json({
-                    message: "An Error Occurred!",
-                    success: false,
-                    admin: null,
-                    token: null
-                }, {status: 401});
-            }
-            if (!result) {
-                return NextResponse.json({
-                    message: "Invalid Password",
-                    success: false,
-                    admin: null,
-                    token: null
-                }, {status: 401});
-            }
 
-            if (!isAdminExists.isAdmin) {
-                return NextResponse.json({
-                    message: "Unauthorized Access!",
-                    success: false,
-                    admin: null,
-                    token: null
-                }, {status: 401});
-            }
-            if (!isAdminExists.isVerified) {
-                return NextResponse.json({
-                    message: "Account is not verified",
-                    success: false,
-                    admin: null, token: null
-                }, {status: 401});
-            }
-
-            const token = JWT.sign({
-                email: isAdminExists.email,
-                id: isAdminExists._id
-            }, process.env.JWT_SECRET as string, {expiresIn: "1h"});
-
+        const isPasswordValid = await bcrypt.compare(password, String(isAdminExists.password));
+        if (!isPasswordValid) {
             return NextResponse.json({
-                message: "Login Successful",
-                success: true,
-                admin: isAdminExists,
-                token
-            }, {status: 200});
+                message: "Invalid Password",
+                success: false,
+                admin: null,
+                token: null
+            }, {status: 401});
+        }
 
-        });
+        if (!isAdminExists.isAdmin) {
+            return NextResponse.json({
+                message: "Unauthorized Access!",
+                success: false,
+                admin: null,
+                token: null
+            }, {status: 401});
+        }
+
+        if (!isAdminExists.isVerified) {
+            return NextResponse.json({
+                message: "Account is not verified",
+                success: false,
+                admin: null, token: null
+            }, {status: 401});
+        }
+
+        const token = JWT.sign({
+            email: isAdminExists.email,
+            id: isAdminExists._id
+        }, process.env.JWT_SECRET as string, {expiresIn: "1h"});
+
+        return NextResponse.json({
+            message: "Login Successful",
+            success: true,
+            admin: isAdminExists,
+            token
+        }, {status: 200});
+
     } catch
         (e: any) {
         return NextResponse.json({

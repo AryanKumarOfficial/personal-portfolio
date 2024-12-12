@@ -5,9 +5,9 @@ import useAuth from "@/backend/store/Auth";
 import toast from "react-hot-toast";
 
 export default function EmailVerification() {
-    const {session, createEmailVerification, verifyEmail} = useAuth();
+    const {createEmailVerification, verifyEmail, token} = useAuth();
     const [userData, setUserData] = useState({
-        userId: "",
+        email: "",
         secret: ""
     })
     const router = useRouter();
@@ -17,12 +17,12 @@ export default function EmailVerification() {
 
     useEffect(() => {
         const secret = searchParams.get("secret");
-        const userId = searchParams.get("userId");
-        if (secret && userId) {
+        const email = searchParams.get("email");
+        if (secret && email) {
             setInitial(false);
             setUserData({
                 secret: secret,
-                userId: userId
+                email: email
             })
         }
     }, []);
@@ -31,11 +31,17 @@ export default function EmailVerification() {
         e.preventDefault();
         try {
             setLoading(true);
-            await verifyEmail(userData.userId, userData.secret);
-            toast.success("Verification completed!");
-            setTimeout(() => {
-                router.push("/admin/login");
-            }, 3000);
+            verifyEmail(userData.email, userData.secret).then((res) => {
+                if (res.success) {
+                    toast.success("Verification completed!");
+                    setTimeout(() => {
+                        router.push("/admin/login");
+                    }, 3000);
+                } else {
+                    toast.error(String(res.error?.message) || "Failed to verify");
+                    setInitial(true);
+                }
+            });
         } catch (error) {
             console.error("Verification error:", error);
             toast.error("Failed to verify");
@@ -48,7 +54,7 @@ export default function EmailVerification() {
         e.preventDefault();
         setLoading(true);
         try {
-            await createEmailVerification();
+            await createEmailVerification(userData.email);
             toast.success("Verification email sent!");
         } catch (error: any) {
             console.error("Error sending verification email:", error);
@@ -58,21 +64,24 @@ export default function EmailVerification() {
         }
     };
 
-    if (!session) {
-        return <div>Redirecting to login...</div>;
-    }
-
     if (initial) {
         return (
             <section className="bg-gray-800 flex flex-col gap-10 justify-center items-center p-10 text-teal-400">
                 <h1 className="text-rose-500 text-xl font-bold">
                     Invalid Verification URL!
                 </h1>
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={userData.email}
+                    onChange={(e) => setUserData({...userData, email: e.target.value})}
+                    className="p-4 bg-gray-700 text-gray-50 text-lg font-semibold rounded w-full"
+                />
                 <button
                     onClick={handleSubmit}
                     type="button"
-                    className="bg-teal-500 p-4 text-gray-50 text-lg font-semibold rounded transition-shadow duration-500 hover:shadow-md shadow-amber-300"
-                    disabled={loading}
+                    className="bg-teal-500 p-4 text-gray-50 text-lg font-semibold rounded transition-shadow duration-500 hover:shadow-md shadow-amber-300 w-full text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-50"
+                    disabled={loading || !userData.email}
                 >
                     {loading ? "Sending Email..." : "Resend Email"}
                 </button>

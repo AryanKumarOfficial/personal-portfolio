@@ -9,7 +9,7 @@ import Icon from "@/app/admin/components/Icon";
 
 
 export default function LoginPage() {
-    const {login, session} = useAuth();
+    const {login, token} = useAuth();
     const router = useRouter();
     const [showPassword, setShowPassword] = React.useState(false);
     const [formData, setFormData] = React.useState({
@@ -60,10 +60,10 @@ export default function LoginPage() {
     }
 
     useEffect(() => {
-        if (session) {
+        if (token) {
             router.push("/admin");
         }
-    }, [session]);
+    }, [token]);
 
     return (
         <section className="flex w-1/3 bg-gray-900 justify-center items-center text-teal-400 pt-28">

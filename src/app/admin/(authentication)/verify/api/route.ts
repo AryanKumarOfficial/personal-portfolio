@@ -17,11 +17,12 @@ export async function POST(req: NextRequest) {
 
         // verify the token from the db
         const existingVerification = await Verification.findOne({email, secret});
+        console.log("existing code", existingVerification);
         if (!existingVerification) {
             return NextResponse.json({message: "Invalid token", success: false}, {status: 400});
         }
 
-        await Admin.findOneAndUpdate({email}, {verified: true});
+        await Admin.findOneAndUpdate({email}, {isVerified: true});
         await Verification.deleteMany({email});
         return NextResponse.json({message: "Email verified", success: true}, {status: 200});
 
