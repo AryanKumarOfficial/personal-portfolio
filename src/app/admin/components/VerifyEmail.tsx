@@ -3,35 +3,40 @@ import React, {useEffect, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import useAuth from "@/backend/store/Auth";
 import toast from "react-hot-toast";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Verify, verify} from '@/backend/schema/Verify'
+
 
 export default function EmailVerification() {
+    const {register, reset, handleSubmit, formState: {errors}} = useForm<Verify>({
+        resolver: zodResolver(verify)
+    });
     const {createEmailVerification, verifyEmail, token} = useAuth();
-    const [userData, setUserData] = useState({
-        email: "",
-        secret: ""
-    })
     const router = useRouter();
     const searchParams = useSearchParams();
     const [initial, setInitial] = useState(true);
     const [loading, setLoading] = useState(false);
 
+
     useEffect(() => {
-        const secret = searchParams.get("secret");
-        const email = searchParams.get("email");
-        if (secret && email) {
-            setInitial(false);
-            setUserData({
-                secret: secret,
-                email: email
-            })
+        if (token) {
+            router.push("/admin");
         }
-    }, []);
+    }, [token]);
+
+    useEffect(() => {
+        if (searchParams.has("email") && searchParams.has("secret")) {
+            setInitial(false);
+        }
+    }, [searchParams]);
+
 
     const handleVerify = async (e: React.MouseEvent) => {
         e.preventDefault();
         try {
             setLoading(true);
-            verifyEmail(userData.email, userData.secret).then((res) => {
+            verifyEmail(searchParams.get("email") ?? "", searchParams.get("secret") ?? "").then((res) => {
                 if (res.success) {
                     toast.success("Verification completed!");
                     setTimeout(() => {
@@ -50,11 +55,10 @@ export default function EmailVerification() {
         }
     };
 
-    const handleSubmit = async (e: React.MouseEvent) => {
-        e.preventDefault();
+    const onSubmit = async (data: Verify) => {
         setLoading(true);
         try {
-            await createEmailVerification(userData.email);
+            await createEmailVerification(data.email);
             toast.success("Verification email sent!");
         } catch (error: any) {
             console.error("Error sending verification email:", error);
@@ -70,21 +74,20 @@ export default function EmailVerification() {
                 <h1 className="text-rose-500 text-xl font-bold">
                     Invalid Verification URL!
                 </h1>
-                <input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={userData.email}
-                    onChange={(e) => setUserData({...userData, email: e.target.value})}
-                    className="p-4 bg-gray-700 text-gray-50 text-lg font-semibold rounded w-full"
-                />
-                <button
-                    onClick={handleSubmit}
-                    type="button"
-                    className="bg-teal-500 p-4 text-gray-50 text-lg font-semibold rounded transition-shadow duration-500 hover:shadow-md shadow-amber-300 w-full text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-50"
-                    disabled={loading || !userData.email}
-                >
-                    {loading ? "Sending Email..." : "Resend Email"}
-                </button>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        className="p-4 bg-gray-700 text-gray-50 text-lg font-semibold rounded w-full"
+                        {...register("email")}
+                    />
+                    <button
+                        type="button"
+                        className="bg-teal-500 p-4 text-gray-50 text-lg font-semibold rounded transition-shadow duration-500 hover:shadow-md shadow-amber-300 w-full text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-50"
+                        disabled={loading}>
+                        {loading ? "Sending Email..." : "Resend Email"}
+                    </button>
+                </form>
             </section>
         );
     } else {

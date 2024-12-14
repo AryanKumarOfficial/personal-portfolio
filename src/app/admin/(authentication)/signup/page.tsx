@@ -4,48 +4,25 @@ import toast from "react-hot-toast";
 import useAuth from "@/backend/store/Auth";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {RegisterSchema, RegisterInput} from "@/backend/schema/Register";
 
 
 export default function SignUp() {
+    const {register, reset, handleSubmit, formState: {errors}, watch} = useForm<RegisterInput>({
+        resolver: zodResolver(RegisterSchema)
+    });
     const {createAccount, token} = useAuth();
     const router = useRouter();
     const [showPassword, setShowPassword] = React.useState(false);
     const [showCPassword, setShowCPassword] = React.useState(false);
-    const [formData, setFormData] = React.useState({
-        name: "",
-        email: "",
-        password: "",
-        cPassword: "",
-    });
     const [loading, setLoading] = React.useState(false);
-    const [error, setError] = React.useState("");
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-
-        // Check if passwords match
-    }
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit = async (data: RegisterInput) => {
         try {
             setLoading(true);
-            if (!formData.name || !formData.email || !formData.password || !formData.cPassword) {
-                toast.error("All fields are required");
-                return;
-            }
 
-            if (formData.password !== formData.cPassword) {
-                toast.error("Passwords do not match");
-                return;
-            } else if (formData.password.length < 8) {
-                toast.error("Password must be at least 8 characters long");
-                return;
-            }
-            const userData = await createAccount(formData.name, formData.email, formData.password);
+            const userData = await createAccount(data.name, data.email, data.password);
 
             if (!userData.success) {
                 toast.error(userData.error!.message);
@@ -55,8 +32,10 @@ export default function SignUp() {
             }
 
         } catch (error) {
-            console.log(error, "error creating user")
+            console.log(error, "error creating user");
+            toast.error("An error occurred while creating account");
         } finally {
+            reset();
             setLoading(false)
         }
 
@@ -73,13 +52,6 @@ export default function SignUp() {
         setShowCPassword(!showCPassword);
     }
 
-    useEffect(() => {
-        if (formData.password !== formData.cPassword && formData.password.length !== 0 && formData.cPassword.length !== 0) {
-            setError("Passwords do not match");
-        } else if (formData.password === formData.cPassword || formData.password.length === 0 || formData.cPassword.length === 0) {
-            setError("");
-        }
-    }, [formData.password, formData.cPassword]);
 
     useEffect(() => {
         if (token) {
@@ -89,7 +61,7 @@ export default function SignUp() {
 
     return (
         <section className="flex bg-gray-900 w-1/3 justify-center items-center text-teal-400 pt-28">
-            <form onSubmit={handleSubmit} className="bg-gray-800 w-full rounded-lg shadow-lg px-10 py-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-gray-800 w-full rounded-lg shadow-lg px-10 py-6">
                 <h1 className={'uppercase text-3xl font-bold text-center'}>Signup</h1>
 
                 <div className={"flex flex-col justify-center items-start gap-4 my-4"}>
@@ -98,12 +70,11 @@ export default function SignUp() {
                     </label>
                     <input
                         type={"text"}
-                        name={"name"}
                         id={"name"}
                         className={"bg-gray-700 w-full rounded outline-none p-2"}
-                        value={formData.name}
-                        onChange={handleChange}
+                        {...register("name")}
                     />
+                    {errors.name && <p className={"text-red-500"}>{errors.name.message}</p>}
                 </div>
 
                 <div className={"flex flex-col justify-center items-start gap-4 my-4"}>
@@ -112,12 +83,11 @@ export default function SignUp() {
                     </label>
                     <input
                         type={"email"}
-                        name={"email"}
                         id={"email"}
                         className={"bg-gray-700 w-full rounded outline-none p-2"}
-                        value={formData.email}
-                        onChange={handleChange}
+                        {...register("email")}
                     />
+                    {errors.email && <p className={"text-red-500"}>{errors.email.message}</p>}
                 </div>
 
                 <div className={"flex flex-col justify-center items-start gap-4 my-4"}>
@@ -127,45 +97,42 @@ export default function SignUp() {
                     <div className={"relative w-full flex justify-center items-center"}>
                         <input
                             type={`${showPassword ? "text" : "password"}`}
-                            name={"password"}
                             id={"password"}
                             className={"bg-gray-700 w-full rounded outline-none p-2 pr-10"}
-                            value={formData.password}
-                            onChange={handleChange}
+                            {...register("password")}
                         />
                         <button onClick={togglePassword} className={"absolute right-2"}>
                             {showPassword ? <i className={"fas fa-eye"}></i> :
                                 <i className={"fas fa-eye-slash"}></i>}
                         </button>
                     </div>
+                    {errors.password && <p className={"text-red-500"}>{errors.password.message}</p>}
                 </div>
 
                 <div className={"flex flex-col justify-center items-start gap-4 my-4"}>
-                    <label htmlFor={"cPassword"} className={"font-bold uppercase cursor-pointer"}>
+                    <label htmlFor={"confirmPassword"} className={"font-bold uppercase cursor-pointer"}>
                         Confirm Password
                     </label>
                     <div className={"relative w-full flex justify-center items-center"}>
                         <input
                             type={`${showCPassword ? "text" : "password"}`}
-                            name={"cPassword"}
-                            id={"cPassword"}
+                            id={"confirmPassword"}
                             className={"bg-gray-700 w-full rounded outline-none p-2 pr-10"}
-                            value={formData.cPassword}
-                            onChange={handleChange}
+                            {...register("confirmPassword")}
                         />
                         <button onClick={toggleCPassword} className={"absolute right-2"}>
                             {showCPassword ? <i className={"fas fa-eye"}></i> :
                                 <i className={"fas fa-eye-slash"}></i>}
                         </button>
                     </div>
+                    {errors.confirmPassword && <p className={"text-red-500"}>{errors.confirmPassword.message}</p>}
                 </div>
 
-                {error && <p className={"text-red-500 text-sm"}>{error}</p>}
 
                 <div className={"flex flex-col w-full justify-center items-center gap-4 my-4 mt-6"}>
                     <button
                         type={"submit"}
-                        className={"bg-teal-600 w-full p-4 rounded text-gray-100 uppercase hover:bg-teal-800 transition-colors duration-500"}
+                        className={"bg-teal-600 w-full p-4 rounded text-gray-100 uppercase hover:bg-teal-800 transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-600 disabled:hover:text-gray-100"}
                         disabled={loading}
                     >
                         {loading ? "Registering..." : "Register"}
