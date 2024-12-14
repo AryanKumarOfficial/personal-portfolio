@@ -44,7 +44,7 @@ export async function GET() {
         const fileData = fs.readFileSync(settingsFilePath, "utf-8");
         const settingsData = JSON.parse(fileData);
 
-        return NextResponse.json(settingsData);
+        return NextResponse.json(settingsData, {status: 200});
     } catch (error) {
         return NextResponse.json({error: "Failed to load settings"}, {status: 500});
     }
