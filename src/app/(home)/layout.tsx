@@ -1,15 +1,28 @@
-import type {Metadata} from "next";
+import type {Metadata, ResolvingMetadata} from "next";
 import {Roboto} from "next/font/google";
 import Navbar from "@/components/Navbar";
 import React from "react";
 import {Toaster} from "react-hot-toast";
 import Footer from "@/components/Footer";
 import SleekLoadingBar from "@/components/LoadingBar";
+import {headers} from "next/headers";
 
-export const metadata: Metadata = {
-    title: "Aryan Kumar | Portfolio",
-    description: "Aryan Kumar's Portfolio",
-};
+type Props = {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export async function generateMetadata({searchParams}: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    const Capitalize = (str: string) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    const headerLists = headers();
+    const title = Capitalize(headerLists.get("x-current-path")?.split("/")?.join('') || "") || "Home";
+    return {
+        title,
+        description: "Home page",
+    };
+}
+
 
 const roboto = Roboto({
     display: "swap",

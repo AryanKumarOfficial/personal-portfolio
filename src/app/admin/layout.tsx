@@ -1,10 +1,18 @@
 import React from "react";
 import Sidebar from "./components/Sidebar";
 import {Metadata} from "next";
+import {headers} from "next/headers";
 
-export const metadata: Metadata = {
-    title: "Aryankumarofficial | Admin Panel",
-    description: "Aryankumarofficial's Admin Panel",
+export async function generateMetadata(): Promise<Metadata> {
+    const Capitalize = (str: string) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    const headerLists = headers();
+    const title = Capitalize(headerLists.get("x-current-path")?.split("/admin")?.join("").split("/").join("") || "") || "Admin"
+    return {
+        title,
+        description: "Admin panel",
+    };
 }
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({children}) => {

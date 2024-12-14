@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import {useEffect, useState} from "react";
+import {Metadata} from "next";
+
 
 export default function Home() {
     const [userDetails, setUserDetails] = useState({title: "", bio: ""});

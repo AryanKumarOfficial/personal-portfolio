@@ -4,7 +4,9 @@ import {NextResponse, NextRequest} from "next/server";
 export default async function middleware(req: NextRequest) {
     try {
         // Ensure database and storage are initialized
-        return NextResponse.next();
+        const headers = new Headers(req.headers);
+        headers.set("x-current-path", req.nextUrl.pathname);
+        return NextResponse.next({headers});
 
     } catch (error) {
         console.error("Middleware Error:", error);
