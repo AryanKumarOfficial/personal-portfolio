@@ -14,6 +14,8 @@ interface HomeState {
 
     fetchHomeData(): void;
 
+    updateHomeData(data: { title: string, description: string }): Promise<void>;
+
     setHydrated(): void;
 }
 
@@ -60,6 +62,32 @@ const useHome = create<HomeState>()(
                             description: null,
                         }
                     });
+                } finally {
+                    set({loading: false});
+                }
+            },
+            async updateHomeData(data) {
+                try {
+                    set({loading: true});
+                    const res = await fetch("/api/settings/home", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(data),
+                    });
+                    const result = await res.json();
+                    if (!res.ok) {
+                        set({error: new Error(result.error)});
+                    }
+                    set({
+                        data: {
+                            title: result.title,
+                            description: result.description,
+                        },
+                        error: null,
+                    });
+                } catch (error: any) {
+                    console.log("error updating home data: ", error?.message);
+                    set({error: new Error(error?.message)});
                 } finally {
                     set({loading: false});
                 }

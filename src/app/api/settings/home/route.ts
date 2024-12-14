@@ -9,7 +9,7 @@ console.log(settingsFilePath, "settingsFilePath");
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const {title, bio} = body.personal;
+        const {title, bio} = body;
         if (!title || !bio) {
             return NextResponse.json({error: "Missing required fields"}, {status: 400});
         }
