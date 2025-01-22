@@ -43,55 +43,49 @@ const Navbar: React.FC = () => {
                 key={index}
                 href={link.href}
                 onClick={toggleMenu}
-                className="text-gray-300 w-1/2 text-left hover:text-teal-400 uppercase flex items-center space-x-2 p-4 transition-colors duration-500"
+                className="text-gray-300 w-full md:w-auto text-left hover:text-teal-400 uppercase flex items-center space-x-2 py-2 px-4 md:p-0 transition-colors duration-300 ease-in-out"
             >
-                <Icon className={`${link.icon} text-xl block md:!hidden`}/>
-                <span>{link.name}</span>
+                <Icon className={`${link.icon} text-xl md:block hidden`} />
+                <span className="md:text-lg">{link.name}</span>
             </Link>
         ));
 
     return (
-        <nav
-            className="p-4 fixed w-full z-10 shadow-md bg-gray-800"
-        >
-            <div
-                className="max-w-6xl mx-auto flex flex-row-reverse md:flex-row flex-wrap justify-center md:justify-between items-center">
-                <Link href="/"
-                      className={`${styles.waveText} text-white text-xl md:text-3xl font-bold uppercase`}>
+        <nav className="p-4 fixed w-full z-10 shadow-md bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800 backdrop-blur-lg">
+            <div className="max-w-6xl mx-auto flex justify-between items-center">
+                <Link href="/" className={`${styles.waveText} text-white text-2xl md:text-3xl font-bold uppercase`}>
                     Aryan&nbsp;Kumar
                 </Link>
-                <div className="hidden md:flex space-x-4">
-                    {renderLinks()}
-                </div>
+                <div className="hidden md:flex space-x-8">{renderLinks()}</div>
             </div>
             <button
                 onClick={toggleMenu}
-                name="menu"
                 aria-label="Toggle Menu"
                 className="md:hidden text-white absolute top-1/2 transform -translate-y-1/2 left-4"
             >
-                <Icon className={`fas ${isMenuOpen ? "fa-times" : "fa-bars"} text-4xl`}/>
+                <Icon className={`fas ${isMenuOpen ? "fa-times" : "fa-bars"} text-3xl`} />
             </button>
 
-            {/* Blur background overlay */}
+            {/* Overlay for mobile */}
             {isMenuOpen && (
                 <div
-                    className="fixed md:hidden inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"
+                    className="fixed md:hidden inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-10"
                     onClick={toggleMenu} // Close menu when the backdrop is clicked
                 ></div>
             )}
 
+            {/* Mobile Menu */}
             <aside
                 id="side-menu"
-                className={`fixed top-0 left-0 h-full w-1/2 bg-gray-800 transform ${
+                className={`fixed top-0 left-0 h-full w-3/4 bg-gray-900 transform ${
                     isMenuOpen ? "translate-x-0" : "-translate-x-full"
                 } transition-transform duration-500 ease-in-out z-20 md:hidden`}
                 role="menu"
             >
-                <button onClick={toggleMenu} className="text-white absolute top-10 transform -translate-y-1/2 right-4">
-                    <Icon className="fas fa-times text-4xl"/>
+                <button onClick={toggleMenu} className="text-white absolute top-4 right-4">
+                    <Icon className="fas fa-times text-2xl" />
                 </button>
-                <div className="flex flex-col justify-center w-1/2 items-center space-y-4 h-full">
+                <div className="flex flex-col items-start space-y-4 px-6 py-10">
                     {renderLinks()}
                 </div>
             </aside>
