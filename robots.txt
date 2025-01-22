@@ -1,0 +1,16 @@
+# robots.txt for https://www.aryankumarofficial.tech/
+
+# Allow all web crawlers to access the entire site
+User-agent: *
+Disallow:
+
+# Disallow access to the admin and sensitive folders
+Disallow: /admin/
+# Disallow: /private/
+
+# Block specific files (if necessary)
+# Disallow: /terms-and-conditions.html
+# Disallow: /privacy-policy.html
+
+# Specify the location of the sitemap
+Sitemap: https://www.aryankumarofficial.tech/sitemap.xml
