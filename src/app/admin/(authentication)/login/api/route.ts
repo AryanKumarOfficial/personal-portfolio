@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
                 admin: null, token: null
             }, {status: 400});
         }
+        // remove password from response
         const isAdminExists = await Admin.findOne({email});
         if (!isAdminExists) {
             return NextResponse.json({
@@ -54,14 +55,20 @@ export async function POST(req: NextRequest) {
         }
 
         const token = JWT.sign({
+            id: isAdminExists._id,
             email: isAdminExists.email,
-            id: isAdminExists._id
         }, process.env.JWT_SECRET as string, {expiresIn: "1h"});
 
         return NextResponse.json({
             message: "Login Successful",
             success: true,
-            admin: isAdminExists,
+            admin: {
+                _id: isAdminExists._id,
+                name: isAdminExists.name,
+                email: isAdminExists.email,
+                isAdmin: isAdminExists.isAdmin,
+                isVerified: isAdminExists.isVerified
+            },
             token
         }, {status: 200});
 

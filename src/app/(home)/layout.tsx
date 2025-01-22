@@ -1,4 +1,4 @@
-import type {Metadata, ResolvingMetadata} from "next";
+import type {Metadata} from "next";
 import {Roboto} from "next/font/google";
 import Navbar from "@/components/Navbar";
 import React from "react";
@@ -7,11 +7,8 @@ import Footer from "@/components/Footer";
 import SleekLoadingBar from "@/components/LoadingBar";
 import {headers} from "next/headers";
 
-type Props = {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
 
-export async function generateMetadata({searchParams}: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
     const Capitalize = (str: string) => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }

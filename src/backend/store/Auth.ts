@@ -4,6 +4,7 @@ import {persist} from "zustand/middleware";
 import {immer} from "zustand/middleware/immer";
 import env from "@/config/config";
 import {generateSecretTokens} from "@/helpers/generators";
+import {cookieStorage} from "zustand-cookie-storage";
 
 interface IAuthStore {
     token: string | null;
@@ -113,6 +114,7 @@ const useAuth = create<IAuthStore>()(
                     });
 
                     const data = await response.json();
+                    console.log("Data: ", data);
                     if (!data.success) {
                         return {
                             success: false,
@@ -245,7 +247,19 @@ const useAuth = create<IAuthStore>()(
                     state?.setHydrated();
                 };
             },
-            storage: createJSONStorage(() => localStorage),
+            storage: createJSONStorage(() => cookieStorage),
+            partialize(state) {
+                return {
+                    user: {
+                        name: state.user?.name,
+                        email: state.user?.email,
+                        isAdmin: state.user?.isAdmin,
+                        isVerified: state.user?.isVerified,
+                    },
+                    token: state.token,
+                    role: state.role,
+                }
+            }
         })
     ))
 ;
