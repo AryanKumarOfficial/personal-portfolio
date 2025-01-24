@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const Capitalize = (str: string) => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
-    const headerLists = headers();
+    const headerLists = await headers();
     const title = Capitalize(headerLists.get("x-current-path")?.split("/")?.join('') || "") || "Home";
     return {
         title,

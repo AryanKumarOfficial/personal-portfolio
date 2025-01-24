@@ -3,46 +3,34 @@ import {MetadataRoute} from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
     return [
         {
-            url: 'https://aryankumarofficail.tech/',
+            url: 'https://aryankumarofficial.tech/',
             lastModified: new Date(),
-            changeFrequency: 'yearly',
+            changeFrequency: 'monthly',
             priority: 1,
         },
         {
-            url: 'https://aryankumarofficail.tech/about',
+            url: 'https://aryankumarofficial.tech/about',
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: 'daily',
             priority: 0.8,
         },
         {
-            url: 'https://aryankumarofficail.tech/blog',
+            url: 'https://aryankumarofficial.tech/contact',
             lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5,
+            changeFrequency: 'daily',
+            priority: 0.8,
         },
         {
-            url: 'https://aryankumarofficail.tech/contact',
+            url: 'https://aryankumarofficial.tech/blogs',
             lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5,
+            changeFrequency: 'daily',
+            priority: 0.8,
         },
         {
-            url: 'https://aryankumarofficail.tech/projects',
+            url: 'https://aryankumarofficial.tech/portfolio',
             lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5,
-        },
-        {
-            url: 'https://aryankumarofficail.tech/404',
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5,
-        },
-        {
-            url: 'https://aryankumarofficail.tech/500',
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5,
+            changeFrequency: 'daily',
+            priority: 0.8,
         },
     ];
 }

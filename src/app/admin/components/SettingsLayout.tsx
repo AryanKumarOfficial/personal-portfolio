@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import {headers} from "next/headers";
+import { headers, type UnsafeUnwrappedHeaders } from "next/headers";
 
 const SettingsLayout: React.FC<{ children: React.ReactNode }> = ({children}) => {
-    const headerList = headers();
+    const headerList = (headers() as unknown as UnsafeUnwrappedHeaders);
     const currentSection = headerList.get("x-current-path")?.split("/admin/settings/").join("");
     console.log(currentSection, "currentSection");
     const sections = [

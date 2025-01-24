@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.10.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@hookform/resolvers": "^3.9.1",
@@ -26,12 +27,12 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.427.0",
     "mongoose": "^8.8.4",
-    "next": "14.2.10",
+    "next": "15.1.6",
     "next-sitemap": "^4.2.3",
     "node-appwrite": "^13.0.0",
     "nodemailer": "^6.9.16",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "react-hook-form": "^7.54.0",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.3.0",
@@ -47,11 +48,15 @@
     "@types/canvas-confetti": "^1.6.4",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "19.0.7",
+    "@types/react-dom": "19.0.3",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.5.3",
+  "overrides": {
+    "@types/react": "19.0.7",
+    "@types/react-dom": "19.0.3"
+  }
 }

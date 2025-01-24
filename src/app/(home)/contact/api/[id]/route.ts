@@ -3,7 +3,8 @@ import Message from "@/backend/Database/Models/Message";
 import {connect} from "@/backend/Database/monggose";
 import {ObjectId} from "mongodb";
 
-export async function DELETE(req: NextRequest, {params}: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
     try {
         await connect();
         const message = await Message.findByIdAndDelete(new ObjectId(params.id));

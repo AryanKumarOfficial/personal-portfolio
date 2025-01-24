@@ -3,6 +3,7 @@ import "./globals.css"
 import Head from "next/head";
 import Script from "next/script";
 import {Metadata} from "next";
+import {ClerkProvider} from "@clerk/nextjs";
 
 export const metadata: Metadata = {
     title: {
@@ -33,7 +34,9 @@ export default function RootLayout({
                     data-color="#5F7FFF"
                     data-position="Right" data-x_margin="18" data-y_margin="18"/>
         </Head>
-        {children}
+        <ClerkProvider>
+            {children}
+        </ClerkProvider>
         </html>
     );
 }
