@@ -14,82 +14,92 @@ import { Spotlight } from "@/components/ui/aceternity/spotlight";
 import { MovingCards } from "@/components/ui/aceternity/moving-cards";
 import { cn } from "@/lib/utils";
 // Import React Icons
-import { FaGithub, FaLinkedin, FaTwitter, FaBriefcase } from 'react-icons/fa';
-import { MdEmail, MdArrowDownward, MdAccountCircle } from 'react-icons/md';
-import { BsCode, BsCodeSlash, BsLaptop } from 'react-icons/bs';
+import { FaGithub, FaLinkedin, FaTwitter, FaBriefcase, FaToolbox, FaReact, FaNodeJs, FaCode, FaDatabase, FaDesktop, FaTerminal, FaTools, FaFireAlt } from 'react-icons/fa';
+import { MdEmail, MdArrowDownward, MdAccountCircle, MdOutlineHandyman } from 'react-icons/md';
+import { BsCode, BsCodeSlash, BsLaptop, BsServer, BsArrowRight, BsLightningCharge } from 'react-icons/bs';
+import { SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiTailwindcss, SiExpress, SiMongodb, SiOpenjdk, SiAppwrite, SiWordpress, SiFigma, SiNpm, SiPostgresql, SiMysql, SiPrisma, SiGit, SiSass, SiDocker, SiAmazon } from "react-icons/si";
+import { ImStatsBars } from "react-icons/im";
+import { TbBrandVscode } from 'react-icons/tb';
 import { IoRocket, IoStatsChart } from 'react-icons/io5';
 
 // Tech stack and skills for the cards section
 const techStack = [
   {
-    icon: "fab fa-react",
+    icon: <FaReact className="text-5xl text-blue-400 animate-pulse-slow" />,
     name: "React & Next.js",
     description: "Building modern, SEO-friendly web applications with the latest features",
     color: "from-blue-500 to-cyan-400"
   },
   {
-    icon: "fab fa-node-js",
+    icon: <FaNodeJs className="text-5xl text-green-500" />,
     name: "Node.js & Express",
     description: "Creating robust backend systems and performant API endpoints",
     color: "from-green-500 to-emerald-400"
   },
   {
-    icon: "fas fa-database",
-    name: "MongoDB & SQL",
-    description: "Database design, optimization and advanced querying",
-    color: "from-emerald-500 to-teal-400"
+    icon: <SiMongodb className="text-5xl text-green-600" />,
+    name: "MongoDB & Databases",
+    description: "Designing efficient data models and seamless database integrations",
+    color: "from-green-500 to-teal-400"
   },
   {
-    icon: "fab fa-css3-alt",
-    name: "Tailwind & CSS",
-    description: "Crafting beautiful, responsive user interfaces",
-    color: "from-blue-400 to-indigo-500"
+    icon: <SiTypescript className="text-5xl text-blue-500" />,
+    name: "JavaScript & TypeScript",
+    description: "Developing with modern JavaScript and TypeScript for type safety",
+    color: "from-yellow-500 to-amber-400"
   },
   {
-    icon: "fas fa-mobile-alt",
-    name: "Responsive Design",
-    description: "Mobile-first, cross-device experiences that work everywhere",
-    color: "from-violet-500 to-purple-400"
+    icon: <SiTailwindcss className="text-5xl text-cyan-500" />,
+    name: "Tailwind CSS",
+    description: "Creating responsive, utility-first designs for all screen sizes",
+    color: "from-blue-400 to-sky-300"
   },
   {
-    icon: "fas fa-cloud",
-    name: "Cloud Services",
-    description: "AWS, Firebase, and other cloud platforms for scalable solutions",
-    color: "from-orange-400 to-pink-500"
+    icon: <FaGithub className="text-5xl text-white" />,
+    name: "Git & Version Control",
+    description: "Managing code with best practices for collaboration and deployment",
+    color: "from-orange-500 to-red-400"
+  },
+  {
+    icon: <SiWordpress className="text-5xl text-blue-400" />,
+    name: "WordPress Development",
+    description: "Building custom themes and plugins for WordPress websites",
+    color: "from-blue-600 to-blue-400"
+  },
+  {
+    icon: <SiAppwrite className="text-5xl text-red-500" />,
+    name: "Backend Services",
+    description: "Integration with Appwrite, Firebase and other backend services",
+    color: "from-red-500 to-pink-400"
+  },
+  {
+    icon: <IoRocket className="text-5xl text-purple-500" />,
+    name: "Performance Optimization",
+    description: "Improving load times and overall web application performance",
+    color: "from-purple-500 to-violet-400"
   },
 ];
 
-// Convert tech stack data for use with MovingCards component if needed
-const movingCardsItems = techStack.map(tech => ({
-  content: (
-    <div className="flex flex-col items-center justify-center h-full p-4">
-      <div className="mb-4 text-teal-400 text-4xl">
-        <i className={tech.icon}></i>
-      </div>
-      <h3 className="text-xl font-semibold text-white mb-2">{tech.name}</h3>
-      <p className="text-gray-400 text-center text-sm">{tech.description}</p>
-    </div>
-  ),
-  key: tech.name.toLowerCase().replace(/\s+/g, '-')
-}));
+// No need to convert tech stack for MovingCards as we're using separate MovingCards items
+// This comment block is kept for future reference if needed
 
 // Component for tech cards with hover effects
 const TechCard = ({ tech, index }: { tech: typeof techStack[0]; index: number }) => (
-  <div
-    className="group relative overflow-hidden rounded-xl bg-black border border-white/10 p-6 h-full transition-all duration-300 hover:shadow-glow hover:border-teal-500/30 hover:-translate-y-1"
+  <div 
+    className="group relative overflow-hidden rounded-xl bg-black/80 backdrop-blur-sm border border-white/10 p-6 h-full transition-all duration-300 hover:shadow-glow hover:border-teal-500/30 hover:-translate-y-1"
   >
     <div className={cn(
-      "absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-br",
+      "absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500 bg-gradient-to-br", 
       tech.color
     )}></div>
     <div className="flex flex-col space-y-4">
       <div className="flex justify-center mb-4">
-        <div className="rounded-full p-3 bg-gradient-to-br from-black to-gray-900 border border-teal-500/20 group-hover:border-teal-500/50 transition-all duration-300">
-          <i className={cn(tech.icon, "text-4xl text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-300")}></i>
+        <div className="rounded-full p-4 bg-gradient-to-br from-black to-gray-900 border-2 border-teal-500/30 group-hover:border-teal-500/70 transition-all duration-300 shadow-md group-hover:shadow-lg">
+          {tech.icon}
         </div>
       </div>
-      <h3 className="text-xl font-semibold text-white text-center">{tech.name}</h3>
-      <p className="text-gray-400 text-center text-sm">{tech.description}</p>
+      <h3 className="text-xl font-semibold text-white text-center group-hover:text-teal-300 transition-colors duration-300">{tech.name}</h3>
+      <p className="text-gray-400 text-center text-sm group-hover:text-gray-300 transition-colors duration-300">{tech.description}</p>
     </div>
   </div>
 );
@@ -385,60 +395,517 @@ export default function Home() {
         </div> */}
       </section>
 
-      {/* Skills Section */}
-      <section className="py-24 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+      {/* Skills & Expertise Section - Professional Capabilities */}
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-950 via-black to-gray-950">
+        {/* Simple, elegant background */}
+        <div className="absolute inset-0 -z-10">
+          {/* Subtle gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-black"></div>
+          
+          {/* Simple accent elements */}
+          <div className="absolute left-0 top-0 w-full h-full opacity-30 bg-[radial-gradient(circle_at_bottom_left,#1a1a1a,transparent_40%)]">
+          </div>
+          <div className="absolute right-0 bottom-0 w-full h-full opacity-30 bg-[radial-gradient(circle_at_top_right,#1a1a1a,transparent_40%)]">
+          </div>
+          
+          {/* Minimal color accents */}
+          <div className="absolute left-0 -bottom-40 h-80 w-80 rounded-full bg-teal-500/5 blur-3xl"></div>
+          <div className="absolute right-0 -top-40 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl"></div>
+          
+          {/* Subtle grid overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f10_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f10_1px,transparent_1px)] bg-[size:80px_80px]"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12">
             <Badge
               variant="outline"
-              className="bg-teal-500/10 text-teal-400 border-teal-500/30 px-4 py-1.5 text-sm mb-6"
+              className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border-emerald-500/30 px-4 py-1.5 text-sm mb-6"
             >
-              <i className="fas fa-code mr-2"></i> Skills & Expertise
+              <FaToolbox className="mr-2" /> Skills & Expertise
             </Badge>
-
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <TextShimmer>My Tech Stack</TextShimmer>
+            
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <TextShimmer className="bg-gradient-to-r from-emerald-400 to-teal-400">
+                Technical Proficiencies
+              </TextShimmer>
             </h2>
-
-            <p className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg">
-              I work with cutting-edge technologies to build responsive, scalable, and performant web applications.
+            
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              A showcase of my core skills and expertise gained through professional experience and personal projects
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-12">
             {techStack.map((tech, index) => (
-              <TechCard key={index} tech={tech} index={index} />
+              <div key={index} className="transform transition-all duration-500 hover:z-10" style={{ animationDelay: `${index * 150}ms` }}>
+                <TechCard tech={tech} index={index} />
+              </div>
             ))}
           </div>
 
           <div className="mt-16 text-center">
             <Button
               asChild
-              className="bg-transparent border border-teal-500/30 hover:bg-teal-500/10 text-teal-400 rounded-full py-6 px-8 transition-all duration-300"
+              className="bg-transparent border border-teal-500/30 hover:bg-teal-500/10 text-teal-400 rounded-full py-6 px-8 transition-all duration-300 group"
             >
-              <Link href="/about#skills">
-                View All Skills <i className="fas fa-arrow-right ml-2"></i>
+              <Link href="/about#skills" className="flex items-center gap-2">
+                View All Skills <BsArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Skills Showcase with Moving Cards */}
-      <section className="py-16 relative overflow-hidden bg-black">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
+      {/* Technologies Showcase - New Grid Layout */}
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-black via-gray-950 to-black">
+        {/* Background elements */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f10_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f10_1px,transparent_1px)] bg-[size:80px_80px]"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-teal-500/5 rounded-full blur-3xl"></div>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12">
             <Badge
               variant="outline"
-              className="bg-teal-500/10 text-teal-400 border-teal-500/30 px-4 py-1.5 text-sm mb-6"
+              className="bg-blue-500/10 text-blue-400 border-blue-500/30 px-4 py-1.5 text-sm mb-6"
             >
-              <i className="fas fa-code mr-2"></i> Technologies
+              <FaToolbox className="mr-2" /> Technology Stack
             </Badge>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Skills in Motion</h2>
+            
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <TextShimmer className="bg-gradient-to-r from-blue-400 to-indigo-500">
+                Tech Toolkit
+              </TextShimmer>
+            </h2>
+            
+            <p className="text-gray-400 max-w-2xl mx-auto mb-12">
+              The technologies and tools I use to build modern web applications
+            </p>
           </div>
 
-          <div className="w-full h-[30rem] overflow-hidden">
-            <MovingCards items={movingCardsItems} direction="right" speed="slow" pauseOnHover={true} />
+          {/* Tech Icons Showcase with MovingCards */}
+          <div className="relative py-10 mb-16">
+            {/* First row - frontend technologies */}
+            <div className="relative mb-12 overflow-hidden">
+              <div className="absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-gray-950 to-transparent z-10"></div>
+              <div className="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-gray-950 to-transparent z-10"></div>
+              
+              <h3 className="text-xl font-semibold text-white flex items-center mb-6">
+                <BsLaptop className="text-blue-400 mr-3" /> Frontend Technologies
+              </h3>
+              
+              <MovingCards
+                items={[
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-blue-500/10 rounded-xl shadow-md hover:shadow-blue-500/30 hover:border-blue-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300 shadow-inner">
+                          <SiReact className="text-blue-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-blue-400 transition-colors duration-300">React</span>
+                      </div>
+                    ),
+                    key: "react"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-white/10 rounded-xl shadow-md hover:shadow-white/30 hover:border-white/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-white/20 group-hover:border-white/40 transition-all duration-300 shadow-inner">
+                          <SiNextdotjs className="text-white text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-300">Next.js</span>
+                      </div>
+                    ),
+                    key: "nextjs"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-blue-500/10 rounded-xl shadow-md hover:shadow-blue-500/30 hover:border-blue-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300 shadow-inner">
+                          <SiTypescript className="text-blue-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-blue-400 transition-colors duration-300">TypeScript</span>
+                      </div>
+                    ),
+                    key: "typescript"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-cyan-500/10 rounded-xl shadow-md hover:shadow-cyan-500/30 hover:border-cyan-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-cyan-500/20 group-hover:border-cyan-500/40 transition-all duration-300 shadow-inner">
+                          <SiTailwindcss className="text-cyan-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-cyan-400 transition-colors duration-300">Tailwind CSS</span>
+                      </div>
+                    ),
+                    key: "tailwind"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-yellow-500/10 rounded-xl shadow-md hover:shadow-yellow-500/30 hover:border-yellow-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-yellow-500/20 group-hover:border-yellow-500/40 transition-all duration-300 shadow-inner">
+                          <SiJavascript className="text-yellow-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-yellow-400 transition-colors duration-300">JavaScript</span>
+                      </div>
+                    ),
+                    key: "javascript"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-purple-500/10 rounded-xl shadow-md hover:shadow-purple-500/30 hover:border-purple-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-purple-500/20 group-hover:border-purple-500/40 transition-all duration-300 shadow-inner">
+                          <SiAppwrite className="text-purple-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-purple-400 transition-colors duration-300">UI/UX</span>
+                      </div>
+                    ),
+                    key: "uiux"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-red-500/10 rounded-xl shadow-md hover:shadow-red-500/30 hover:border-red-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-red-500/20 group-hover:border-red-500/40 transition-all duration-300 shadow-inner">
+                          <SiReact className="text-red-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-red-400 transition-colors duration-300">React Native</span>
+                      </div>
+                    ),
+                    key: "reactnative"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-pink-500/10 rounded-xl shadow-md hover:shadow-pink-500/30 hover:border-pink-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-pink-500/20 group-hover:border-pink-500/40 transition-all duration-300 shadow-inner">
+                          <SiTailwindcss className="text-pink-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-pink-400 transition-colors duration-300">CSS/SASS</span>
+                      </div>
+                    ),
+                    key: "css"
+                  },
+                ]}
+                direction="right"
+                speed="fast"
+                pauseOnHover={true}
+                cardClassName="!bg-transparent !border-0 !p-0 !shadow-none"
+              />
+            </div>
+            
+            {/* Second row - backend technologies */}
+            <div className="relative mb-12 overflow-hidden">
+              <div className="absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-gray-950 to-transparent z-10"></div>
+              <div className="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-gray-950 to-transparent z-10"></div>
+              
+              <h3 className="text-xl font-semibold text-white flex items-center mb-6">
+                <BsServer className="text-green-400 mr-3" /> Backend Technologies
+              </h3>
+              
+              <MovingCards
+                items={[
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-green-500/10 rounded-xl shadow-md hover:shadow-green-500/30 hover:border-green-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-green-500/20 group-hover:border-green-500/40 transition-all duration-300 shadow-inner">
+                          <FaNodeJs className="text-green-500 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-green-500 transition-colors duration-300">Node.js</span>
+                      </div>
+                    ),
+                    key: "nodejs"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-gray-500/10 rounded-xl shadow-md hover:shadow-gray-500/30 hover:border-gray-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-gray-500/20 group-hover:border-gray-500/40 transition-all duration-300 shadow-inner">
+                          <SiExpress className="text-gray-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-gray-200 transition-colors duration-300">Express.js</span>
+                      </div>
+                    ),
+                    key: "express"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-green-500/10 rounded-xl shadow-md hover:shadow-green-500/30 hover:border-green-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-green-500/20 group-hover:border-green-500/40 transition-all duration-300 shadow-inner">
+                          <SiMongodb className="text-green-500 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-green-500 transition-colors duration-300">MongoDB</span>
+                      </div>
+                    ),
+                    key: "mongodb"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-black border border-white/5 rounded-xl shadow-md hover:shadow-blue-500/20 hover:border-blue-500/30 transition-all duration-500">
+                        <SiAppwrite className="text-blue-400 text-3xl" />
+                        <span className="text-sm font-medium text-white">Appwrite</span>
+                      </div>
+                    ),
+                    key: "appwrite"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-black border border-white/5 rounded-xl shadow-md hover:shadow-white/20 hover:border-white/30 transition-all duration-500">
+                        <SiNextdotjs className="text-white text-3xl" />
+                        <span className="text-sm font-medium text-white">Next API</span>
+                      </div>
+                    ),
+                    key: "nextapi"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-orange-500/10 rounded-xl shadow-md hover:shadow-orange-500/30 hover:border-orange-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-orange-500/20 group-hover:border-orange-500/40 transition-all duration-300 shadow-inner">
+                          <FaFireAlt className="text-orange-500 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-orange-500 transition-colors duration-300">Firebase</span>
+                      </div>
+                    ),
+                    key: "firebase"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-orange-500/10 rounded-xl shadow-md hover:shadow-orange-500/30 hover:border-orange-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-orange-500/20 group-hover:border-orange-500/40 transition-all duration-300 shadow-inner">
+                          <SiOpenjdk className="text-orange-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-orange-400 transition-colors duration-300">Java</span>
+                      </div>
+                    ),
+                    key: "java"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-blue-500/10 rounded-xl shadow-md hover:shadow-blue-500/30 hover:border-blue-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300 shadow-inner">
+                          <SiPostgresql className="text-blue-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-blue-400 transition-colors duration-300">PostgreSQL</span>
+                      </div>
+                    ),
+                    key: "postgresql"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-blue-700/10 rounded-xl shadow-md hover:shadow-blue-700/30 hover:border-blue-700/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-blue-700/20 group-hover:border-blue-700/40 transition-all duration-300 shadow-inner">
+                          <SiMysql className="text-blue-700 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-blue-700 transition-colors duration-300">MySQL</span>
+                      </div>
+                    ),
+                    key: "mysql"
+                  },
+                ]}
+                direction="left"
+                speed="normal"
+                pauseOnHover={true}
+                cardClassName="!bg-transparent !border-0 !p-0 !shadow-none"
+              />
+            </div>
+            
+            {/* Third row - tools and CMS */}
+            <div className="relative overflow-hidden">
+              <div className="absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-gray-950 to-transparent z-10"></div>
+              <div className="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-gray-950 to-transparent z-10"></div>
+              
+              <h3 className="text-xl font-semibold text-white flex items-center mb-6">
+                <MdOutlineHandyman className="text-purple-400 mr-3" /> CMS & Tools
+              </h3>
+              
+              <MovingCards
+                items={[
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-black border border-white/5 rounded-xl shadow-md hover:shadow-blue-500/20 hover:border-blue-500/30 transition-all duration-500">
+                        <SiWordpress className="text-blue-400 text-3xl" />
+                        <span className="text-sm font-medium text-white">WordPress</span>
+                      </div>
+                    ),
+                    key: "wordpress"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-green-500/10 rounded-xl shadow-md hover:shadow-green-500/30 hover:border-green-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-green-500/20 group-hover:border-green-500/40 transition-all duration-300 shadow-inner">
+                          <FaToolbox className="text-green-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-green-400 transition-colors duration-300">Shopify</span>
+                      </div>
+                    ),
+                    key: "shopify"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-gray-500/10 rounded-xl shadow-md hover:shadow-gray-500/30 hover:border-gray-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-gray-500/20 group-hover:border-gray-500/40 transition-all duration-300 shadow-inner">
+                          <FaGithub className="text-white text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-300">GitHub</span>
+                      </div>
+                    ),
+                    key: "github"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-gradient-to-b from-black to-gray-900 border border-blue-500/10 rounded-xl shadow-md hover:shadow-blue-500/30 hover:border-blue-500/40 transition-all duration-500 group hover:-translate-y-1">
+                        <div className="p-3 rounded-full bg-gradient-to-br from-gray-900 to-black border border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300 shadow-inner">
+                          <TbBrandVscode className="text-blue-400 text-3xl group-hover:animate-pulse-slow" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-300 group-hover:text-blue-400 transition-colors duration-300">VS Code</span>
+                      </div>
+                    ),
+                    key: "vscode"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-black border border-white/5 rounded-xl shadow-md hover:shadow-teal-500/20 hover:border-teal-500/30 transition-all duration-500">
+                        <FaNodeJs className="text-teal-400 text-3xl" />
+                        <span className="text-sm font-medium text-white">npm</span>
+                      </div>
+                    ),
+                    key: "npm"
+                  },
+                  {
+                    content: (
+                      <div className="flex flex-col items-center justify-center gap-2 p-4 h-full w-full bg-black border border-white/5 rounded-xl shadow-md hover:shadow-blue-500/20 hover:border-blue-500/30 transition-all duration-500">
+                        <IoRocket className="text-blue-500 text-3xl" />
+                        <span className="text-sm font-medium text-white">Vercel</span>
+                      </div>
+                    ),
+                    key: "vercel"
+                  },
+                ]}
+                direction="right"
+                speed="slow"
+                pauseOnHover={true}
+                cardClassName="!bg-transparent !border-0 !p-0 !shadow-none"
+              />
+            </div>
+          </div>
+          
+          {/* Skills Showcase */}
+          <div className="mt-16">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-black/80 to-black border border-gray-800/50 p-8">
+              <div className="absolute inset-0 bg-grid-white/5 bg-grid-8 [mask-image:radial-gradient(white,transparent_85%)]" />
+              
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                  <BsLightningCharge className="text-yellow-400" /> 
+                  <span>Specialized Skills</span>
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {/* Frontend Skills */}
+                  <div className="group relative bg-black/50 rounded-xl overflow-hidden backdrop-blur-sm border border-white/5 shadow-xl hover:shadow-blue-500/10 hover:border-blue-500/20 transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="p-6 relative z-10">
+                      <div className="p-3 rounded-full bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/10 w-14 h-14 flex items-center justify-center mb-4 shadow-inner group-hover:border-blue-500/30 transition-all duration-500">
+                        <SiReact className="text-blue-400 text-3xl group-hover:animate-spin-slow" />
+                      </div>
+                      <h4 className="text-lg font-semibold text-white mb-3">Frontend Development</h4>
+                      <ul className="space-y-2">
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-blue-400 mr-2"></div>
+                          React & Next.js Expertise
+                        </li>
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-blue-400 mr-2"></div>
+                          Responsive & Adaptive UI
+                        </li>
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-blue-400 mr-2"></div>
+                          Modern Animation & Transitions
+                        </li>
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-blue-400 mr-2"></div>
+                          Performance Optimization
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  {/* Backend Skills */}
+                  <div className="group relative bg-black/50 rounded-xl overflow-hidden backdrop-blur-sm border border-white/5 shadow-xl hover:shadow-green-500/10 hover:border-green-500/20 transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="p-6 relative z-10">
+                      <div className="p-3 rounded-full bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/10 w-14 h-14 flex items-center justify-center mb-4 shadow-inner group-hover:border-green-500/30 transition-all duration-500">
+                        <FaNodeJs className="text-green-400 text-3xl group-hover:animate-pulse-slow" />
+                      </div>
+                      <h4 className="text-lg font-semibold text-white mb-3">Backend Development</h4>
+                      <ul className="space-y-2">
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-green-400 mr-2"></div>
+                          Node.js & Express Architecture
+                        </li>
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-green-400 mr-2"></div>
+                          Database Design & Integration
+                        </li>
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-green-400 mr-2"></div>
+                          RESTful & GraphQL APIs
+                        </li>
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-green-400 mr-2"></div>
+                          Authentication & Security
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  {/* Design Skills */}
+                  <div className="group relative bg-black/50 rounded-xl overflow-hidden backdrop-blur-sm border border-white/5 shadow-xl hover:shadow-purple-500/10 hover:border-purple-500/20 transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="p-6 relative z-10">
+                      <div className="p-3 rounded-full bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/10 w-14 h-14 flex items-center justify-center mb-4 shadow-inner group-hover:border-purple-500/30 transition-all duration-500">
+                        <SiFigma className="text-purple-400 text-3xl group-hover:animate-pulse-slow" />
+                      </div>
+                      <h4 className="text-lg font-semibold text-white mb-3">UI/UX Design</h4>
+                      <ul className="space-y-2">
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-purple-400 mr-2"></div>
+                          Interaction Design Principles
+                        </li>
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-purple-400 mr-2"></div>
+                          Visual Hierarchy & Flow
+                        </li>
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-purple-400 mr-2"></div>
+                          Wireframing & Prototyping
+                        </li>
+                        <li className="text-gray-300 flex items-center">
+                          <div className="h-1.5 w-1.5 rounded-full bg-purple-400 mr-2"></div>
+                          User Research & Testing
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Currently Learning */}
+          <div className="mt-16 max-w-3xl mx-auto bg-black/50 border border-gray-800/50 rounded-xl p-6 md:p-8 hover:shadow-lg transition-all duration-500">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                <BsLightningCharge className="text-blue-400" size={24} />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-2 text-white">Currently Learning</h3>
+                <p className="text-gray-400 mb-4">I'm currently expanding my skills in these technologies to enhance my full-stack capabilities:</p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge className="bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border-0 text-blue-400">Java Development</Badge>
+                  <Badge className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-0 text-purple-400">Next.js 15</Badge>
+                  <Badge className="bg-gradient-to-r from-teal-500/20 to-green-500/20 border-0 text-teal-400">Full-Stack Projects</Badge>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -458,7 +925,7 @@ export default function Home() {
               variant="outline"
               className="bg-blue-500/10 text-blue-400 border-blue-500/30 px-4 py-1.5 text-sm mb-6"
             >
-              <i className="fas fa-briefcase mr-2"></i> Featured Work
+              <FaBriefcase className="mr-2" /> Featured Work
             </Badge>
 
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -478,7 +945,7 @@ export default function Home() {
               className="bg-blue-500 hover:bg-blue-600 text-white rounded-full py-6 px-8 transition-all duration-300 shadow-glow"
             >
               <Link href="/portfolio">
-                View All Projects <i className="fas fa-arrow-right ml-2"></i>
+                View All Projects <BsArrowRight className="ml-2" />
               </Link>
             </Button>
           </div>
@@ -511,7 +978,7 @@ export default function Home() {
                   className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white text-base md:text-lg rounded-full px-8 py-6 shadow-glow transition-all duration-300 hover:shadow-glow-lg"
                 >
                   <Link href="/contact">
-                    <i className="fas fa-envelope mr-2"></i> Get in Touch
+                    <MdEmail className="mr-2" /> Get in Touch
                   </Link>
                 </Button>
               </div>
