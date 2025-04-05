@@ -8,6 +8,7 @@ import SkillsSection from "@/components/home/SkillsSection";
 import ProjectsSection from "@/components/home/ProjectsSection";
 import CurrentlyLearningSection from "@/components/home/CurrentlyLearningSection";
 import CtaSection from "@/components/home/CtaSection";
+import HomeJsonLd from "@/components/home/HomeJsonLd";
 
 export default function Home() {
   const { fetchHomeData, data, error, loading } = useHome();
@@ -86,6 +87,8 @@ export default function Home() {
 
   return (
     <main className="bg-black text-white overflow-hidden">
+      {/* Structured Data for SEO */}
+      <HomeJsonLd />
       {/* Hero Section */}
       <HeroSection
       />

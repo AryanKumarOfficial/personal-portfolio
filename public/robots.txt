@@ -1,11 +1,9 @@
-# *
+# Allow all crawlers
 User-agent: *
 Allow: /
 
 # Host
 Host: https://www.aryankumarofficial.tech
 
-# Sitemaps
+# Sitemap
 Sitemap: https://www.aryankumarofficial.tech/sitemap.xml
-Sitemap: https://www.aryankumarofficial.tech/my-custom-sitemap-1.xml
-Sitemap: https://www.aryankumarofficial.tech/my-custom-sitemap-2.xml

@@ -3,6 +3,8 @@ import React, {Suspense, useEffect, useState} from 'react';
 import HeroSection from "@/app/(home)/about/components/HeroSection";
 import Skills from "@/app/(home)/about/components/Skills";
 import Education from "@/app/(home)/about/components/Education";
+import AboutJsonLd from "@/app/(home)/about/components/AboutJsonLd";
+import { Metadata } from "next";
 
 const LoadingAnimation = () => (
   <div className="flex items-center justify-center h-screen bg-black text-white">
@@ -65,12 +67,33 @@ const About: React.FC = () => {
     return (
         <Suspense fallback={<LoadingAnimation />}>
             <main className="bg-black text-white min-h-screen">
-                <HeroSection
-                    experience={about.experiences}
-                    personalInfo={about.personal}
+                {/* Add structured data for SEO */}
+                <AboutJsonLd 
+                    personal={about.personal}
+                    experiences={about.experiences}
+                    skills={about.skills}
+                    education={about.education}
                 />
-                <Skills skills={about.skills}/>
-                <Education education={about.education}/>
+                
+                {/* Hero Section with personal information */}
+                <section aria-labelledby="about-hero">
+                    <HeroSection
+                        experience={about.experiences}
+                        personalInfo={about.personal}
+                    />
+                </section>
+                
+                {/* Skills section with semantic HTML */}
+                <section aria-labelledby="skills-section">
+                    <h2 id="skills-section" className="sr-only">Professional Skills</h2>
+                    <Skills skills={about.skills}/>
+                </section>
+                
+                {/* Education section with semantic HTML */}
+                <section aria-labelledby="education-section">
+                    <h2 id="education-section" className="sr-only">Education Background</h2>
+                    <Education education={about.education}/>
+                </section>
             </main>
         </Suspense>
     )
