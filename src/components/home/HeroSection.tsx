@@ -135,7 +135,7 @@ const HeroSection = forwardRef<HTMLDivElement, HeroSectionProps>(
               {/* Profile image with enhanced design */}
               <div className="relative w-80 h-80 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl bg-gradient-to-b from-gray-900 to-black">
                 <Image
-                  src="/assets/images/profile.png"
+                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop"
                   alt="Aryan Kumar"
                   fill
                   className="object-cover transform hover:scale-105 transition-transform duration-700"
