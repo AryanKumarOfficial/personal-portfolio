@@ -187,20 +187,38 @@ const HeroSection = () => {
             </Button>
           </div>
 
-          {/* Social Links with hover animations */}
-          <div className="flex justify-center lg:justify-start gap-5 pt-3 animate-fade-in opacity-0" style={{ animationDelay: '1200ms', animationFillMode: 'forwards' }}>
-            <Link href="https://github.com/AryanKumarOfficial" target="_blank" rel="noopener noreferrer" className="transition-transform duration-300 hover:scale-110">
-              <FaGithub className="text-white/60 hover:text-teal-400 transition-colors duration-300" size={22} />
-            </Link>
-            <Link href="https://linkedin.com/in/aryan-kumar-official" target="_blank" rel="noopener noreferrer" className="transition-transform duration-300 hover:scale-110">
-              <FaLinkedin className="text-white/60 hover:text-teal-400 transition-colors duration-300" size={22} />
-            </Link>
-            <Link href="https://twitter.com/AryanKOfficial" target="_blank" rel="noopener noreferrer" className="transition-transform duration-300 hover:scale-110">
-              <FaTwitter className="text-white/60 hover:text-teal-400 transition-colors duration-300" size={22} />
-            </Link>
-            <Link href="mailto:contact@aryankumar.dev" className="transition-transform duration-300 hover:scale-110">
-              <MdEmail className="text-white/60 hover:text-teal-400 transition-colors duration-300" size={24} />
-            </Link>
+          {/* Social Links with staggered animations */}
+          <div className="flex justify-center lg:justify-start gap-5 pt-6 animate-fade-in opacity-0" style={{ animationDelay: '1200ms', animationFillMode: 'forwards' }}>
+            <a 
+              href="https://github.com/AryanKumarOfficial" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-800 bg-gray-900/50 text-white/70 hover:text-teal-400 hover:border-teal-500/50 backdrop-blur-sm transition-all duration-300 hover:scale-110"
+            >
+              <FaGithub size={20} />
+            </a>
+            <a 
+              href="https://linkedin.com/in/aryan-kumar-official" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-800 bg-gray-900/50 text-white/70 hover:text-blue-400 hover:border-blue-500/50 backdrop-blur-sm transition-all duration-300 hover:scale-110"
+            >
+              <FaLinkedin size={20} />
+            </a>
+            <a 
+              href="https://twitter.com/AryanKOfficial" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-800 bg-gray-900/50 text-white/70 hover:text-blue-400 hover:border-blue-500/50 backdrop-blur-sm transition-all duration-300 hover:scale-110"
+            >
+              <FaTwitter size={20} />
+            </a>
+            <a 
+              href="mailto:contact@aryankumar.dev"
+              className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-800 bg-gray-900/50 text-white/70 hover:text-red-400 hover:border-red-500/50 backdrop-blur-sm transition-all duration-300 hover:scale-110"
+            >
+              <MdEmail size={20} />
+            </a>
           </div>
         </div>
 
@@ -258,16 +276,16 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Scroll Down Button */}
-      <button
-        onClick={scrollToNextSection}
-        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white opacity-70 hover:opacity-100 transition-opacity duration-300 flex flex-col items-center text-sm font-medium"
-      >
-        <span className="mb-2">Scroll Down</span>
-        <MdArrowDownward className="animate-bounce" />
-      </button>
+        {/* Scroll Down Button */}
+        <button
+          onClick={scrollToNextSection}
+          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white opacity-70 hover:opacity-100 transition-opacity duration-300 flex flex-col items-center text-sm font-medium"
+        >
+          <span className="mb-2">Scroll Down</span>
+          <MdArrowDownward className="animate-bounce" />
+        </button>
+      </div>
     </section>
   );
 };
