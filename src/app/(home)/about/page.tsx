@@ -4,8 +4,19 @@ import HeroSection from "@/app/(home)/about/components/HeroSection";
 import Skills from "@/app/(home)/about/components/Skills";
 import Education from "@/app/(home)/about/components/Education";
 
-const About: React.FC = () => {
+const LoadingAnimation = () => (
+  <div className="flex items-center justify-center h-screen bg-black text-white">
+    <div className="relative">
+      <div className="w-16 h-16 border-4 border-blue-400/20 rounded-full animate-spin"></div>
+      <div className="w-16 h-16 border-4 border-transparent border-t-blue-400 rounded-full animate-spin absolute top-0 left-0"></div>
+      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-sm text-blue-400 whitespace-nowrap">
+        Loading...
+      </div>
+    </div>
+  </div>
+);
 
+const About: React.FC = () => {
     const [about, setAbout] = useState({
         personal: {
             name: "",
@@ -22,30 +33,45 @@ const About: React.FC = () => {
             projectsCompleted: "",
         },
         skills: [{name: "", icon: ""}],
-        education: [{degree: "", year: "", institute: "", description: "", highlights: "", icon: ""}],
+        education: [{
+            id: 0,
+            institution: "",
+            degree: "",
+            startDate: "",
+            description: "",
+            highlights: [] as string[],
+            type: ""
+        }],
     });
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch('/api/settings/about')
             .then(res => res.json())
             .then(data => {
-                console.log(data, 'data');
                 setAbout(data);
+                setIsLoading(false);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.error('Error fetching about data:', err);
+                setIsLoading(false);
+            });
     }, []);
 
+    if (isLoading) {
+        return <LoadingAnimation />;
+    }
+
     return (
-        <Suspense fallback={
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-2xl text-gray-800">Loading...</p>
-            </div>
-        }>
-            <HeroSection
-                experience={about.experiences}
-                personalInfo={about.personal}/>
-            <Skills skills={about.skills}/>
-            <Education educationData={about.education}/>
+        <Suspense fallback={<LoadingAnimation />}>
+            <main className="bg-black text-white min-h-screen">
+                <HeroSection
+                    experience={about.experiences}
+                    personalInfo={about.personal}
+                />
+                <Skills skills={about.skills}/>
+                <Education education={about.education}/>
+            </main>
         </Suspense>
     )
 }

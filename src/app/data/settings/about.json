@@ -92,24 +92,63 @@
       "degree": "Matriculation",
       "year": "2016 - 2021",
       "institute": "Nikhil Shyama DAV Public School",
-      "description": "Completed matriculation with a strong focus on science and mathematics, excelling in subjects like Physics, Chemistry, and Advanced Mathematics. Actively participated in science fairs and mathematics competitions, achieving several accolades.",
-      "highlights": "In addition to academic achievements, engaged in various extracurricular activities such as the debate club and robotics team, which nurtured leadership and teamwork skills.",
+      "description": "Completed matriculation with a strong focus on science and mathematics. Excelled in subjects such as Physics, Chemistry, and Advanced Mathematics. Actively participated in science fairs and mathematics competitions, which helped sharpen analytical and problem-solving skills.",
+      "highlights": "Participated in extracurricular activities including debate club, robotics team, sports events, and cultural fests. Developed leadership and teamwork abilities through organizing school events. Earned accolades and awards in science fairs, debates, and robotics competitions.",
+      "courses": [
+        "Science",
+        "Mathematics",
+        "English",
+        "Social Studies",
+        "Computer Science"
+      ],
+      "achievements": [
+        "Awarded for excellence in science fairs",
+        "Recognized at inter-school debate competitions",
+        "Received accolades in mathematics olympiads"
+      ],
       "icon": "fas fa-certificate"
     },
     {
       "degree": "Diploma in Computer Science and Engineering",
       "year": "2021 - 2024",
       "institute": "New Government Polytechnic",
-      "description": "Specialized in core computer science subjects including Algorithms, Data Structures, Web Development, and Database Management. Gained hands-on experience through various projects and internships.",
-      "highlights": "Successfully completed a final year project on developing a full-stack web application, which was well-received by the faculty. Participated in hackathons and coding competitions, securing top positions. Volunteered as a tutor for junior students, helping them with programming basics.",
+      "description": "Specialized in key computer science subjects including Algorithms, Data Structures, Web Development, and Database Management. Gained practical experience through labs, projects, and industry internships, which bridged theory with real-world application.",
+      "highlights": "Successfully completed a final year project by developing a full-stack web application that was well-received by the faculty. Actively participated in hackathons and coding competitions, earning top positions. Volunteered as a tutor for junior students, helping them grasp programming fundamentals and problem-solving techniques.",
+      "courses": [
+        "Programming in C, C++, Java",
+        "Web Technologies (HTML, CSS, JavaScript, Node.js)",
+        "Database Systems (MySQL, MongoDB)",
+        "Software Engineering",
+        "Data Structures and Algorithms"
+      ],
+      "achievements": [
+        "Final year project commended by the faculty",
+        "State-level hackathon winner",
+        "Certificate of merit in coding contests"
+      ],
+      "internship": "Completed an internship at a local software solutions firm, enhancing skills in full-stack development and project management.",
       "icon": "fas fa-graduation-cap"
     },
     {
       "degree": "B. Tech in Computer Science and Engineering",
       "year": "2024 - 2027",
       "institute": "Oriental Institute of Science and Technology",
-      "description": "",
-      "highlights": "",
+      "description": "Pursuing an advanced degree in Computer Science with a curriculum that covers emerging areas such as Artificial Intelligence, Machine Learning, Cybersecurity, and Cloud Computing. The program emphasizes both theoretical foundations and practical implementations, including research and capstone projects.",
+      "highlights": "Anticipated involvement in innovative projects including a capstone project focused on AI-driven applications. Expected participation in research labs, industry collaborations, and technical clubs to further enhance learning and practical exposure.",
+      "courses": [
+        "Advanced Algorithms",
+        "Machine Learning",
+        "Data Mining",
+        "Cybersecurity",
+        "Cloud Computing",
+        "Mobile App Development",
+        "Internet of Things (IoT)"
+      ],
+      "achievements": [
+        "Planned participation in national coding competitions and tech symposiums",
+        "Opportunities for research publications and industry internships"
+      ],
+      "extracurricular": "Active member of coding clubs, robotics teams, and tech communities, with a focus on continuous learning and innovation.",
       "icon": "fas fa-graduation-cap"
     }
   ]
