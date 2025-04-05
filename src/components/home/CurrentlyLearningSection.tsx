@@ -1,6 +1,20 @@
-import { FiBookOpen } from "react-icons/fi";
-import { GoGraph } from "react-icons/go";
-import { SiWebassembly, SiRust, SiSolidity, SiTensorflow, SiKubernetes, SiAmazon } from "react-icons/si";
+import { FiBookOpen, FiCode, FiDatabase } from "react-icons/fi";
+import { GoGraph, GoCodescan } from "react-icons/go";
+import { 
+  SiNextdotjs, 
+  SiOpenjdk,
+  SiLinux,
+  SiTypescript,
+  SiFramer,
+  SiNodedotjs,
+  SiMongodb,
+  SiDocker,
+  SiKubernetes,
+  SiCloudflare,
+  SiAndroid
+} from "react-icons/si";
+import { BsFillCpuFill, BsStack, BsCodeSquare } from "react-icons/bs";
+import { DiJava } from "react-icons/di";
 
 // Create a custom GradientBorderCard component since the import doesn't exist
 const GradientBorderCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
@@ -15,47 +29,117 @@ const GradientBorderCard = ({ children, className = "" }: { children: React.Reac
 const CurrentlyLearningSection = () => {
   const learningItems = [
     {
-      icon: <SiRust className="text-orange-400 text-3xl" />,
-      name: "Rust",
-      description: "Learning systems programming with Rust for high-performance applications",
-      progress: 35,
+      icon: <DiJava className="text-orange-400 text-3xl" />,
+      name: "Core Java",
+      description: "Deepening knowledge of Java fundamentals, JVM architecture, and object-oriented programming concepts",
+      progress: 80,
       color: "from-orange-500 to-red-500"
     },
     {
-      icon: <SiWebassembly className="text-purple-400 text-3xl" />,
-      name: "WebAssembly",
-      description: "Exploring WebAssembly for near-native performance in web applications",
-      progress: 40,
+      icon: <BsStack className="text-blue-400 text-3xl" />,
+      name: "Data Structures & Algorithms",
+      description: "Implementing advanced data structures and optimizing algorithmic problem-solving approaches",
+      progress: 75,
+      color: "from-blue-500 to-blue-700"
+    },
+    {
+      icon: <SiNextdotjs className="text-white text-3xl" />,
+      name: "Next.js App Router",
+      description: "Mastering server components, React Server Actions, and advanced routing patterns",
+      progress: 70,
+      color: "from-gray-500 to-gray-700"
+    },
+    {
+      icon: <BsFillCpuFill className="text-purple-400 text-3xl" />,
+      name: "Computer Architecture",
+      description: "Studying processor design, memory hierarchy, and system architecture principles",
+      progress: 65,
       color: "from-purple-500 to-indigo-500"
     },
     {
-      icon: <SiTensorflow className="text-yellow-400 text-3xl" />,
-      name: "Machine Learning",
-      description: "Studying ML fundamentals and implementing models with TensorFlow",
-      progress: 30,
+      icon: <SiLinux className="text-yellow-400 text-3xl" />,
+      name: "Operating Systems",
+      description: "Exploring process management, memory allocation, and system-level programming concepts",
+      progress: 70,
       color: "from-yellow-500 to-amber-500"
+    },
+    {
+      icon: <GoCodescan className="text-green-400 text-3xl" />,
+      name: "Software Engineering",
+      description: "Applying design patterns, architectural principles, and development methodologies in projects",
+      progress: 75,
+      color: "from-green-500 to-emerald-600"
+    },
+    {
+      icon: <SiTypescript className="text-blue-400 text-3xl" />,
+      name: "Advanced TypeScript",
+      description: "Implementing complex type systems, generics, and type utilities for scalable applications",
+      progress: 65,
+      color: "from-blue-400 to-cyan-500"
+    },
+    {
+      icon: <BsCodeSquare className="text-pink-400 text-3xl" />,
+      name: "Algorithm Analysis",
+      description: "Analyzing time/space complexity and optimizing algorithmic solutions for efficiency",
+      progress: 60,
+      color: "from-pink-500 to-fuchsia-600"
+    },
+    {
+      icon: <SiFramer className="text-purple-400 text-3xl" />,
+      name: "UI Animation",
+      description: "Creating fluid animations and interactive UI components with Framer Motion",
+      progress: 55,
+      color: "from-purple-400 to-indigo-500"
+    },
+    {
+      icon: <SiNodedotjs className="text-green-400 text-3xl" />,
+      name: "Node.js Backend",
+      description: "Developing scalable microservices and RESTful APIs with Express.js",
+      progress: 90,
+      color: "from-green-600 to-emerald-700"
+    },
+    {
+      icon: <FiDatabase className="text-blue-400 text-3xl" />,
+      name: "Database Systems",
+      description: "Working with SQL/NoSQL databases, query optimization, and data modeling techniques",
+      progress: 75,
+      color: "from-blue-500 to-sky-600"
+    },
+    {
+      icon: <SiMongodb className="text-green-400 text-3xl" />,
+      name: "MongoDB",
+      description: "Building applications with MongoDB Atlas, aggregation pipelines, and Mongoose ODM",
+      progress: 80,
+      color: "from-green-500 to-lime-600"
+    },
+    {
+      icon: <SiDocker className="text-blue-400 text-3xl" />,
+      name: "Containerization",
+      description: "Creating Docker containers, multi-stage builds, and optimizing container images",
+      progress: 50,
+      color: "from-blue-600 to-cyan-500"
     },
     {
       icon: <SiKubernetes className="text-blue-400 text-3xl" />,
       name: "Kubernetes",
-      description: "Containerizing applications and implementing deployment strategies",
-      progress: 45,
-      color: "from-blue-500 to-cyan-500"
+      description: "Orchestrating containerized applications and implementing deployment strategies",
+      progress: 40,
+      color: "from-blue-500 to-indigo-600"
     },
     {
-      icon: <SiSolidity className="text-gray-400 text-3xl" />,
-      name: "Blockchain",
-      description: "Building smart contracts with Solidity and exploring Web3 technologies",
-      progress: 25,
-      color: "from-gray-500 to-slate-500"
+      icon: <SiCloudflare className="text-orange-400 text-3xl" />,
+      name: "Web Security",
+      description: "Implementing authentication, authorization, and defense against common web vulnerabilities",
+      progress: 75,
+      color: "from-orange-500 to-amber-600"
     },
-    {
-      icon: <SiAmazon className="text-orange-400 text-3xl" />,
-      name: "AWS Cloud",
-      description: "Gaining expertise in cloud architecture and serverless computing",
-      progress: 50,
-      color: "from-orange-500 to-yellow-500"
-    }
+    // {
+    //   icon: <SiAndroid className="text-green-400 text-3xl" />,
+    //   name: "Android Development",
+    //   description: "Building native Android applications using Kotlin and Jetpack Compose",
+    //   progress: 30,
+    //   color: "from-green-500 to-emerald-600"
+    // }
   ];
 
   return (
@@ -71,14 +155,14 @@ const CurrentlyLearningSection = () => {
           <div className="flex items-center justify-center space-x-2 mb-3">
             <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
             <div className="bg-blue-900/30 text-blue-300 border border-blue-500/20 px-3 py-1 rounded-full text-xs font-medium">
-              EXPANDING KNOWLEDGE
+              CONTINUOUS GROWTH
             </div>
             <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Currently Learning</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            I'm constantly expanding my skills by exploring these emerging technologies.
-            Follow my journey as I build expertise in these cutting-edge areas.
+            As technology evolves, I'm dedicated to expanding my expertise in these modern web technologies.
+            Here's what I'm focused on mastering right now.
           </p>
         </div>
         
@@ -140,8 +224,8 @@ const CurrentlyLearningSection = () => {
                   <h3 className="text-xl font-semibold text-white">Learning Stats</h3>
                 </div>
                 <p className="text-gray-400 mb-6">
-                  I dedicate significant time to learning new technologies and improving my skills.
-                  Here's a snapshot of my ongoing learning journey.
+                  Being a developer means committing to lifelong learning. Here's a snapshot 
+                  of how I approach expanding my skills and keeping up with the latest technologies.
                 </p>
                 
                 <a 
@@ -158,22 +242,22 @@ const CurrentlyLearningSection = () => {
               
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700/50">
-                  <div className="text-4xl font-bold text-white mb-2">12+</div>
-                  <div className="text-gray-400">Hours/week on learning</div>
+                  <div className="text-4xl font-bold text-white mb-2">15+</div>
+                  <div className="text-gray-400">Hours/week learning</div>
                 </div>
                 
                 <div className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700/50">
-                  <div className="text-4xl font-bold text-white mb-2">6</div>
+                  <div className="text-4xl font-bold text-white mb-2">16</div>
                   <div className="text-gray-400">Current focus areas</div>
                 </div>
                 
                 <div className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700/50">
-                  <div className="text-4xl font-bold text-white mb-2">4</div>
-                  <div className="text-gray-400">Learning projects</div>
+                  <div className="text-4xl font-bold text-white mb-2">8</div>
+                  <div className="text-gray-400">Side projects</div>
                 </div>
                 
                 <div className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700/50">
-                  <div className="text-4xl font-bold text-white mb-2">8+</div>
+                  <div className="text-4xl font-bold text-white mb-2">12+</div>
                   <div className="text-gray-400">Technical courses completed</div>
                 </div>
               </div>
