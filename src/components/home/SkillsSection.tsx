@@ -109,7 +109,7 @@ const SkillsSection = () => {
           <div className="w-20 h-1 bg-gradient-to-r from-teal-500 to-blue-500 mx-auto rounded mb-6"></div>
           <p className="text-gray-400 max-w-2xl mx-auto">
             I specialize in full-stack development with expertise in both frontend and backend technologies.
-            I'm passionate about creating responsive, user-friendly interfaces and robust, scalable backend systems.
+            I&apos;m passionate about creating responsive, user-friendly interfaces and robust, scalable backend systems.
           </p>
         </div>
         

@@ -58,8 +58,8 @@ const AdminDashboard = () => {
                     <h2 className="text-xl md:text-2xl font-semibold mb-4 text-teal-300">Recent Activities</h2>
                     <ul>
                         <li className="mb-4">
-                            <p className="text-teal-500"><strong>John Doe</strong> added a new post <em>"How to use
-                                Tailwind CSS"</em></p>
+                            <p className="text-teal-500"><strong>John Doe</strong> added a new post <em>&ldquo;How to use
+                                Tailwind CSS&rdquo;</em></p>
                             <p className="text-teal-600 text-sm">2 hours ago</p>
                         </li>
                         <li className="mb-4">
@@ -67,8 +67,8 @@ const AdminDashboard = () => {
                             <p className="text-teal-600 text-sm">5 hours ago</p>
                         </li>
                         <li className="mb-4">
-                            <p className="tt5"><strong>Bob Johnson</strong> commented on <em>"React vs
-                                Vue"</em></p>
+                            <p className="tt5"><strong>Bob Johnson</strong> commented on <em>&ldquo;React vs
+                                Vue&rdquo;</em></p>
                             <p className="text-teal-600 text-sm">1 day ago</p>
                         </li>
                         {/* Add more recent activities as needed */}
@@ -92,7 +92,7 @@ const AdminDashboard = () => {
                                 Settings
                             </Link>
                         </li>
-                        <li className="mb-4">
+                        <li className="mb-4">   
                             <Link href="/admin/profile"
                                   className="flex items-center text-teal-400 hover:text-teal-500 transition-colors duration-500">
                                 <i className="fas fa-user mr-2"/>

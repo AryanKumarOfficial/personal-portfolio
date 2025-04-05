@@ -26,7 +26,7 @@ const Testimonials: React.FC = () => {
                                  boxShadow: "12px 12px 12px rgba(0, 0, 0, 0.2), -10px -10px 10px #1f2937"
                              }}
                         >
-                            <p className="text-lg italic mb-4 text-center">"{testimonial.quote}"</p>
+                            <p className="text-lg italic mb-4 text-center">&ldquo;{testimonial.quote}&rdquo;</p>
                             <h5 className="text-xl font-semibold text-teal-400">{testimonial.name}</h5>
                             <p className="text-gray-400 text-center">{testimonial.title}</p>
                         </div>

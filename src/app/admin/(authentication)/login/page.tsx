@@ -1,21 +1,21 @@
 "use client";
 
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import useAuth from "@/backend/store/Auth";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Icon from "@/app/admin/components/Icon";
-import {LoginSchema, loginSchema} from "@/backend/schema/login"
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { LoginSchema, loginSchema } from "@/backend/schema/login"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 
 export default function LoginPage() {
-    const {register, handleSubmit, reset, formState: {errors}} = useForm<LoginSchema>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema)
     });
-    const {login} = useAuth();
+    const { login } = useAuth();
     const router = useRouter();
     const [showPassword, setShowPassword] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
@@ -77,13 +77,13 @@ export default function LoginPage() {
                             {...register('password')}
                         />
                         <button onClick={togglePassword} className={"absolute right-2"}>
-                            {showPassword ? <Icon className={"fas fa-eye"}/> :
-                                <Icon className={"fas fa-eye-slash"}/>}
+                            {showPassword ? <Icon className={"fas fa-eye"} /> :
+                                <Icon className={"fas fa-eye-slash"} />}
                         </button>
                     </div>
                     <div className={"flex justify-end w-full items-center gap-2"}>
                         <Link href={"/admin/forgot"}
-                              className={"text-sm text-teal-400 hover:text-teal-300 transition-colors duration-500"}>
+                            className={"text-sm text-teal-400 hover:text-teal-300 transition-colors duration-500"}>
                             Forgot Password?
                         </Link>
                     </div>
@@ -100,10 +100,10 @@ export default function LoginPage() {
                 </div>
                 <div className={"flex justify-center w-full items-center gap-2"}>
                     <p className={"text-sm text-gray-400"}>
-                        Don't have an account?
+                        Don&apos;t have an account?
                     </p>
                     <Link href={"/admin/signup"}
-                          className={"text-sm text-teal-400 hover:text-teal-300 transition-colors duration-500"}>
+                        className={"text-sm text-teal-400 hover:text-teal-300 transition-colors duration-500"}>
                         Signup
                     </Link>
                 </div>

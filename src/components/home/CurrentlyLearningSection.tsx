@@ -1,7 +1,7 @@
 import { FiBookOpen, FiCode, FiDatabase } from "react-icons/fi";
 import { GoGraph, GoCodescan } from "react-icons/go";
-import { 
-  SiNextdotjs, 
+import {
+  SiNextdotjs,
   SiOpenjdk,
   SiLinux,
   SiTypescript,
@@ -149,7 +149,7 @@ const CurrentlyLearningSection = () => {
         <div className="absolute inset-0 bg-[url('/assets/images/grid-pattern.png')] bg-repeat opacity-[0.03]"></div>
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-gradient-to-t from-blue-500/5 to-transparent rounded-full blur-3xl"></div>
       </div>
-      
+
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center space-x-2 mb-3">
@@ -161,11 +161,11 @@ const CurrentlyLearningSection = () => {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Currently Learning</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            As technology evolves, I'm dedicated to expanding my expertise in these modern web technologies.
-            Here's what I'm focused on mastering right now.
+            As technology evolves, I&apos;m dedicated to expanding my expertise in these modern web technologies.
+            Here&apos;s what I&apos;m focused on mastering right now.
           </p>
         </div>
-        
+
         {/* Learning cards with progress indicators */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {learningItems.map((item, index) => (
@@ -178,13 +178,13 @@ const CurrentlyLearningSection = () => {
                       {item.icon}
                     </div>
                   </div>
-                  
+
                   {/* Content */}
                   <div className="flex-grow">
                     <h3 className="text-xl font-semibold text-white mb-2">{item.name}</h3>
                     <p className="text-gray-400 text-sm mb-4">{item.description}</p>
                   </div>
-                  
+
                   {/* Progress section */}
                   <div className="mt-auto">
                     <div className="flex items-center justify-between mb-2">
@@ -194,12 +194,12 @@ const CurrentlyLearningSection = () => {
                       </div>
                       <span className="text-white text-sm font-medium">{item.progress}%</span>
                     </div>
-                    
+
                     {/* Progress bar with animation */}
                     <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-                      <div 
+                      <div
                         className={`h-full rounded-full bg-gradient-to-r ${item.color}`}
-                        style={{ 
+                        style={{
                           width: `${item.progress}%`,
                           transition: "width 1.5s ease-in-out"
                         }}
@@ -211,11 +211,11 @@ const CurrentlyLearningSection = () => {
             </GradientBorderCard>
           ))}
         </div>
-        
+
         {/* Learning statistics */}
         <div className="mt-16 bg-gradient-to-b from-gray-900 to-black rounded-2xl border border-gray-800/50 p-8 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/assets/images/tech-pattern.png')] bg-repeat opacity-[0.03]"></div>
-          
+
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row justify-between gap-8">
               <div className="flex-1">
@@ -224,12 +224,12 @@ const CurrentlyLearningSection = () => {
                   <h3 className="text-xl font-semibold text-white">Learning Stats</h3>
                 </div>
                 <p className="text-gray-400 mb-6">
-                  Being a developer means committing to lifelong learning. Here's a snapshot 
+                  Being a developer means committing to lifelong learning. Here&apos;s a snapshot
                   of how I approach expanding my skills and keeping up with the latest technologies.
                 </p>
-                
-                <a 
-                  href="/learning-path" 
+
+                <a
+                  href="/learning-path"
                   className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors duration-300"
                 >
                   <span>View my complete learning roadmap</span>
@@ -239,23 +239,23 @@ const CurrentlyLearningSection = () => {
                   </svg>
                 </a>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700/50">
                   <div className="text-4xl font-bold text-white mb-2">15+</div>
                   <div className="text-gray-400">Hours/week learning</div>
                 </div>
-                
+
                 <div className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700/50">
                   <div className="text-4xl font-bold text-white mb-2">16</div>
                   <div className="text-gray-400">Current focus areas</div>
                 </div>
-                
+
                 <div className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700/50">
                   <div className="text-4xl font-bold text-white mb-2">8</div>
                   <div className="text-gray-400">Side projects</div>
                 </div>
-                
+
                 <div className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700/50">
                   <div className="text-4xl font-bold text-white mb-2">12+</div>
                   <div className="text-gray-400">Technical courses completed</div>

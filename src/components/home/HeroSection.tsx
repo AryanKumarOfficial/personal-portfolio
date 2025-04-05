@@ -251,7 +251,7 @@ const HeroSection = () => {
                 {/* Image container with hover effect */}
                 <div className="aspect-[5/6] overflow-hidden group">
                   <Image
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop"
+                    src="/assets/images/user.jpg"
                     alt="Aryan Kumar"
                     width={500}
                     height={600}

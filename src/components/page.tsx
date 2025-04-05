@@ -20,7 +20,7 @@ export default function Home() {
                     />
                 </div>
                 <div className="flex-1 p-6 md:order-1 text-center md:text-left">
-                    <h1 className="text-5xl font-bold text-white mb-4">Hi, I'm Aryan Kumar</h1>
+                    <h1 className="text-5xl font-bold text-white mb-4">Hi, I&apos;m Aryan Kumar</h1>
                     <h2 className="text-3xl text-blue-400 mb-4">Front-end Developer</h2>
                     <p className="text-lg text-gray-400 mb-6">
                         I am an open-source enthusiast and maintainer. I have learned a lot from the open-source

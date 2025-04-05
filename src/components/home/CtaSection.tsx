@@ -16,7 +16,7 @@ const CtaSection = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Bring Your Vision to Life?</h2>
             <p className="text-gray-300 text-lg mb-8">
               Whether you need a modern web application, a robust backend system, or a complete digital solution,
-              let's collaborate to create something amazing together.
+              let&apos;s collaborate to create something amazing together.
             </p>
             
             <div className="flex flex-col md:flex-row gap-4 justify-center">
