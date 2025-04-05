@@ -88,13 +88,10 @@ export default function Home() {
     <main className="bg-black text-white overflow-hidden">
       {/* Hero Section */}
       <HeroSection
-        typedText={typedText}
-        scrollToNextSection={scrollToNextSection}
-        ref={heroRef}
       />
       
       {/* Skills Section */}
-      <SkillsSection />
+      <SkillsSection/>
       
       {/* Projects Section */}
       <div className="py-20 bg-gradient-to-b from-black via-gray-950 to-black">

@@ -20,6 +20,12 @@ const stats = [
   { label: "Technologies", value: "10+" },
 ];
 
+type HeroSectionProps = {
+  typedText: string;
+  scrollToNextSection: () => void;
+  ref?: React.RefObject<HTMLDivElement>;
+}
+
 const HeroSection = () => {
   const [typedText, setTypedText] = useState("");
   const [textIndex, setTextIndex] = useState(0);

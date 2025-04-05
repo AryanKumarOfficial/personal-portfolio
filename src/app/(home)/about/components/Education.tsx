@@ -376,7 +376,7 @@ const Education = ({ education }: { education: EducationItem[] }) => {
                                               shadow-lg shadow-blue-500/20 flex items-center justify-center"
                                     >
                                         <span className="text-white text-xs">
-                                            {getEducationIcon(item.type, item.icon)}
+                                            {getEducationIcon( item.icon)}
                                         </span>
                                     </motion.div>
                                 </div>
