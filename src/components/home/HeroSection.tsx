@@ -1,193 +1,276 @@
-import { forwardRef } from "react";
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Text3D } from "@/components/ui/aceternity/3d-text";
 import { TextShimmer } from "@/components/ui/aceternity/text-shimmer";
 import { GridPattern } from "@/components/ui/aceternity/grid-pattern";
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaBriefcase } from 'react-icons/fa';
 import { MdEmail, MdArrowDownward, MdAccountCircle } from 'react-icons/md';
-import { ImStatsBars } from "react-icons/im";
+import { BsCode, BsCodeSlash, BsLaptop } from 'react-icons/bs';
+import { IoRocket, IoStatsChart } from 'react-icons/io5';
 
-interface HeroSectionProps {
-  typedText: string;
-  scrollToNextSection: () => void;
-}
+// Statistics to showcase achievements
+const stats = [
+  { label: "Projects Completed", value: "30+" },
+  { label: "Years Experience", value: "3+" },
+  { label: "Happy Clients", value: "15+" },
+  { label: "Technologies", value: "10+" },
+];
 
-const HeroSection = forwardRef<HTMLDivElement, HeroSectionProps>(
-  ({ typedText, scrollToNextSection }, ref) => {
-    // Stats to showcase achievements
-    const stats = [
-      { label: "Projects Completed", value: "30+" },
-      { label: "Years Experience", value: "3+" },
-      { label: "Satisfied Clients", value: "25+" },
-      { label: "GitHub Repositories", value: "45+" },
-    ];
+const HeroSection = () => {
+  const [typedText, setTypedText] = useState("");
+  const [textIndex, setTextIndex] = useState(0);
+  const heroRef = useRef<HTMLDivElement>(null);
 
-    return (
-      <section
-        ref={ref}
-        className="relative min-h-screen overflow-hidden bg-black flex flex-col justify-center"
-      >
-        {/* Enhanced Background Elements with more animations */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          {/* Rich gradient backdrop */}
-          <div className="absolute inset-0 bg-gradient-to-bl from-black via-gray-900 to-black"></div>
+  // Profession titles for the typing effect
+  const professions = [
+    "Full-Stack Developer",
+    "UI/UX Designer",
+    "Problem Solver",
+    "Tech Innovator"
+  ];
 
-          {/* Grid pattern for texture */}
-          <GridPattern
-            cellSize={40}
-            dotSize={1}
-            className="absolute inset-0 text-white/[0.1] [mask-image:linear-gradient(to_bottom,transparent_40%,black)]"
-            dotClassName="bg-white"
-          />
+  // Scroll to next section
+  const scrollToNextSection = () => {
+    if (heroRef.current) {
+      const heroHeight = heroRef.current.offsetHeight;
+      window.scrollTo({ top: heroHeight, behavior: 'smooth' });
+    }
+  };
 
-          {/* Animated circles */}
-          <div className="absolute top-1/4 left-1/3 w-72 h-72 bg-teal-500/5 rounded-full filter blur-3xl animate-pulse-slow"></div>
-          <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-blue-500/5 rounded-full filter blur-3xl animate-pulse-slow delay-700"></div>
+  // Typing effect
+  useEffect(() => {
+    const currentText = professions[textIndex];
+    let currentIndex = 0;
+    let isDeleting = false;
+    let timer: NodeJS.Timeout;
 
-          {/* Subtle shimmer effects */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,rgba(4,108,255,0.05),transparent)] transform"></div>
-        </div>
+    const type = () => {
+      const currentProfession = professions[textIndex];
 
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6 py-16 z-10 relative">
-          {/* Left column with text content */}
-          <div className="w-full md:w-1/2 mb-16 md:mb-0 relative">
-            {/* Professional badge */}
-            <div className="inline-block mb-6 rounded-full border border-teal-500/30 bg-teal-500/10 backdrop-blur-sm px-3 py-1 text-sm text-teal-300 animate-fadeIn">
-              <Badge className="mr-1 bg-teal-500/30 border-none">NEW</Badge> Available for work
+      if (!isDeleting && currentIndex <= currentProfession.length) {
+        setTypedText(currentProfession.substring(0, currentIndex));
+        currentIndex++;
+        timer = setTimeout(type, 100);
+      } else if (isDeleting && currentIndex >= 0) {
+        setTypedText(currentProfession.substring(0, currentIndex));
+        currentIndex--;
+        timer = setTimeout(type, 50);
+      } else if (currentIndex <= 0) {
+        isDeleting = false;
+        setTextIndex((prevIndex) => (prevIndex + 1) % professions.length);
+        timer = setTimeout(type, 500);
+      } else {
+        isDeleting = true;
+        timer = setTimeout(type, 2000);
+      }
+    };
+
+    timer = setTimeout(type, 1000);
+    return () => clearTimeout(timer);
+  }, [textIndex]);
+
+  return (
+    <section
+      ref={heroRef}
+      className="relative min-h-screen overflow-hidden bg-black flex flex-col justify-center"
+    >
+      {/* Enhanced Background Elements with more animations */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Rich gradient backdrop */}
+        <div className="absolute inset-0 bg-gradient-to-bl from-black via-gray-900 to-black"></div>
+
+        {/* Diagonal accent element with animation */}
+        <div className="absolute top-0 bottom-0 right-0 w-1/3 bg-gradient-to-l from-teal-900/30 to-transparent skew-x-[-12deg] transform origin-top-right hidden lg:block"></div>
+        <div className="absolute -bottom-[30%] -left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-teal-900/10 via-blue-900/5 to-transparent blur-3xl animate-pulse-slow"></div>
+
+        {/* Animated accent elements with varied animations */}
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl animate-pulse-slow opacity-70"></div>
+        <div className="absolute top-[10%] left-[5%] w-40 h-40 bg-teal-400/5 rounded-full blur-2xl animate-spin-slow"></div>
+
+        {/* Floating particles */}
+        <div className="absolute top-[30%] right-[20%] w-1 h-1 bg-teal-400 rounded-full shadow-glow animate-float opacity-70"></div>
+        <div className="absolute top-[70%] left-[30%] w-1 h-1 bg-teal-400 rounded-full shadow-glow animate-float opacity-70 animation-delay-700"></div>
+        <div className="absolute top-[20%] left-[40%] w-1 h-1 bg-blue-400 rounded-full shadow-glow animate-float opacity-70 animation-delay-1000"></div>
+
+        {/* Grid overlay with enhanced pattern */}
+        <GridPattern
+          className="absolute inset-0 opacity-[0.15]"
+          cellSize={20}
+          dotSize={1}
+          dotClassName="bg-white"
+        />
+
+        {/* Subtle tech pattern overlay */}
+        <div className="absolute inset-0 bg-[url('/assets/images/tech-pattern.png')] bg-repeat opacity-[0.03] mix-blend-screen"></div>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 container mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-6 items-center">
+        {/* Left Column - Content with animations (3/5 width on large screens) */}
+        <div className="lg:col-span-3 space-y-8 text-center lg:text-left">
+          {/* Professional Badge with slide-down animation */}
+          <div className="flex justify-center lg:justify-start mb-2 animate-fade-in">
+            <div className="inline-flex items-center space-x-1 bg-gradient-to-r from-black/70 to-gray-900/70 border border-teal-500/30 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm hover:shadow-teal-500/10 transition-all duration-300 hover:border-teal-500/50">
+              <BsCode className="text-teal-400 animate-pulse-slow" size={14} />
+              <span className="text-teal-300 text-xs font-medium">Full-Stack Developer</span>
             </div>
-
-            {/* Main heading with modern typography */}
-            <h1 className="text-4xl md:text-5xl xl:text-7xl font-extrabold mb-6 text-white relative">
-              <span className="block text-3xl md:text-4xl text-gray-400 mb-2">Hello, I'm</span>
-              <span className="relative">
-                <Text3D>Aryan Kumar</Text3D>
-                <span className="absolute -bottom-1.5 left-0 right-0 h-[0.5px] bg-gradient-to-r from-transparent via-teal-500 to-transparent"></span>
-              </span>
-            </h1>
-
-            {/* Profession with typing effect */}
-            <div className="text-xl md:text-2xl flex items-center mb-8 text-gray-300 h-8">
-              <span className="mr-2 text-white">I'm a</span>
-              <span className="text-teal-400 font-semibold">{typedText}</span>
-              <span className="animate-blink ml-1">|</span>
-            </div>
-
-            {/* Enhanced description with gradients */}
-            <p className="text-gray-300 text-lg mb-8 max-w-lg leading-relaxed">
-              I build <span className="text-teal-400 font-medium">modern</span> and{" "}
-              <span className="text-blue-400 font-medium">responsive</span> web 
-              applications with cutting-edge technologies, focusing on performance,
-              scalability, and exceptional user experience.
-            </p>
-
-            {/* Statistics row */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center border border-gray-800 rounded-lg p-3 bg-gradient-to-b from-gray-900 to-transparent hover:border-teal-500/30 transition-all duration-300 group">
-                  <div className="text-2xl font-bold text-white mb-1 group-hover:text-teal-400 transition-colors duration-300">{stat.value}</div>
-                  <div className="text-xs text-gray-400">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA buttons with enhanced design */}
-            <div className="flex flex-wrap items-center gap-4">
-              <Link href="/about" className="px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-full font-medium transition-all duration-300 hover:shadow-glow hover:from-teal-500 hover:to-cyan-500">
-                About Me
-              </Link>
-              <Link href="/projects" className="px-6 py-3 bg-transparent border border-gray-700 text-white rounded-full font-medium transition-all duration-300 hover:border-teal-500/50 hover:bg-black hover:shadow-glow">
-                My Projects
-              </Link>
-            </div>
-
-            {/* Scroll Down Button */}
-            <button 
-              onClick={scrollToNextSection}
-              className="absolute bottom-0 left-0 md:left-1/4 mb-4 text-white opacity-70 hover:opacity-100 transition-opacity duration-300 flex items-center text-sm font-medium"
-            >
-              <span className="mr-2">Scroll Down</span>
-              <MdArrowDownward className="animate-bounce" />
-            </button>
           </div>
 
-          {/* Right column with profile image */}
-          <div className="w-full md:w-1/2 flex justify-center md:justify-end relative">
-            {/* Decorative elements for visual interest */}
-            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-blue-500/10 to-transparent rounded-full blur-3xl"></div>
-            
-            {/* Decorative grid in background */}
-            <div className="absolute inset-0 bg-[url('/assets/images/grid-pattern.png')] bg-repeat opacity-[0.03]"></div>
+          {/* Name and Role with staggered animations */}
+          <div className="relative">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold animate-slide-up">
+              <span className="text-white">Aryan </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400 animate-gradient-x">Kumar</span>
+            </h1>
 
-            {/* Circle with gradient around image */}
-            <div className="relative">
-              {/* Animated ring */}
-              <div className="absolute -inset-4 rounded-full border border-teal-500/30 animate-spin-slow"></div>
-              
-              {/* Corner accents */}
-              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-teal-500/30 rounded-tl-md"></div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-teal-500/30 rounded-tr-md"></div>
-              <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-teal-500/30 rounded-bl-md"></div>
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-teal-500/30 rounded-br-md"></div>
-              
-              {/* Profile image with enhanced design */}
-              <div className="relative w-80 h-80 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl bg-gradient-to-b from-gray-900 to-black">
-                <Image
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop"
-                  alt="Aryan Kumar"
-                  fill
-                  className="object-cover transform hover:scale-105 transition-transform duration-700"
-                />
-                
-                {/* Professional highlight badge */}
-                <div className="absolute bottom-6 -right-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white text-xs px-4 py-1 rounded-full font-medium shadow-xl">
-                  <span className="whitespace-nowrap">Full-Stack Developer</span>
+            {/* Dynamic role with enhanced typing effect */}
+            <div
+              className="h-12 mt-5 mb-3 animate-fade-in opacity-0"
+              style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}
+            >
+              <div className="flex items-center justify-center lg:justify-start gap-2">
+                <div className="h-2 w-2 rounded-full bg-teal-400 animate-pulse"></div>
+                <span className="text-xl text-white/80 font-light">
+                  {typedText || '\u00A0'}
+                </span>
+              </div>
+            </div>
+
+            {/* Short bio with fade-in animation */}
+            <p className="text-gray-400 text-base md:text-lg max-w-lg mx-auto lg:mx-0 mt-4 animate-fade-in opacity-0" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
+              I build modern web applications with a focus on performance, user experience, and clean code.
+            </p>
+          </div>
+
+          {/* Stats Row with staggered hover animations */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-2 animate-fade-in opacity-0" style={{ animationDelay: '800ms', animationFillMode: 'forwards' }}>
+            {stats.map((stat, index) => (
+              <div key={index} className="flex flex-col items-center lg:items-start group transition-all duration-300 hover:translate-y-[-3px]">
+                <div className="flex items-center mb-1 gap-1.5">
+                  {index === 0 && <IoRocket className="text-teal-400 group-hover:text-teal-300 transition-colors duration-300" size={18} />}
+                  {index === 1 && <IoStatsChart className="text-teal-400 group-hover:text-teal-300 transition-colors duration-300" size={18} />}
+                  {index === 2 && <FaBriefcase className="text-teal-400 group-hover:text-teal-300 transition-colors duration-300" size={16} />}
+                  {index === 3 && <BsCodeSlash className="text-teal-400 group-hover:text-teal-300 transition-colors duration-300" size={18} />}
+                  <div className="text-white font-bold text-lg md:text-xl group-hover:text-teal-300 transition-colors duration-300">{stat.value}</div>
+                </div>
+                <div className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors duration-300">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Buttons with enhanced hover effects */}
+          <div className="flex flex-wrap gap-4 mt-6 justify-center lg:justify-start animate-fade-in opacity-0" style={{ animationDelay: '1000ms', animationFillMode: 'forwards' }}>
+            <Button
+              asChild
+              className="group flex items-center gap-2 bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-500 hover:to-teal-400 text-white rounded-lg px-6 py-2.5 font-medium transition-all duration-300 shadow-md hover:shadow-teal-500/20"
+            >
+              <Link href="/about" className="flex items-center gap-2">
+                <MdAccountCircle className="group-hover:animate-spin-slow" size={18} />
+                <span>About Me</span>
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              variant="outline"
+              className="group flex items-center gap-2 bg-transparent border border-white/10 text-white hover:text-teal-400 hover:bg-gray-900/50 hover:border-teal-400/40 rounded-lg px-6 py-2.5 transition-all duration-300 shadow-sm hover:shadow-teal-500/10"
+            >
+              <Link href="/portfolio" className="flex items-center gap-2">
+                <BsLaptop className="group-hover:translate-y-[-2px] transition-transform duration-300" size={16} />
+                <span>View Projects</span>
+              </Link>
+            </Button>
+          </div>
+
+          {/* Social Links with hover animations */}
+          <div className="flex justify-center lg:justify-start gap-5 pt-3 animate-fade-in opacity-0" style={{ animationDelay: '1200ms', animationFillMode: 'forwards' }}>
+            <Link href="https://github.com/AryanKumarOfficial" target="_blank" rel="noopener noreferrer" className="transition-transform duration-300 hover:scale-110">
+              <FaGithub className="text-white/60 hover:text-teal-400 transition-colors duration-300" size={22} />
+            </Link>
+            <Link href="https://linkedin.com/in/aryan-kumar-official" target="_blank" rel="noopener noreferrer" className="transition-transform duration-300 hover:scale-110">
+              <FaLinkedin className="text-white/60 hover:text-teal-400 transition-colors duration-300" size={22} />
+            </Link>
+            <Link href="https://twitter.com/AryanKOfficial" target="_blank" rel="noopener noreferrer" className="transition-transform duration-300 hover:scale-110">
+              <FaTwitter className="text-white/60 hover:text-teal-400 transition-colors duration-300" size={22} />
+            </Link>
+            <Link href="mailto:contact@aryankumar.dev" className="transition-transform duration-300 hover:scale-110">
+              <MdEmail className="text-white/60 hover:text-teal-400 transition-colors duration-300" size={24} />
+            </Link>
+          </div>
+        </div>
+
+        {/* Right Column - Image (2/5 width on large screens) */}
+        <div className="lg:col-span-2 flex justify-center items-center order-first lg:order-last">
+          {/* Profile Image with Animated Geometric Frame */}
+          <div className="relative">
+            {/* Main container with enhanced design */}
+            <div className="relative max-w-sm transform transition-transform duration-700 hover:scale-[1.02] hover:rotate-1">
+              {/* Animated glow effect */}
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-teal-500/20 to-blue-500/20 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-gradient-x"></div>
+
+              {/* Background shape with subtle animation */}
+              <div className="absolute -right-3 -bottom-3 w-full h-full border-2 border-teal-500/20 rounded-lg animate-pulse-slow"></div>
+
+              {/* Main frame with hover effects */}
+              <div className="relative bg-gradient-to-tr from-gray-900 to-black border border-white/10 rounded-lg overflow-hidden shadow-xl">
+                {/* Enhanced corner accents with hover animation */}
+                <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-teal-400/40 rounded-tl-lg transition-all duration-500 group-hover:border-teal-400/60"></div>
+                <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-teal-400/40 rounded-br-lg transition-all duration-500 group-hover:border-teal-400/60"></div>
+                <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-blue-400/40"></div>
+                <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-blue-400/40"></div>
+
+                {/* Image container with hover effect */}
+                <div className="aspect-[5/6] overflow-hidden group">
+                  <Image
+                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop"
+                    alt="Aryan Kumar"
+                    width={500}
+                    height={600}
+                    priority
+                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Enhanced overlay with gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10"></div>
+                  {/* Tech pattern overlay */}
+                  <div className="absolute inset-0 bg-[url('/assets/images/circuit-pattern.png')] bg-repeat opacity-[0.07] mix-blend-overlay"></div>
+                </div>
+
+                {/* Enhanced experience badge with animation */}
+                <div className="absolute right-0 top-5 bg-gradient-to-r from-teal-900/80 to-blue-900/80 backdrop-blur-sm py-1 pl-3 pr-2 rounded-l-full border-l border-t border-b border-teal-500/40 shadow-lg hover:shadow-teal-500/20 transition-all duration-300 hover:pr-3">
+                  <span className="text-white text-xs flex items-center">
+                    <span className="text-teal-300 font-semibold mr-1 animate-pulse-slow">3+</span> Years Experience
+                  </span>
+                </div>
+
+                {/* Tech stack badge */}
+                <div className="absolute left-0 bottom-5 bg-gradient-to-r from-blue-900/80 to-teal-900/80 backdrop-blur-sm py-1 pl-2 pr-3 rounded-r-full border-r border-t border-b border-blue-500/40 shadow-lg">
+                  <span className="text-white text-xs flex items-center gap-1.5">
+                    <BsCode className="text-blue-300" size={10} />
+                    <span>Full-Stack Developer</span>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Social links with float-up effect */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center space-x-4 z-20">
-          <a 
-            href="https://github.com/yourusername" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-800 bg-gray-900/50 text-white hover:text-teal-400 hover:border-teal-500/50 backdrop-blur-sm transition-all duration-300 group hover:-translate-y-1"
-          >
-            <FaGithub className="group-hover:animate-pulse-slow" />
-          </a>
-          <a 
-            href="https://linkedin.com/in/yourusername" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-800 bg-gray-900/50 text-white hover:text-blue-400 hover:border-blue-500/50 backdrop-blur-sm transition-all duration-300 group hover:-translate-y-1"
-          >
-            <FaLinkedin className="group-hover:animate-pulse-slow" />
-          </a>
-          <a 
-            href="https://twitter.com/yourusername" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-800 bg-gray-900/50 text-white hover:text-blue-400 hover:border-blue-500/50 backdrop-blur-sm transition-all duration-300 group hover:-translate-y-1"
-          >
-            <FaTwitter className="group-hover:animate-pulse-slow" />
-          </a>
-          <a 
-            href="mailto:your.email@example.com" 
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-800 bg-gray-900/50 text-white hover:text-red-400 hover:border-red-500/50 backdrop-blur-sm transition-all duration-300 group hover:-translate-y-1"
-          >
-            <MdEmail className="group-hover:animate-pulse-slow" />
-          </a>
-        </div>
-      </section>
-    );
-  }
-);
-
-HeroSection.displayName = "HeroSection";
+      {/* Scroll Down Button */}
+      <button
+        onClick={scrollToNextSection}
+        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white opacity-70 hover:opacity-100 transition-opacity duration-300 flex flex-col items-center text-sm font-medium"
+      >
+        <span className="mb-2">Scroll Down</span>
+        <MdArrowDownward className="animate-bounce" />
+      </button>
+    </section>
+  );
+};
+HeroSection.displayName = 'HeroSection';
 
 export default HeroSection;
