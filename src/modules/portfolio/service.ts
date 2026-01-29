@@ -56,4 +56,17 @@ export class PortfolioService {
       where: { id },
     });
   }
+
+  static async updateProject(id: string, data: Partial<Project>) {
+    return db.project.update({
+      where: { id },
+      data,
+    });
+  }
+
+  static async deleteProject(id: string) {
+    return db.project.delete({
+      where: { id },
+    });
+  }
 }

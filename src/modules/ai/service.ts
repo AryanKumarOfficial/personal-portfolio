@@ -26,7 +26,7 @@ export class AIService {
       `;
 
       const { object } = await generateObject({
-        model: google('gemini-2.5-flash'),
+        model: google('gemini-1.5-flash'),
         schema: z.object({
           summary: z.string().describe('A professional summary of the project (max 50 words).'),
           techStack: z.array(z.string()).describe('Detected or recommended tech stack.'),
@@ -43,6 +43,44 @@ export class AIService {
         summary: `(Fallback) Project: ${title}`,
         techStack: ['Unknown'],
         sentiment: 0.5,
+      };
+    }
+  }
+
+  static async generateBlogAnalysis(
+    title: string,
+    content: string
+  ): Promise<{ summary: string; tags: string[] }> {
+    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+      console.log('⚠️ No Google AI API Key found. Returning mock data.');
+      return {
+        summary: `(AI Generated) A blog post about ${title}.`,
+        tags: ['Blog', 'Tech', 'AI'],
+      };
+    }
+
+    try {
+      const prompt = `
+        Analyze the following blog post:
+        Title: ${title}
+        Content: ${content.substring(0, 5000)}
+      `;
+
+      const { object } = await generateObject({
+        model: google('gemini-1.5-flash'),
+        schema: z.object({
+          summary: z.string().describe('A short, engaging summary of the blog post (max 50 words).'),
+          tags: z.array(z.string()).describe('Relevant topic tags for the post.'),
+        }),
+        prompt: prompt,
+      });
+
+      return object;
+    } catch (error) {
+      console.error('AI Generation Error:', error);
+      return {
+        summary: `(Fallback) Blog Post: ${title}`,
+        tags: ['General'],
       };
     }
   }

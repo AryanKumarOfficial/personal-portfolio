@@ -1,6 +1,7 @@
 import { BlogService } from "@/modules/blog/service";
-import { createPostAction } from "@/modules/blog/actions";
+import { createPostAction, publishPostAction, deletePostAction } from "@/modules/blog/actions";
 import { Post } from "@/.generated/prisma/client";
+import Link from 'next/link';
 
 export default async function BlogsPage() {
   const posts: Post[] = await BlogService.getPosts(undefined);
@@ -56,7 +57,7 @@ export default async function BlogsPage() {
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
           >
-            Publish Post
+            Create Draft
           </button>
         </form>
       </div>
@@ -74,8 +75,53 @@ export default async function BlogsPage() {
               </span>
             </div>
             <p className="mt-2 text-gray-700 dark:text-gray-300 line-clamp-2">{post.excerpt || post.content.substring(0, 100)}</p>
-            <div className="mt-4 text-xs text-gray-400">
-                Created: {new Date(post.createdAt).toLocaleDateString()}
+
+            {(post.aiSummary || (post.aiTags && post.aiTags.length > 0)) && (
+              <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded border border-green-100 dark:border-green-900">
+                <h4 className="text-xs font-bold text-green-700 dark:text-green-300 flex items-center gap-2">
+                  ✨ AI Analysis
+                </h4>
+                {post.aiSummary && <p className="text-sm mt-1 italic">{post.aiSummary}</p>}
+                {post.aiTags && post.aiTags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {post.aiTags.map((t: string) => (
+                      <span key={t} className="text-xs bg-green-200 dark:bg-green-800 px-2 py-0.5 rounded">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="mt-4 flex items-center justify-between">
+                <div className="text-xs text-gray-400">
+                    Created: {new Date(post.createdAt).toLocaleDateString()}
+                </div>
+                <div className="flex gap-2">
+                     <Link
+                        href={`/admin/blogs/${post.id}`}
+                        className="text-sm text-blue-600 hover:text-blue-800 underline"
+                      >
+                        Edit
+                      </Link>
+
+                    {post.status !== 'PUBLISHED' && (
+                        <form action={publishPostAction}>
+                            <input type="hidden" name="id" value={post.id} />
+                            <button type="submit" className="text-sm text-green-600 hover:text-green-800 underline">
+                                Publish
+                            </button>
+                        </form>
+                    )}
+
+                    <form action={deletePostAction}>
+                        <input type="hidden" name="id" value={post.id} />
+                        <button type="submit" className="text-sm text-red-600 hover:text-red-800 underline">
+                            Delete
+                        </button>
+                    </form>
+                </div>
             </div>
           </div>
         ))}
