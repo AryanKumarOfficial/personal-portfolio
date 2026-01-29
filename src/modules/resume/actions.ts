@@ -35,14 +35,58 @@ export async function addEducationAction(formData: FormData) {
   const session = await auth();
   if (!session?.user?.id) throw new Error('Unauthorized');
 
+  const institutionValue = formData.get('institution');
+  const degreeValue = formData.get('degree');
+  const fieldValue = formData.get('field');
+  const startDateValue = formData.get('startDate');
+  const endDateValue = formData.get('endDate');
+  const descriptionValue = formData.get('description');
+  const locationValue = formData.get('location');
+
+  if (typeof institutionValue !== 'string' || !institutionValue.trim()) {
+    throw new Error('Invalid or missing institution');
+  }
+  if (typeof degreeValue !== 'string' || !degreeValue.trim()) {
+    throw new Error('Invalid or missing degree');
+  }
+  if (typeof fieldValue !== 'string' || !fieldValue.trim()) {
+    throw new Error('Invalid or missing field');
+  }
+  if (typeof startDateValue !== 'string' || !startDateValue.trim()) {
+    throw new Error('Invalid or missing startDate');
+  }
+  if (typeof descriptionValue !== 'string' || !descriptionValue.trim()) {
+    throw new Error('Invalid or missing description');
+  }
+  if (typeof locationValue !== 'string' || !locationValue.trim()) {
+    throw new Error('Invalid or missing location');
+  }
+
+  const startDate = new Date(startDateValue);
+  if (Number.isNaN(startDate.getTime())) {
+    throw new Error('Invalid startDate format');
+  }
+
+  let endDate: Date | null = null;
+  if (endDateValue !== null && endDateValue !== undefined && String(endDateValue).trim() !== '') {
+    if (typeof endDateValue !== 'string') {
+      throw new Error('Invalid endDate');
+    }
+    const parsedEndDate = new Date(endDateValue);
+    if (Number.isNaN(parsedEndDate.getTime())) {
+      throw new Error('Invalid endDate format');
+    }
+    endDate = parsedEndDate;
+  }
+
   await ResumeService.addEducation({
-    institution: formData.get('institution') as string,
-    degree: formData.get('degree') as string,
-    field: formData.get('field') as string,
-    startDate: new Date(formData.get('startDate') as string),
-    endDate: formData.get('endDate') ? new Date(formData.get('endDate') as string) : null,
-    description: formData.get('description') as string,
-    location: formData.get('location') as string,
+    institution: institutionValue,
+    degree: degreeValue,
+    field: fieldValue,
+    startDate,
+    endDate,
+    description: descriptionValue,
+    location: locationValue,
   });
 
   revalidatePath('/admin/resume');
