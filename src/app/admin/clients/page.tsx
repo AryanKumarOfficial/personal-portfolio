@@ -33,7 +33,7 @@ export default async function ClientsPage() {
                 {client.logo && <img src={client.logo} alt={client.name} className="w-10 h-10 rounded-full object-cover bg-gray-100" />}
                 <div>
                     <h4 className="font-bold">{client.name}</h4>
-                    {client.website && <a href={client.website} target="_blank" className="text-xs text-blue-500 hover:underline">{client.website}</a>}
+                    {client.website && <a href={client.website} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">{client.website}</a>}
                 </div>
              </div>
              {client.testimonial && (
