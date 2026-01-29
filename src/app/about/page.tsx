@@ -35,7 +35,8 @@ export default async function AboutPage() {
         </section>
 
         {/* Skills */}
-        <section>
+        {skills.length > 0 && (
+          <section>
             <div className="flex items-center gap-3 mb-8">
                 <div className="p-2 bg-blue-100 rounded-lg text-blue-600"><Code /></div>
                 <h2 className="text-2xl font-bold">Technical Skills</h2>
@@ -55,10 +56,12 @@ export default async function AboutPage() {
                     </div>
                 ))}
             </div>
-        </section>
+          </section>
+        )}
 
         {/* Experience */}
-        <section>
+        {experience.length > 0 && (
+          <section>
             <div className="flex items-center gap-3 mb-8">
                 <div className="p-2 bg-orange-100 rounded-lg text-orange-600"><Briefcase /></div>
                 <h2 className="text-2xl font-bold">Experience</h2>
@@ -84,10 +87,12 @@ export default async function AboutPage() {
                     </div>
                 ))}
             </div>
-        </section>
+          </section>
+        )}
 
         {/* Education */}
-        <section>
+        {education.length > 0 && (
+          <section>
             <div className="flex items-center gap-3 mb-8">
                 <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600"><GraduationCap /></div>
                 <h2 className="text-2xl font-bold">Education</h2>
@@ -105,7 +110,8 @@ export default async function AboutPage() {
                     </div>
                 ))}
             </div>
-        </section>
+          </section>
+        )}
 
       </main>
 
