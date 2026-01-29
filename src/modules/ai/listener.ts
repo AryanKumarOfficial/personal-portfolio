@@ -37,4 +37,35 @@ export const startAIListeners = async () => {
       console.error('❌ AI Enrichment Failed:', error);
     }
   });
+
+  await bus.subscribe('POST_CREATED', async (event: AppEvent) => {
+    console.log('🤖 AI Service received POST_CREATED:', event.payload.title);
+
+    const { postId, title, content } = event.payload;
+
+    try {
+      // 1. Generate Content
+      const analysis = await AIService.generateBlogAnalysis(title, content);
+
+      // 2. Update Database
+      await db.post.update({
+        where: { id: postId },
+        data: {
+          aiSummary: analysis.summary,
+          aiTags: analysis.tags,
+        },
+      });
+
+      console.log(`✅ Post ${postId} enriched by AI.`);
+
+      // 3. Emit Enriched Event
+      await bus.publish('POST_AI_ENRICHED', {
+        postId,
+        analysis,
+      });
+
+    } catch (error) {
+      console.error('❌ AI Enrichment for Post Failed:', error);
+    }
+  });
 };

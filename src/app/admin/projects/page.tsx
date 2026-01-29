@@ -1,6 +1,7 @@
 import { PortfolioService } from "@/modules/portfolio/service";
-import { createProjectAction } from "@/modules/portfolio/actions";
+import { createProjectAction, publishProjectAction, deleteProjectAction } from "@/modules/portfolio/actions";
 import { Project } from "@/.generated/prisma/client";
+import Link from 'next/link';
 
 export default async function ProjectsPage() {
   // Show all projects (DRAFT and PUBLISHED) in Admin
@@ -96,8 +97,34 @@ export default async function ProjectsPage() {
               </div>
             )}
 
-            <div className="mt-4 text-xs text-gray-400">
-                Created: {new Date(project.createdAt).toLocaleDateString()}
+            <div className="mt-4 flex items-center justify-between">
+                <div className="text-xs text-gray-400">
+                    Created: {new Date(project.createdAt).toLocaleDateString()}
+                </div>
+                <div className="flex gap-2">
+                     <Link
+                        href={`/admin/projects/${project.id}`}
+                        className="text-sm text-blue-600 hover:text-blue-800 underline"
+                      >
+                        Edit
+                      </Link>
+
+                    {project.status !== 'PUBLISHED' && (
+                        <form action={publishProjectAction}>
+                            <input type="hidden" name="id" value={project.id} />
+                            <button type="submit" className="text-sm text-green-600 hover:text-green-800 underline">
+                                Publish
+                            </button>
+                        </form>
+                    )}
+
+                    <form action={deleteProjectAction}>
+                        <input type="hidden" name="id" value={project.id} />
+                        <button type="submit" className="text-sm text-red-600 hover:text-red-800 underline">
+                            Delete
+                        </button>
+                    </form>
+                </div>
             </div>
           </div>
         ))}

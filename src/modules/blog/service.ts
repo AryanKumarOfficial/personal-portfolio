@@ -53,4 +53,26 @@ export class BlogService {
       include: { author: true },
     });
   }
+
+  static async getPostById(id: string) {
+    return db.post.findUnique({
+      where: { id },
+    });
+  }
+
+  static async updatePost(id: string, data: Partial<Post>) {
+    if (data.status === 'PUBLISHED') {
+      data.publishedAt = new Date();
+    }
+    return db.post.update({
+      where: { id },
+      data,
+    });
+  }
+
+  static async deletePost(id: string) {
+    return db.post.delete({
+      where: { id },
+    });
+  }
 }
