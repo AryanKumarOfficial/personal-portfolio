@@ -14,6 +14,7 @@ export async function createProjectAction(formData: FormData) {
   const title = formData.get('title') as string;
   const description = formData.get('description') as string;
   const githubUrl = formData.get('githubUrl') as string;
+  const liveUrl = formData.get('liveUrl') as string;
   const tags = (formData.get('tags') as string)?.split(',').map(t => t.trim());
 
   if (!title) {
@@ -24,6 +25,7 @@ export async function createProjectAction(formData: FormData) {
     title,
     description,
     githubUrl,
+    liveUrl,
     tags,
     userId: session.user.id,
   });
