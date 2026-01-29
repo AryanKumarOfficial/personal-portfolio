@@ -45,14 +45,23 @@ export default async function ProjectsPage() {
                 />
             </div>
             <div>
-                <label className="block text-sm font-medium mb-1">Tags (comma separated)</label>
+                <label className="block text-sm font-medium mb-1">Live URL</label>
                 <input
-                name="tags"
-                type="text"
+                name="liveUrl"
+                type="url"
                 className="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-                placeholder="React, Next.js, AI"
+                placeholder="https://example.com"
                 />
             </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Tags (comma separated)</label>
+            <input
+            name="tags"
+            type="text"
+            className="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            placeholder="React, Next.js, AI"
+            />
           </div>
           <button
             type="submit"

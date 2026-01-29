@@ -19,14 +19,11 @@ export async function createProjectAction(formData: FormData) {
     throw new Error('Unauthorized');
   }
 
-  const rawData = {
-    title: formData.get('title'),
-    description: formData.get('description'),
-    githubUrl: formData.get('githubUrl'),
-    tags: formData.get('tags'),
-  };
-
-  const validated = createProjectSchema.safeParse(rawData);
+  const title = formData.get('title') as string;
+  const description = formData.get('description') as string;
+  const githubUrl = formData.get('githubUrl') as string;
+  const liveUrl = formData.get('liveUrl') as string;
+  const tags = (formData.get('tags') as string)?.split(',').map(t => t.trim());
 
   if (!validated.success) {
     throw new Error(validated.error.errors[0].message);
@@ -37,8 +34,9 @@ export async function createProjectAction(formData: FormData) {
   await PortfolioService.createProject({
     title,
     description,
-    githubUrl: githubUrl || undefined,
-    tags: tags ? tags.split(',').map(t => t.trim()) : [],
+    githubUrl,
+    liveUrl,
+    tags,
     userId: session.user.id,
   });
 
