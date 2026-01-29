@@ -1,6 +1,7 @@
 import db from '@/lib/db';
 import { getEventBus } from '@/infrastructure/event-bus';
 import { Project } from '@prisma/client';
+import { nanoid } from 'nanoid';
 
 export type CreateProjectInput = {
   title: string;
@@ -16,7 +17,7 @@ export class PortfolioService {
     const bus = getEventBus();
 
     // 1. Generate Slug
-    const slug = input.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Date.now();
+    const slug = input.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + nanoid(10);
 
     // 2. Persist to DB
     const project = await db.project.create({
