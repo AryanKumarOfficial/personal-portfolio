@@ -16,21 +16,8 @@ export type CreatePostInput = {
 export class BlogService {
   static async createPost(input: CreatePostInput): Promise<Post> {
     const bus = getEventBus();
-    // Generate a clean, human-readable base slug from the title
-    const baseSlugRaw = input.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-    const baseSlug = baseSlugRaw || 'post';
+    const slug = input.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Date.now();
 
-    // Ensure slug uniqueness by appending a counter only if needed
-    let slug = baseSlug;
-    let counter = 1;
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      const existing = await db.post.findUnique({ where: { slug } });
-      if (!existing) {
-        break;
-      }
-      slug = `${baseSlug}-${counter++}`;
-    }
     const post = await db.post.create({
       data: {
         title: input.title,

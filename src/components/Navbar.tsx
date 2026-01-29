@@ -16,7 +16,7 @@ export default function Navbar() {
                  <Link href="/contact" className="text-slate-600 hover:text-blue-600 transition-colors">Contact</Link>
             </div>
             <div className="flex gap-4 items-center">
-                <Link href="https://github.com/AryanKumarOfficial" target="_blank" rel="noopener noreferrer"
+                <Link href="https://github.com/AryanKumarOfficial" target="_blank"
                       className="p-2 hover:bg-slate-100 rounded-full transition-colors">
                     <Github className="w-5 h-5 text-slate-600"/>
                 </Link>
