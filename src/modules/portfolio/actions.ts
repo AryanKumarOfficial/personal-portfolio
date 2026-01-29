@@ -3,6 +3,14 @@
 import { auth } from '@/auth';
 import { PortfolioService } from './service';
 import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
+
+const createProjectSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  githubUrl: z.string().url().optional().or(z.literal('')),
+  tags: z.string().optional(),
+});
 
 export async function createProjectAction(formData: FormData) {
   const session = await auth();
@@ -11,36 +19,26 @@ export async function createProjectAction(formData: FormData) {
     throw new Error('Unauthorized');
   }
 
-  const title = formData.get('title') as string;
-  let description = formData.get('description') as string;
-  const githubUrl = formData.get('githubUrl') as string;
-  const tags = (formData.get('tags') as string)?.split(',').map(t => t.trim());
+  const rawData = {
+    title: formData.get('title'),
+    description: formData.get('description'),
+    githubUrl: formData.get('githubUrl'),
+    tags: formData.get('tags'),
+  };
 
-  if (!title) {
-    throw new Error('Title is required');
+  const validated = createProjectSchema.safeParse(rawData);
+
+  if (!validated.success) {
+    throw new Error(validated.error.errors[0].message);
   }
 
-  // Validate description field
-  if (description) {
-    const trimmedDescription = description.trim();
-    
-    if (trimmedDescription.length === 0) {
-      throw new Error('Description cannot be empty or only whitespace');
-    }
-    
-    if (trimmedDescription.length > 5000) {
-      throw new Error('Description must be less than 5000 characters');
-    }
-    
-    // Use trimmed description
-    description = trimmedDescription;
-  }
+  const { title, description, githubUrl, tags } = validated.data;
 
   await PortfolioService.createProject({
     title,
     description,
-    githubUrl,
-    tags,
+    githubUrl: githubUrl || undefined,
+    tags: tags ? tags.split(',').map(t => t.trim()) : [],
     userId: session.user.id,
   });
 

@@ -15,6 +15,11 @@ export const startAIListeners = async () => {
       // 1. Generate Content
       const analysis = await AIService.generateSummary(title, description, githubUrl);
 
+      if (!analysis) {
+         console.warn(`⚠️ AI Service returned null for project ${projectId}`);
+         return;
+      }
+
       // 2. Update Database
       await db.project.update({
         where: { id: projectId },
@@ -34,7 +39,8 @@ export const startAIListeners = async () => {
       });
 
     } catch (error) {
-      console.error('❌ AI Enrichment Failed:', error);
+      console.error(`❌ AI Enrichment Failed for project ${projectId}:`, error);
+      // Future: Implement Dead Letter Queue or Retry logic here
     }
   });
 };
