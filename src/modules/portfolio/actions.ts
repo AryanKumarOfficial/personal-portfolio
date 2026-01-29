@@ -12,12 +12,28 @@ export async function createProjectAction(formData: FormData) {
   }
 
   const title = formData.get('title') as string;
-  const description = formData.get('description') as string;
+  let description = formData.get('description') as string;
   const githubUrl = formData.get('githubUrl') as string;
   const tags = (formData.get('tags') as string)?.split(',').map(t => t.trim());
 
   if (!title) {
     throw new Error('Title is required');
+  }
+
+  // Validate description field
+  if (description) {
+    const trimmedDescription = description.trim();
+    
+    if (trimmedDescription.length === 0) {
+      throw new Error('Description cannot be empty or only whitespace');
+    }
+    
+    if (trimmedDescription.length > 5000) {
+      throw new Error('Description must be less than 5000 characters');
+    }
+    
+    // Use trimmed description
+    description = trimmedDescription;
   }
 
   await PortfolioService.createProject({
