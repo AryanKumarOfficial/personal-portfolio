@@ -1,6 +1,6 @@
 import { PortfolioService } from "@/modules/portfolio/service";
 import { createProjectAction } from "@/modules/portfolio/actions";
-import { Project } from "@prisma/client";
+import { Project } from "@/.generated/prisma/client";
 
 export default async function ProjectsPage() {
   // Show all projects (DRAFT and PUBLISHED) in Admin

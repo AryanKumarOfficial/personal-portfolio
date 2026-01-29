@@ -19,6 +19,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   projects      Project[]
+  posts         Post[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -89,6 +90,95 @@ model Project {
 
   @@index([userId])
   @@index([status])
+}
+
+// --- Blog Domain ---
+
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   @db.Text // Markdown
+  excerpt     String?  @db.Text
+  coverImage  String?
+
+  publishedAt DateTime?
+  status      String   @default("DRAFT") // DRAFT, PUBLISHED, ARCHIVED
+
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String[]
+
+  tags       String[]
+  categories String[]
+
+  // AI Enrichment Data
+  aiSummary String? @db.Text
+  aiTags    String[]
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([authorId])
+  @@index([status])
+  @@index([slug])
+}
+
+// --- Resume / Portfolio Extras ---
+
+model Skill {
+  id       String  @id @default(cuid())
+  name     String
+  category String  // Frontend, Backend, DevOps, etc.
+  level    Int?    // 1-100 or similar
+  icon     String? // URL or icon name
+  order    Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  institution String
+  degree      String
+  field       String?
+  startDate   DateTime
+  endDate     DateTime? // Null if current
+  description String?   @db.Text
+  location    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Experience {
+  id           String    @id @default(cuid())
+  company      String
+  role         String
+  startDate    DateTime
+  endDate      DateTime? // Null if current
+  description  String?   @db.Text
+  technologies String[]
+  type         String?   // Full-time, Contract, etc.
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Client {
+  id          String  @id @default(cuid())
+  name        String
+  logo        String?
+  website     String?
+  testimonial String? @db.Text
+  position    String? // Position of the person giving testimonial
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // --- Event Store (Audit & Replay) ---

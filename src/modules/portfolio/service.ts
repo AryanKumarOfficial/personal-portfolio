@@ -1,6 +1,6 @@
 import db from '@/lib/db';
 import { getEventBus } from '@/infrastructure/event-bus';
-import { Project } from '@prisma/client';
+import { Project } from '@/.generated/prisma/client';
 
 export type CreateProjectInput = {
   title: string;
