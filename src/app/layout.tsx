@@ -4,8 +4,6 @@ import Head from "next/head";
 import Script from "next/script";
 import { Metadata } from "next";
 import { headers } from "next/headers";
-import { ClerkProvider } from "@clerk/nextjs";
-
 export const metadata: Metadata = {
     title: {
         default: "Aryan Kumar | Full-Stack Developer & UI/UX Designer",
@@ -71,9 +69,9 @@ export default function RootLayout({
                 data-description="Support me on Buy me a coffee!" data-message="Buy me a coffee"
                 data-color="#5F7FFF"
                 data-position="Right" data-x_margin="18" data-y_margin="18" />
-            <ClerkProvider>
+            <body className="min-h-screen bg-background font-sans antialiased">
                 {children}
-            </ClerkProvider>
+            </body>
         </html>
     );
 }
