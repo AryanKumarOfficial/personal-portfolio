@@ -71,7 +71,7 @@ export default function EnvPage() {
       <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-md dark:bg-amber-950 dark:border-amber-800">
         <h2 className="font-semibold text-amber-800 dark:text-amber-300 mb-2">Security Notice</h2>
         <p className="text-amber-700 dark:text-amber-400 text-sm">
-          These environment variables may contain sensitive information. Only use the "Show Value" feature 
+          These environment variables may contain sensitive information. Only use the &quot;Show Value&quot; feature
           in secure environments, and never share your screen while viewing sensitive values.
         </p>
       </div>

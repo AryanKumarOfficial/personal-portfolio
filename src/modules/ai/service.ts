@@ -1,13 +1,15 @@
-import OpenAI from 'openai';
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'mock-key',
-});
+import { google } from '@ai-sdk/google';
+import { generateObject } from 'ai';
+import { z } from 'zod';
 
 export class AIService {
-  static async generateSummary(title: string, description: string, githubUrl?: string): Promise<{ summary: string; techStack: string[]; sentiment: number }> {
-    if (!process.env.OPENAI_API_KEY) {
-      console.log('⚠️ No OpenAI API Key found. Returning mock data.');
+  static async generateSummary(
+    title: string,
+    description: string,
+    githubUrl?: string
+  ): Promise<{ summary: string; techStack: string[]; sentiment: number }> {
+    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+      console.log('⚠️ No Google AI API Key found. Returning mock data.');
       return {
         summary: `(AI Generated) A fantastic project about ${title}.`,
         techStack: ['React', 'Next.js', 'TypeScript'],
@@ -20,27 +22,28 @@ export class AIService {
         Analyze the following project:
         Title: ${title}
         Description: ${description}
-        GitHub: ${githubUrl}
-
-        Provide a JSON response with:
-        1. A professional summary (max 50 words).
-        2. Detected or recommended tech stack (array of strings).
-        3. Sentiment score (0-1).
+        GitHub: ${githubUrl || 'N/A'}
       `;
 
-      const response = await openai.chat.completions.create({
-        model: 'gpt-4o', // or gpt-3.5-turbo
-        messages: [{ role: 'user', content: prompt }],
-        response_format: { type: "json_object" },
+      const { object } = await generateObject({
+        model: google('gemini-1.5-flash'),
+        schema: z.object({
+          summary: z.string().describe('A professional summary of the project (max 50 words).'),
+          techStack: z.array(z.string()).describe('Detected or recommended tech stack.'),
+          sentiment: z.number().describe('Sentiment score between 0 and 1.'),
+        }),
+        prompt: prompt,
       });
 
-      const content = response.choices[0].message.content;
-      if (!content) throw new Error('No content from AI');
-
-      return JSON.parse(content);
+      return object;
     } catch (error) {
       console.error('AI Generation Error:', error);
-      throw error;
+      // Fallback for demo purposes if AI fails or quota exceeded
+      return {
+        summary: `(Fallback) Project: ${title}`,
+        techStack: ['Unknown'],
+        sentiment: 0.5,
+      };
     }
   }
 }
