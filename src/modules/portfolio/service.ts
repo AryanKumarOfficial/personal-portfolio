@@ -16,7 +16,12 @@ export class PortfolioService {
     const bus = getEventBus();
 
     // 1. Generate Slug
-    const slug = input.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Date.now();
+    const baseSlug = input.title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
+    const slug = `${baseSlug}-${Date.now()}`;
 
     // 2. Persist to DB
     const project = await db.project.create({
