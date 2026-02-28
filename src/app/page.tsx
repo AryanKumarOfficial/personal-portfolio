@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/button";
+
 export default function Home() {
   return (
-    <section className="min-h-screen flex items-center">
+    <section className="container mx-auto min-h-screen flex items-center">
       <div className="max-w-3xl">
         <p className="text-muted-foreground font-mono mb-2">
           Full-Stack Engineer
@@ -16,11 +18,11 @@ export default function Home() {
         </p>
 
         <div className="flex gap-4 mt-6">
-          <button className="bg-primary text-primary-foreground px-6 py-3 rounded-lg">
+          <Button className="bg-primary text-primary-foreground px-6 py-3 rounded-lg">
             View Projects
-          </button>
+          </Button>
 
-          <button className="border px-6 py-3 rounded-lg">GitHub</button>
+          <Button className="border px-6 py-3 rounded-lg">GitHub</Button>
         </div>
       </div>
     </section>
