@@ -10,15 +10,7 @@ import {
   scaleIn,
   defaultTransition,
 } from "@/lib/motion";
-
-const techStack = [
-  "Next.js",
-  "TypeScript",
-  "PostgreSQL",
-  "Node.js",
-  "Prisma",
-  "Docker",
-];
+import { HeroData } from "@/lib/data/profile";
 
 import Image from "next/image";
 
@@ -54,7 +46,7 @@ const Hero = () => {
             className="inline-flex items-center gap-2 px-3 py-1 mb-6 text-sm border rounded-full bg-muted/40 backdrop-blur"
           >
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            Available for freelance & internships
+            {HeroData.availability}
           </motion.div>
 
           <motion.p
@@ -62,7 +54,7 @@ const Hero = () => {
             transition={defaultTransition}
             className="text-muted-foreground font-mono mb-3 text-sm"
           >
-            Full-Stack Engineer
+            {HeroData.role}
           </motion.p>
 
           <motion.h2
@@ -70,7 +62,7 @@ const Hero = () => {
             transition={defaultTransition}
             className="text-xl sm:text-2xl font-semibold mb-2"
           >
-            {` Hi, I'm Aryan Kumar 👋`}
+            {` Hi, I'm ${HeroData.name} 👋`}
           </motion.h2>
 
           <motion.h1
@@ -78,8 +70,9 @@ const Hero = () => {
             transition={defaultTransition}
             className="max-w-xl text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight"
           >
-            Building scalable <span className="text-primary">SaaS</span>,
-            dashboards, and modern web apps.
+            {HeroData.headline.prefix}{" "}
+            <span className="text-primary">{HeroData.headline.highlight}</span>,
+            {HeroData.headline.suffix}
           </motion.h1>
 
           <motion.p
@@ -87,9 +80,7 @@ const Hero = () => {
             transition={defaultTransition}
             className="mt-6 text-muted-foreground text-base sm:text-lg leading-relaxed max-w-xl"
           >
-            Full-stack developer specializing in SaaS architecture, REST APIs,
-            authentication systems, and scalable database design using Next.js,
-            Node.js, and PostgreSQL.
+            {HeroData.description}
           </motion.p>
 
           {/* TECH STACK */}
@@ -98,7 +89,7 @@ const Hero = () => {
             transition={defaultTransition}
             className="flex flex-wrap gap-2 mt-6"
           >
-            {techStack.map((tech) => (
+            {HeroData.techStack.map((tech) => (
               <motion.span
                 key={tech}
                 whileHover={{
@@ -132,7 +123,7 @@ const Hero = () => {
             <motion.div whileTap={{ scale: 0.96 }}>
               <Button variant="outline" size="lg" asChild>
                 <Link
-                  href="https://github.com/aryankumarofficial"
+                  href={HeroData.social.github}
                   target="_blank"
                   className="flex items-center gap-2"
                 >
