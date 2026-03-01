@@ -21,6 +21,7 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import ThemeToggle from "./ThemeToggle";
 interface NavItem {
   href: string;
   label: string;
@@ -159,6 +160,7 @@ const Nabar: React.FC = () => {
             </SheetContent>
           </Sheet>
         </div>
+        <ThemeToggle />
       </div>
     </header>
   );
