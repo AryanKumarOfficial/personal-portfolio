@@ -6,35 +6,28 @@ export type Experience = {
   location?: string;
   description: string;
   tech: string[];
-  link?: string;
 };
 
 export const experiences: Experience[] = [
   {
-    id: `madrocket`,
-    role: `Full-Stack Developer Intern`,
-    company: `Madrocket Media and Technology`,
+    id: "madrocket",
+    role: "Full-Stack Developer Intern",
+    company: "Madrocket Technologies",
     period: "2025",
-    location: "remote",
-    description: `Worked on scalable dashboard features, implemented authentication flows, optimized database queries, and improved UI performance using Next.js and PostgreSQL.`,
-    tech: [
-      "Next.js",
-      "TypeScript",
-      "Firebase",
-      "React.js",
-      "Tailwind",
-      "Prisma",
-      "PostgreSQL",
-    ],
+    location: "Remote",
+    description:
+      "Built scalable dashboard modules, authentication flows, and optimized database queries using Next.js and PostgreSQL.",
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
   },
+
   {
     id: "freelance",
     role: "Freelance Full-Stack Developer",
-    company: "Self-employed",
+    company: "Self-Employed",
     period: "2023 — Present",
     location: "Remote",
     description:
-      "Built SaaS dashboards, admin panels, and full-stack web apps for clients with authentication, analytics, and scalable backend systems.",
+      "Developed SaaS dashboards, admin panels, and backend systems with authentication, analytics, and scalable architecture.",
     tech: ["Next.js", "Node.js", "MongoDB", "Docker"],
   },
 ];
