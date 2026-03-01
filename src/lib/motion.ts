@@ -35,3 +35,8 @@ export const defaultTransition: Transition = {
   duration: 0.45,
   ease: [0.21, 1.02, 0.73, 1],
 };
+
+export const cardVarients = {
+  rest: { y: 0, scale: 1 },
+  hover: { y: -10, scale: 1.02 },
+};

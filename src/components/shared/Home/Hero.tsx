@@ -194,6 +194,9 @@ const Hero = () => {
           </motion.div>
         </motion.div>
       </div>
+      <div
+        className="absolute bottom-0 left-0 w-full h-32 bg-linear-to-b from-transparent to-background"
+      />
     </motion.section>
   );
 };
