@@ -143,7 +143,7 @@ export default function Navbar() {
         rect.top <= window.innerHeight * 0.35 &&
         rect.bottom >= window.innerHeight * 0.35
       ) {
-        current = item.href;
+        current = `#${hashOnly}`;
       }
     }
 
@@ -188,8 +188,8 @@ export default function Navbar() {
             <NavigationMenu>
               <NavigationMenuList>
                 {items.map((item) => {
-                  const active = activeHash === `#${item.href}`;
-
+                  const hashOnly = `#${item.href.split("#")[1]}`;
+                  const active = activeHash === hashOnly;
                   return (
                     <NavigationMenuItem key={item.href}>
                       <NavigationMenuLink
@@ -244,8 +244,8 @@ export default function Navbar() {
 
                 <div className="flex flex-col mt-6">
                   {items.map((item) => {
-                    const active = activeHash === item.href;
-
+                    const hashOnly = `#${item.href.split("#")[1]}`;
+                    const active = activeHash === hashOnly;
                     return (
                       <SheetClose key={item.href} asChild>
                         <Link
