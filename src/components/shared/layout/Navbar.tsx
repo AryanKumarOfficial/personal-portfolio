@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -127,18 +128,19 @@ const Nabar: React.FC = () => {
               </SheetHeader>
               <nav className="flex flex-col px-3 py-4">
                 {items.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "px-4 py-3 rounded-lg text-base font-medium transition",
-                      pathname === item.href
-                        ? "bg-accent text-foreground"
-                        : "text-muted-foreground hover:bg-accent hover:text-foreground",
-                    )}
-                  >
-                    {item.label}
-                  </Link>
+                  <SheetClose asChild key={item.href}>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "px-4 py-3 rounded-lg text-base font-medium transition",
+                        pathname === item.href
+                          ? "bg-accent text-foreground"
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </SheetClose>
                 ))}
               </nav>
               <div className="flex-1" />
