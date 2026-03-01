@@ -42,11 +42,11 @@ interface NavItem {
 }
 
 const items: NavItem[] = [
-  { href: "#home", label: "Home" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#home", label: "Home" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#about", label: "About" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -132,7 +132,8 @@ export default function Navbar() {
     let current = "#home";
 
     for (const item of items) {
-      const el = document.getElementById(item.href.replace("#", ""));
+      const hashOnly = item.href.split("#")[1];
+      const el = document.getElementById(hashOnly);
 
       if (!el) continue;
 
@@ -174,7 +175,7 @@ export default function Navbar() {
       >
         <div className="max-w-6xl mx-auto px-6 h-full flex items-center justify-between">
           {/* logo */}
-          <Link href="#home" scroll={false} className="flex flex-col">
+          <Link href="/#home" scroll={false} className="flex flex-col">
             <span className="font-semibold text-lg">{HeroData.name}</span>
 
             <span className="text-[10px] font-mono text-primary">
@@ -187,7 +188,7 @@ export default function Navbar() {
             <NavigationMenu>
               <NavigationMenuList>
                 {items.map((item) => {
-                  const active = activeHash === item.href;
+                  const active = activeHash === `#${item.href}`;
 
                   return (
                     <NavigationMenuItem key={item.href}>
