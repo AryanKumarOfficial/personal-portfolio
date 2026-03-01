@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "@/components/shared/layout/providers";
 import Navbar from "@/components/shared/layout/Navbar";
 import GlobalBackground from "@/components/shared/layout/GlobalBackground";
+import Footer from "@/components/shared/layout/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -76,8 +77,11 @@ export default function RootLayout({
       >
         <GlobalBackground />
         <Providers>
-          <Navbar />
-          {children}
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>

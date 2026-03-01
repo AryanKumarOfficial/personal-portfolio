@@ -14,7 +14,7 @@ export default function GlobalBackground() {
 
       <motion.div
         style={{ opacity, scale }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-225 h-150 bg-primary/10 blur-[120px] rounded-full"
+        className="absolute top-[10%] left-1/2 -translate-x-1/2 w-175 h-87.5 bg-primary/10 blur-[120px] rounded-full"
       />
     </div>
   );
