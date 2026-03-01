@@ -1,9 +1,12 @@
 export const contact = {
-  title: `Let's work together`,
+  title: "Let's work together",
+
   description:
-    "I'm open to internships, freelance, and full-time opportunities. If you have a project or role in mind, feel free to reach out.",
+    "I'm currently available for internships, freelance projects, and full-time roles. Feel free to reach out if you'd like to collaborate.",
 
   email: "aryan@aryankumarofficial.dev",
+
+  availability: "Available for internships",
 
   socials: [
     {
@@ -13,10 +16,6 @@ export const contact = {
     {
       name: "LinkedIn",
       href: "https://linkedin.com/in/aryankumarofficial",
-    },
-    {
-      name: "Twitter",
-      href: "https://twitter.com/_aryankofficial",
     },
   ],
 };
