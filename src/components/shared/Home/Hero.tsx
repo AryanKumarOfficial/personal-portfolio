@@ -24,6 +24,7 @@ const Hero = () => {
 
   return (
     <motion.section
+      id="home"
       style={{ opacity, y }}
       className="relative w-full pb-28 overflow-hidden"
     >
