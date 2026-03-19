@@ -46,7 +46,7 @@ export default function About() {
                 alt="Aryan Kumar"
                 width={420}
                 height={420}
-                className="relative w-full h-auto max-w-[420px] rounded-2xl border object-cover shadow-lg mx-auto"
+                className="relative w-full h-auto max-w-105 rounded-2xl border object-cover shadow-lg mx-auto"
                 initial={{
                   opacity: 0,
                   scale: 0.9,

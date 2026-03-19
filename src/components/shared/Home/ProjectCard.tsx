@@ -1,92 +1,112 @@
 "use client";
 
-import { type Project } from "@/lib/data/profile";
+import Github from "@/assets/icons/Github";
+import { motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { motion } from "motion/react";
-import { useState } from "react";
 
-type Props = {
-  project: Project;
+type Project = {
+  id: string;
+  title: string;
+  description: string;
+  tech: readonly string[];
+  github?: string;
+  live?: string;
+  image: string;
 };
 
 const MotionImage = motion.create(Image);
 
-export default function ProjectCard({ project }: Props) {
-  const [imgSrc, setImgSrc] = useState(project.image);
-  const fallbackImg = "/images/projects/fallback.png";
 
+export function ProjectCard({
+  project,
+  featured = false,
+}: {
+  project: Project;
+  featured?: boolean;
+}) {
   return (
-    <motion.article
-      whileHover={{ y: -10, scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 260, damping: 18 }}
-      className="group relative h-full rounded-2xl"
+    <motion.div
+      layoutId={`card-${project.id}`}
+      whileHover={{ y: -8, scale: 1.01 }}
+      transition={{ duration: 0.25 }}
+      className={`group cursor-pointer relative rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 hover:border-white/20 transition ${
+        featured ? "h-full" : ""
+      }`}
     >
-      {/* glow */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500">
-        <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-primary/20 via-transparent to-primary/10 blur-xl" />
+      {/* Glow */}
+      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_70%)]" />
+
+      {/* Image */}
+      <div className={`relative overflow-hidden ${featured ? "h-64" : "h-52"}`}>
+        <MotionImage
+          layoutId={`image-${project.id}`}
+          width={"100"}
+          height={"100"}
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
+
+        {/* Floating label */}
+        <div className="absolute top-3 left-3 text-[10px] px-2 py-1 rounded-md bg-white/10 backdrop-blur border border-white/10 text-white">
+          {featured ? "Featured" : "Project"}
+        </div>
       </div>
 
-      {/* card */}
-      <div className=" relative h-full flex flex-col rounded-2xl border border-border/60 bg-linear-to-b from-background/90 to-muted/40 backdrop-blur-xl overflow-hidden">
-        {/* IMAGE */}
-        <div className="relative h-48 shrink-0 overflow-hidden rounded-t-2xl isolate">
-          <MotionImage
-            src={imgSrc}
-            alt={project.title}
-            fill
-            onError={() => setImgSrc(fallbackImg)}
-            className="object-cover"
-            whileHover={{ scale: 1.08 }}
-            transition={{ duration: 0.5 }}
-          />
+      {/* Content */}
+      <div className={`p-5 space-y-3 ${featured ? "p-6" : ""}`}>
+        <h3 className="text-lg font-semibold text-white">{project.title}</h3>
 
-          <div className="absolute inset-0 bg-linear-to-t from-background/90 to-transparent" />
+        <p className="text-sm text-zinc-400 line-clamp-2">
+          {project.description}
+        </p>
+
+        {/* Tech */}
+        <div className="flex flex-wrap gap-2">
+          {project.tech.slice(0, 4).map((t) => (
+            <span
+              key={t}
+              className="text-xs px-2 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300"
+            >
+              {t}
+            </span>
+          ))}
         </div>
 
-        {/* CONTENT */}
-        <div className="flex flex-col flex-1 px-6 py-6">
-          {/* TITLE */}
-          <h3 className="text-lg font-semibold">{project.title}</h3>
-
-          <p className=" text-sm text-muted-foreground mt-3 flex-1 leading-relaxed">
-            {project.description}
-          </p>
-
-          <div className="flex flex-wrap gap-2 mt-4">
-            {project.tech.map((tech) => (
-              <span
-                key={tech}
-                className=" text-xs px-3 py-1 rounded-md bg-muted/60 border border-border/60"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-
-          <div className=" flex gap-6 mt-6 text-sm font-medium">
+        {/* Actions */}
+        <div className="flex items-center justify-between pt-3">
+          <div className="flex items-center gap-3">
             {project.github && (
-              <Link
+              <a
                 href={project.github}
                 target="_blank"
-                className="text-muted-foreground hover:text-primary transition"
+                className="text-zinc-400 hover:text-white transition"
               >
-                GitHub →
-              </Link>
+                <Github />
+              </a>
             )}
 
             {project.live && (
-              <Link
+              <a
                 href={project.live}
                 target="_blank"
-                className="text-muted-foreground hover:text-primary transition"
+                className="text-zinc-400 hover:text-white transition"
               >
-                Live →
-              </Link>
+                <ExternalLink size={18} />
+              </a>
             )}
           </div>
+
+          {/* Subtle CTA */}
+          <span className="text-xs text-zinc-500 group-hover:text-white transition">
+            View →
+          </span>
         </div>
       </div>
-    </motion.article>
+    </motion.div>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import ThemeProvider from "./ThemProvider";
+import MotionLayout from "./MotionLayout";
 
 export default function Providers({
   children,
@@ -7,8 +8,10 @@ export default function Providers({
   children: Readonly<React.ReactNode>;
 }) {
   return (
-    <>
-      <ThemeProvider>{children}</ThemeProvider>
-    </>
+    <React.Fragment>
+      <MotionLayout>
+        <ThemeProvider>{children}</ThemeProvider>
+      </MotionLayout>
+    </React.Fragment>
   );
 }
