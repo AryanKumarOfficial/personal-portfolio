@@ -158,7 +158,7 @@ const Hero = () => {
           transition={{
             duration: 0.6,
           }}
-          className="flex justify-center md:justify-end"
+          className="flex justify-center md:justify-end mt-8 md:mt-0"
         >
           <motion.div
             animate={{
@@ -169,7 +169,7 @@ const Hero = () => {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="relative w-72 h-72 rounded-2xl border bg-muted/40 backdrop-blur overflow-hidden"
+            className="relative w-64 h-64 sm:w-72 sm:h-72 rounded-2xl border bg-muted/40 backdrop-blur overflow-hidden"
           >
             <div className="absolute inset-0 bg-linear-to-br from-primary/20 via-transparent to-transparent blur-2xl opacity-60 z-10 pointer-events-none" />
 

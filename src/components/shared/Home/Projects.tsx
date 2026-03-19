@@ -6,7 +6,7 @@ import { fadeUp, staggerContainer } from "@/lib/motion";
 
 export default function Projects() {
   return (
-    <section id="projects" className="relative py-32">
+    <section id="projects" className="relative py-32 overflow-hidden">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 0.4 }}

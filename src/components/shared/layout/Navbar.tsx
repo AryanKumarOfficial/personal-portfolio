@@ -228,6 +228,8 @@ export default function Navbar() {
             </Button>
           </div>
 
+          <ThemeToggle />
+
           {/* mobile */}
           <div className="flex items-center gap-2 md:hidden">
             <Sheet>
@@ -266,8 +268,6 @@ export default function Navbar() {
               </SheetContent>
             </Sheet>
           </div>
-
-          <ThemeToggle />
         </div>
       </motion.header>
     </>

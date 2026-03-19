@@ -46,7 +46,7 @@ export default function About() {
                 alt="Aryan Kumar"
                 width={420}
                 height={420}
-                className="relative rounded-2xl border object-cover shadow-lg"
+                className="relative w-full h-auto max-w-[420px] rounded-2xl border object-cover shadow-lg mx-auto"
                 initial={{
                   opacity: 0,
                   scale: 0.9,
@@ -84,7 +84,7 @@ export default function About() {
             {/* stats */}
             <motion.div
               variants={staggerContainer}
-              className="flex gap-10 mt-10"
+              className="flex flex-wrap gap-6 sm:gap-10 mt-10"
             >
               {about.stats.map((stat) => (
                 <motion.div key={stat.label} variants={fadeUp}>
