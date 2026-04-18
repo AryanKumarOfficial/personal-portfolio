@@ -3,13 +3,14 @@
 import { projects } from "@/lib/data/profile";
 import { notFound } from "next/navigation";
 import { motion } from "framer-motion";
-import { use } from "react";
+import { use, useState } from "react";
 
 export default function ProjectPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const [imageError, setImageError] = useState<boolean>(false);
   const { id } = use(params);
   console.log(`param`, id);
   const project = projects.find((p) => p.id === id);
@@ -21,7 +22,12 @@ export default function ProjectPage({
       {/* Image */}
       <motion.img
         layoutId={`image-${project.id}`}
-        src={project.image}
+        src={
+          imageError
+            ? `https://dummyimage.com/800x450/1a1a1a/ffffff&text=${project.title.replace(" ", "+")}`
+            : project.image
+        }
+        onError={() => setImageError(true)}
         className="rounded-xl mb-8"
       />
 

@@ -4,6 +4,7 @@ import Github from "@/assets/icons/Github";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 type Project = {
   id: string;
@@ -17,7 +18,6 @@ type Project = {
 
 const MotionImage = motion.create(Image);
 
-
 export function ProjectCard({
   project,
   featured = false,
@@ -25,6 +25,8 @@ export function ProjectCard({
   project: Project;
   featured?: boolean;
 }) {
+  const [imgError, setImageError] = useState<boolean>(false);
+
   return (
     <motion.div
       layoutId={`card-${project.id}`}
@@ -43,8 +45,15 @@ export function ProjectCard({
           layoutId={`image-${project.id}`}
           width={"100"}
           height={"100"}
-          src={project.image}
+          src={
+            imgError
+              ? `https://placehold.co/800x450?text=${project.title.split(" ").join("+")}`
+              : project.image
+          }
           alt={project.title}
+          onError={() => {
+            setImageError(true);
+          }}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
 

@@ -3,9 +3,10 @@ import { projects } from "@/lib/data/profile";
 import { ProjectCard } from "./ProjectCard";
 import { motion } from "motion/react";
 import { fadeUp, staggerContainer } from "@/lib/motion";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Projects() {
+  const router = useRouter();
   return (
     <section id="projects" className="relative py-32 overflow-hidden">
       <motion.div
@@ -40,10 +41,13 @@ export default function Projects() {
               key={project.id}
               variants={fadeUp}
               className={i === 0 ? "sm:col-span-2 lg:col-span-2" : ""}
+              onClick={() =>
+                router.push(`/projects/${project.id}`, {
+                  scroll: true,
+                })
+              }
             >
-              <Link href={`/projects/${project.id}`}>
-                <ProjectCard project={project} featured={i === 0} />
-              </Link>
+              <ProjectCard project={project} featured={i === 0} />
             </motion.div>
           ))}
         </motion.div>
