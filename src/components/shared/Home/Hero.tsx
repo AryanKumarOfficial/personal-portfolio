@@ -32,7 +32,7 @@ const Hero = () => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 0.6, scale: 1 }}
         transition={{ duration: 1.2 }}
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/30 rounded-full blur-[140px] -z-10"
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-125 h-125 bg-primary/30 rounded-full blur-[140px] -z-10"
       />
 
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
@@ -41,15 +41,6 @@ const Hero = () => {
           initial="initial"
           animate="animate"
         >
-          <motion.div
-            variants={fadeUp}
-            transition={defaultTransition}
-            className="inline-flex items-center gap-2 px-3 py-1 mb-6 text-sm border rounded-full bg-muted/40 backdrop-blur"
-          >
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            {HeroData.availability}
-          </motion.div>
-
           <motion.p
             variants={fadeUp}
             transition={defaultTransition}

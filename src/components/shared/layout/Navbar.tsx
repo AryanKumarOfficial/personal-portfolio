@@ -178,9 +178,6 @@ export default function Navbar() {
           <Link href="/#home" scroll={false} className="flex flex-col">
             <span className="font-semibold text-lg">{HeroData.name}</span>
 
-            <span className="text-[10px] font-mono text-primary">
-              {HeroData.availability}
-            </span>
           </Link>
 
           {/* desktop */}
