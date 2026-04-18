@@ -32,7 +32,7 @@ const Hero = () => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 0.6, scale: 1 }}
         transition={{ duration: 1.2 }}
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-175 h-175 bg-primary/20 rounded-full blur-[120px] -z-10"
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/30 rounded-full blur-[140px] -z-10"
       />
 
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
@@ -71,9 +71,8 @@ const Hero = () => {
             transition={defaultTransition}
             className="max-w-xl text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight"
           >
-            {HeroData.headline.prefix}{" "}
-            <span className="text-primary">{HeroData.headline.highlight}</span>,
-            {HeroData.headline.suffix}
+            I build scalable SaaS systems with clean, production-ready
+            architecture.
           </motion.h1>
 
           <motion.p
@@ -160,44 +159,28 @@ const Hero = () => {
           }}
           className="flex justify-center md:justify-end mt-8 md:mt-0"
         >
-          <motion.div
-            animate={{
-              y: [0, -12, 0],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="relative w-64 h-64 sm:w-72 sm:h-72 rounded-2xl border bg-muted/40 backdrop-blur overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-linear-to-br from-primary/20 via-transparent to-transparent blur-2xl opacity-60 z-10 pointer-events-none" />
+          <div className="relative w-64 h-64 sm:w-72 sm:h-72">
+            {/* Outer glow */}
+            <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-2xl opacity-60" />
 
-            <MotionImage
-              src="/images/aryan.jpg"
-              alt="Aryan Kumar"
-              fill
-              priority
-              className="object-cover"
-              initial={{
-                opacity: 0,
-                scale: 1.1,
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-              }}
-              transition={{
-                duration: 0.8,
-                ease: "easeOut",
-              }}
-            />
-          </motion.div>
+            {/* Border gradient */}
+            <div className="absolute inset-0 rounded-2xl p-px bg-linear-to-br from-primary/40 via-transparent to-primary/10">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-black">
+                <MotionImage
+                  src="/images/aryan.jpg"
+                  alt="Aryan Kumar"
+                  fill
+                  className="object-cover"
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8 }}
+                />
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
-      <div
-        className="absolute bottom-0 left-0 w-full h-32 bg-linear-to-b from-transparent to-background"
-      />
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-linear-to-b from-transparent to-background" />
     </motion.section>
   );
 };
