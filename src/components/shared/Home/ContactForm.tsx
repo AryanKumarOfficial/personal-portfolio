@@ -98,7 +98,7 @@ export default function ContactForm() {
             name="company"
             control={hookform.control}
             render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
+              <Field className="hidden" data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="company">company (Optional)</FieldLabel>
                 <InputGroup>
                   <InputGroupAddon>
