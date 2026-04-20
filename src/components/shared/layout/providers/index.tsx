@@ -1,6 +1,7 @@
 import React from "react";
 import ThemeProvider from "./ThemProvider";
 import MotionLayout from "./MotionLayout";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function Providers({
   children,
@@ -10,7 +11,10 @@ export default function Providers({
   return (
     <React.Fragment>
       <MotionLayout>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Toaster />
+          {children}
+        </ThemeProvider>
       </MotionLayout>
     </React.Fragment>
   );
