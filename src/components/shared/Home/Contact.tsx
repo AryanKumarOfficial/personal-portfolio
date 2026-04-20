@@ -60,17 +60,20 @@ export default function Contact() {
             variants={fadeUp}
             className="flex justify-center gap-6 mt-8 flex-wrap"
           >
-            {contact.socials.map((social) => (
-              <a
-                key={social.name}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition text-sm"
-              >
-                {social.name}
-              </a>
-            ))}
+            {contact.socials.map((social, idx) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={idx}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition text-sm"
+                >
+                  <Icon />
+                </a>
+              );
+            })}
           </motion.div>
         </motion.div>
       </div>
