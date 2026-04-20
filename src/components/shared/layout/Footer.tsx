@@ -36,16 +36,20 @@ export default function Footer() {
 
         {/* socials */}
         <div className="flex gap-6">
-          {contact.socials.map((social) => (
-            <Link
-              key={social.name}
-              href={social.href}
-              target="_blank"
-              className="text-sm text-muted-foreground hover:text-primary transition"
-            >
-              {social.name}
-            </Link>
-          ))}
+          {contact.socials.map((social) => {
+            
+            const Icon=social.icon
+            return (
+              <Link
+                key={social.href}
+                href={social.href}
+                target="_blank"
+                className="text-sm text-muted-foreground hover:text-primary transition"
+              >
+                social.Icon
+              </Link>
+            );
+          })}
         </div>
       </div>
 
