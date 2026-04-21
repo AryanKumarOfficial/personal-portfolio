@@ -37,8 +37,7 @@ export default function Footer() {
         {/* socials */}
         <div className="flex gap-6">
           {contact.socials.map((social) => {
-            
-            const Icon=social.icon
+            const Icon = social.icon;
             return (
               <Link
                 key={social.href}
@@ -46,7 +45,7 @@ export default function Footer() {
                 target="_blank"
                 className="text-sm text-muted-foreground hover:text-primary transition"
               >
-                social.Icon
+                <Icon />
               </Link>
             );
           })}
