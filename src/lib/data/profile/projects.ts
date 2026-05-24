@@ -30,7 +30,7 @@ export const projects: Project[] = [
             "Zustand",
             "Recharts",
         ] as const,
-        github: "https://github.com/aryankumarofficial/downtime-detector-saas",
+        github: "https://github.com/aryankumarofficial/pulse-check",
         live: "https://pulse-check.aryankumarofficial.dev",
         image: "/images/projects/pulse-check.png",
         blog: {
