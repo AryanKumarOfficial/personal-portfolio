@@ -16,6 +16,40 @@ export type Project = {
 
 export const projects: Project[] = [
     {
+        id: "pulsecheck-saas",
+        title: "PulseCheck – Downtime Monitoring SaaS",
+        description:
+            "A comprehensive B2B SaaS platform for real-time endpoint monitoring. Features include background cron jobs, SSL certificate tracking, incident logging, role-based tenant access, and Razorpay subscription billing.",
+        tech: [
+            "Next.js",
+            "TypeScript",
+            "TailwindCSS",
+            "InsForge BaaS",
+            "PostgreSQL",
+            "Razorpay",
+            "Zustand",
+            "Recharts",
+        ] as const,
+        github: "https://github.com/aryankumarofficial/downtime-detector-saas",
+        live: "https://pulse-check.aryankumarofficial.dev",
+        image: "/images/projects/pulse-check.png",
+        blog: {
+            overview: "PulseCheck was engineered to provide developers and startups with a highly reliable, low-latency system for monitoring their critical infrastructure. It required building a scalable background task queue, managing complex B2B multi-tenant architecture, and handling subscription lifecycles.",
+            architecture: "The platform utilizes a Next.js App Router frontend seamlessly integrated with InsForge (a Backend-as-a-Service platform) for the PostgreSQL database, authentication, and Serverless Edge Functions. Background monitoring runs on scheduled Edge Functions, which write telemetry data directly to the database without blocking the main application thread.",
+            technicalChallenges: [
+                {
+                    title: "Scalable Background Telemetry",
+                    description: "Executing HTTP pings across hundreds of tenant URLs asynchronously without choking a monolithic server process. I resolved this by offloading the heavy lifting to InsForge Edge Functions driven by CRON triggers, strictly decoupling the monitoring workload from the main Next.js API layer."
+                },
+                {
+                    title: "Idempotent B2B Subscriptions",
+                    description: "Handling role-based access and strict subscription tier limits (e.g., maximum 5 monitors on the Pro plan). I implemented secure, idempotent webhook signature verification via Razorpay and enforced subscription entitlements at the database schema level."
+                }
+            ],
+            learnings: "I gained deep expertise in architecting serverless background task workflows and managing robust, secure subscription lifecycles utilizing third-party payment providers within a strict B2B multi-tenant environment."
+        }
+    },
+    {
         id: "agrilearn-nexus",
         title: "AgriLearn Nexus",
         description:
