@@ -41,9 +41,10 @@ export default function Projects() {
                             "md:col-span-8 md:row-span-2",
                             "md:col-span-4",
                             "md:col-span-4",
-                            "md:col-span-4",
-                            "md:col-span-4",
-                            "md:col-span-4",
+                            "md:col-span-6",
+                            "md:col-span-6",
+                            "md:col-span-6",
+                            "md:col-span-6",
                         ];
                         return (
                             <motion.div

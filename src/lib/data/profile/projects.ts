@@ -65,6 +65,24 @@ export const projects: Project[] = [
         image: "/images/projects/blind-app.png",
     },
     {
+        id: "imagekit-online-store",
+        title: "ImageKit Shop",
+        description: "A full-stack digital asset storefront with a sleek, minimalist admin dashboard. It features secure credential authentication, dynamic product variant pricing, Razorpay payment integration, and a seamless image processing pipeline.",
+        tech: [
+            "Next.js",
+            "TypeScript",
+            "Tailwind CSS",
+            "DaisyUI",
+            "Mongoose",
+            "NextAuth",
+            "Razorpay",
+            "ImageKit"
+        ],
+        github: "https://github.com/aryankumarofficial/imagekit-online-store",
+        live: "https://image-store-delta.vercel.app/",
+        image: "/images/projects/image-kit.png",
+    },
+    {
         id: "fitwell",
         title: "FitWell – Wellness Dashboard",
         description:
