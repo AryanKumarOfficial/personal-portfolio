@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: "Aryan Kumar | Full Stack Engineer",
     description:
       "Full Stack Engineer building scalable web applications using Next.js and modern technologies.",
-    url: "https://yourdomain.com",
+    url: "https://aryankumarofficial.dev",
     siteName: "Aryan Kumar Portfolio",
     locale: "en_US",
     type: "website",
